@@ -1,0 +1,15 @@
+{
+  "name": "8-0-command-line-snowman",
+  "version": "1.0.0",
+  "description": "For this assignment, you will build a game of [snowman](https://benstone1.github.io/Snowman-App/) that lets you play in the terminal!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/snowman.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}

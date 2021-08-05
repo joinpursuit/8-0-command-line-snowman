@@ -14,8 +14,8 @@ const getWinOrLoss = require("./getWinOrLoss.js");
   // Declare a variable called userIsWinner and assign it the evaluated result of invoking gameState
   const userIsWinner = getWinOrLoss(word);
   if (userIsWinner) {
-    console.log("\nYou Won! The word was: " + word + "!\n🌟 You're a star! 🌟");
+    console.log("\n🏆 You Won! 🏆\nThe word was: " + word + "!\n🌟 You're a star! 🌟");
   } else {
-    console.log("\nYou Lost! The word was: " + word + "!");
+    console.log("\nYou Lost! The word was: " + word + "!\n keep failing forward, you'll get em next time!");
   }
 })();

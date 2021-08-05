@@ -71,6 +71,20 @@ function charReplacer(input, word, wordDisplay){//should be ran if guess check r
 
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
+  console.log(`
+  .      *    *           *.       *   .                      *     .
+               .   .                   __   *    .     * .     *
+    *       *         *   .     .    _|__|_        *    __   .       *
+  .  *  /\\       /\\          *        ('')    *       _|__|_     .
+       /  \\   * /  \\  *          .  <( . )> *  .       ('')   *   *
+  *    /  \\     /  \\   .   *       _(__.__)_  _   ,--<(  . )>  .    .
+      /    \\   /    \\          *   |       |  )),\`   (   .  )     *
+   *   \`||\` ..  \`||\`   . *.   ... ==========='\`   ... '--\`-\` ... *    .
+      
+      Hello and Welcome to the Snowman Game!!
+  `
+
+  )
   const word = getRandomWord();
   let wordDisplay = []
   let guessedLetters = []

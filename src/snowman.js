@@ -81,21 +81,33 @@ function run() {
   }
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-
     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
     After a user hits the 'return' key, the rest of the code will run.
   */
   while(wordDisplay.includes('_') && lives > 0){
-    console.log(`${wordDisplay.join('')}\n\nGuessed Values: ${guessedLetters.join(', ')}\n\nYou have ${lives} guesses remaining`)
+    console.log(`\n___________________________________________________________________\n___________________________________________________________________\n\n${wordDisplay.join(' ')}\n\nGuessed Values: ${guessedLetters.join(', ')}\n\nYou have ${lives} guesses remaining\n`)
     const userInput = readline.question("Guess a letter: ");
     // This line of code will print out whatever is inputted in by the user.
-    console.log("THE USER INPUTTED:", userInput);
     if (guessCheck(userInput, word)){
-      charReplacer(userInput, word, wordDisplay)
+      if (guessedLetters.includes(userInput)){
+        console.log(`Already guessed ${userInput}, but it's all good.`)
+      }else{
+        guessedLetters.push(userInput)
+        charReplacer(userInput, word, wordDisplay)
+        if(userInput === word){
+          for (let letter of word){
+            charReplacer(letter, word, wordDisplay)
+          }
+        }
+      }
     }else{
       lives -=1
-      guessedLetters.push(userInput)
+      if (guessedLetters.includes(userInput)){
+        console.log(`Already guessed ${userInput}, still taking a life though.`)
+        guessedLetters.push(userInput + ' again')
+      }else{
+        guessedLetters.push(userInput)
+      }
     }
     if (lives === 0) {
       const cont = readline.question("Out of Lives, CONTINUE? y/n");
@@ -107,11 +119,11 @@ function run() {
     }
   }
   if (wordDisplay.includes('_')){
-    `Lost this time to "${word}."`
+    console.log(`\nLost this time to "${word}."`)
   }else if(continues === 0){
-    console.log(`Congratulations you got the word "${word}" with no continues.`)
-  }else{console.log(`Congratulations you got the word "${word}" with ${continues} continues.`)}
-  const newGame = readline.question('Would you like to start a new game? y/n\n')
+    console.log(`\nCongratulations you got the word "${word}" with no continues.`)
+  }else{console.log(`\nCongratulations you got the word "${word}" with ${continues} continues.`)}
+  const newGame = readline.question('\nWould you like to start a new game? y/n\n')
   if (newGame === 'y'){
     run()
   }else{console.log('Thank you for playing!!')}

@@ -71,10 +71,16 @@ function run() {
   //declare a constant variable named lettersGuessed and initialize it as an empty array
   const lettersGuessed = [];
   //declare a variable called remainingGuesses and assign it 5 to start off
-  let remainingGuesses = 5;
+  let remainingGuesses = 7;
+  //declare a flag variable called userIsWinner and assign it false to start off
+  let userIsWinner = false;
 
   //while we still have remaining tries
   while (remainingGuesses > 0) {
+    if (word === currentWordState.join("")) {
+      userIsWinner = true;
+      break;
+    }
     //declare a constant named userInput and assign it the evaluated result of invoking getValidLetterGuess
     // const userInput = getValidLetterGuess();
     const userInput = getNonRepeatingLetter(lettersGuessed);
@@ -91,6 +97,8 @@ function run() {
           currentWordState[index] = userInput;
         }
       });
+    } else {
+      remainingGuesses--;
     }
     //post iteration log to the console Remaining Guesses, LettersGuessed comma space seperated, and currentWordState using join method space seperated
     console.log("\nRemaining Guesses: ", remainingGuesses);
@@ -98,9 +106,11 @@ function run() {
     console.log("Word: ", currentWordState.join(" "));
   }
 
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
-  console.log(currentWordState);
+  if (userIsWinner) {
+    console.log(`\nYou Won! The word was: ${word}!\n🌟 You're a star! 🌟`);
+  } else {
+    console.log(`\nYou Lost! The word was: ${word}!`);
+  }
 }
 
 run();

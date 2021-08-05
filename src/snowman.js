@@ -17,7 +17,7 @@ function getRandomWord() {
 // Importing valid inputs
 const validInput = require("./validinput");
 // New Helper function
-function validInput(letter) {
+function validInputCheck(letter) {
   // Check if letter is valid and return it
   return validInput.includes(letter.toLowerCase())
 };
@@ -51,16 +51,29 @@ function run() {
 while (displayedWord.length < secretWord.length) {
   displayedWord.push('_');
 }
-  // Create loop for our game
+// Declare variable for message
+let message = '';
+  // Create loop for our game: this loop determines whether you ran out of lives or you lost the game because you still haven't completed the word. 
+  while (incorrectGuess !== 0 && displayedWord.includes('_')) {
   // Console log/Print our game \n
+  console.log(`Remaining Incorrect Guesses: ${incorrectGuess}\nLetters Guessed: ${alreadyGuessed.join(', ') || 'None'}/nWord: ${displayedWord.join(' ')}`) 
   // Ask for an input 
   const userInput = readline.question("Guess a letter: ");
   // .includes method returns a boolean
 
   // Check if input.toLowerCase() isn't valid(!) with helper function
+  if (!validInputCheck(userInput)) {
     // If it isn't, print the incorrect letter & ask user to input valid input.
+    message = `\n\nInvalid input of ${userInput}. Please enter a single letter.`
+    // Send the user back to the guess phase.
+    continue;
+  }
   // Check if input was already guessed
+  if (alreadyGuessed.includes(userInput) {
     // It it was, tell the user, and don't penalize them.
+  message = `Input of ${userInput} has already been guessed.`
+  continue;
+  }
   // Create lightswitch, set to false
   // Loop through our secretWord 
     // In loop, check if input a currentLetter 
@@ -68,6 +81,10 @@ while (displayedWord.length < secretWord.length) {
       // If it does, incorrect Guess -= 0
       // If it isn't, incorrectGuess -= 1
     // Add input to letters guessed
+  }
+  // Check if they won
+  // If they did, give winning phrase
+  // If they didn't, give the lossing phrase
   console.log("THE USER INPUTTED:", userInput);
 }
 

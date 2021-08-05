@@ -67,11 +67,11 @@ function guessCheck(userInput){
 */
 function run() {
   
-  // variable boolean to start the game
+  
   let startGame = true;
-  // number of allowed tries
+  // number of trues allowed
   let numberOfTries = 7;
-  // keep track of the user's inputs
+  // keeps track of the user's inputs
   let inputStr = "";
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();

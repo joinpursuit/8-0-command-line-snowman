@@ -15,6 +15,39 @@ function getRandomWord() {
   return dictionary[index];
 }
 
+
+// this function will determine if the guess is valid
+// this function will determine if the guess is valid
+function getValidLetterGuess() {
+  //This helper function helps determine if the imput is a valid letter 
+  function guessIsValid(letter) {
+    //Use regex to determine if letter is in the alphabet and ignores case insesitivity.
+    const validEntries = /[a-z]/i;
+    //if the letter is valid and letters length is only 1
+    if(validEntries.test(letter) && letter.length === 1) {
+      //return that letter.
+      return letter;
+    } else {
+      return false;
+    }
+  }
+  // Declare a variable named letter with a falsy value to start
+  let letter = "";
+  //while the letter is a falsy value run the while loop
+  while (!letter) {
+    //Asking a question to get user's input
+    let input = readline.question("Please enter your guess: ");
+    if (guessIsValid(input)) {//checks if the imput id valid
+      letter = input;
+    } else {//if the imput is invalid.
+      console.log("Please enter a valid letter");
+    }
+  }
+  return letter.toLowerCase();
+}
+
+
+
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
 

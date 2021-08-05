@@ -82,6 +82,12 @@ function run() {
    *   \`||\` ..  \`||\`   . *.   ... ==========='\`   ... '--\`-\` ... *    .
 
       Hello and Welcome to the Snowman Game!!
+      Rules: I will give you the length of a word and 7 lives.
+          You can take your time guessing either letters or full words,
+          but for each wrong guess you make I will take a life. However,
+          I will give you access to a continue for 2 more lives whenever 
+          you run out, try your best to not need them, but you may push 
+          through as you wish.
   `
   )
   const word = getRandomWord();
@@ -93,7 +99,7 @@ function run() {
   for (let i = 0; i< word.length; i++){
     wordDisplay.push('_')
   }
-  console.log(`Let's get started ${playerName}.`)
+  console.log(`Let's get started ${playerName}.\nThe word is ${word.length} letters long.`)
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.

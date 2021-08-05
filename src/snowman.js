@@ -42,22 +42,39 @@ function run() {
   while (displayedWord.length < secretWord.length){
     displayedWord.push("_");
   }
+  //Declare variable for message
+  let message = "";
   //Create loop for our game
-  //Print our game
-  //Ask for an input
-  const userInput = readline.question("Guess a letter: ");
-  //check if input isnt valid with helper function
-    //if it isn't, ask user to input valid input.
-  //check if input was already guess
-    //if it was, tell the user, and don't penalize them
-  //loop through our secretWord
-    //in loop, check if input = currentLetter
-      //if it is, change the value of displayedWord[i], to currentLetter
-  //after loop, check if displayWord includes input
-    //if it does, incorrect Guess -= 0;
-    //if it isn't, incorrectGuess -= 1;
-  //Add input to letters guessed
-  
+  while (incorrectGuess !== 0 && displayedWord.includes("_")){
+    //Print our game
+    console.log(`Remaining Incorrect Guesses: ${incorrectGuess}\nLetters Guessed: ${alreadyGuessed.join(", ") || "None"}\nWord: ${displayedWord.join(" ")}${message}`);
+    //Ask for an input
+    const userInput = readline.question("Guess a letter: ");
+    //check if input isnt valid with helper function
+    if (!validInputCheck(userInput)){
+      //if it isn't, ask user to input valid input
+      message = `\n\nInvalid input of ${userInput}. Please enter a single letter.`
+      //send them back to the guess phase
+      continue;
+    }
+    //check if input was already guess
+    if (alreadyGuessed.includes(userInput)){
+      //if it was, tell the user, and don't penalize them
+      message = `Input of ${userInput} has already been guessed.`;
+      continue;
+    }
+    //loop through our secretWord
+      //in loop, check if input = currentLetter
+        //if it is, change the value of displayedWord[i], to currentLetter
+    //after loop, check if displayWord includes input
+      //if it does, incorrect Guess -= 0;
+      //if it isn't, incorrectGuess -= 1;
+    //Add input to letters guessed
+    
+  }
+  //check if they won
+    //if they did, give winning message
+    //if they didn't, give losing message
 }
 
 run();

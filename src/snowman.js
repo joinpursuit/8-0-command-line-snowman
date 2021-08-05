@@ -51,7 +51,7 @@ function getRandomWord() {
 
 function guessCheck(input, word){
   if (input.length > 1){
-    if (input.toLowerCase() === word){
+    if (input.toLowerCase() === word){//just for fun check for whole words
       return true
     }else{return false}
   }else{
@@ -63,7 +63,7 @@ function guessCheck(input, word){
 
 function charReplacer(input, word, wordDisplay){//should be ran if guess check returned true
   for (let i = 0; i < word.length; i++){
-    if (word[i] === input.toLowerCase()){
+    if (word[i] === input.toLowerCase()){//iterates through letter of the word for the inputted letter and replaces the same index in the displayed word
       wordDisplay.splice(i,1,input)
     }
   }
@@ -91,7 +91,7 @@ function run() {
   `
   )
   const word = getRandomWord();
-  const playerName = readline.question('Whose playing today?')
+  const playerName = readline.question('Whose playing today?')//Just a random feature
   let wordDisplay = []
   let guessedLetters = []
   let lives = 7
@@ -106,28 +106,28 @@ function run() {
     After a user hits the 'return' key, the rest of the code will run.
   */
   while(wordDisplay.includes('_') && lives > 0){
-    console.log(`\n___________________________________________________________________\n___________________________________________________________________\n\n${wordDisplay.join(' ')}\n\nGuessed Values: ${guessedLetters.join(', ')}\n\nYou have ${lives} guesses remaining\n`)
+    console.log(`\n___________________________________________________________________\n___________________________________________________________________\n\n${wordDisplay.join(' ')}\n\nGuessed Values: ${guessedLetters.join(', ')}\n\nYou have ${lives} guesses remaining\n`)//display of everything, should repost every loop
     const userInput = readline.question("Guess a letter: ");
     // This line of code will print out whatever is inputted in by the user.
-    if (guessCheck(userInput, word)){
-      if (guessedLetters.includes(userInput)){
+    if (guessCheck(userInput, word)){// t/f check from helper function
+      if (guessedLetters.includes(userInput)){// Accounts for repeated correct guesses
         console.log(`\nAlready guessed ${userInput}, but it's all good.`)
       }else{
         guessedLetters.push(userInput)
         charReplacer(userInput, word, wordDisplay)
-        if(userInput === word){
+        if(userInput === word){//just for fun check if they get the user gets the entire word
           for (let letter of word){
             charReplacer(letter, word, wordDisplay)
           }
           console.log(`Impressive ${playerName}, you managed to get the word exactly!!`)
         }
       }
-    }else{
+    }else{//subtract lives for every wrong guess
       lives -=1
-      if (guessedLetters.includes(userInput)){
+      if (guessedLetters.includes(userInput)){// extra message for repeated wrong guess
         console.log(`\nAlready guessed ${userInput}, still taking a life though.`)
         guessedLetters.push(userInput + ' again')
-      }else{
+      }else{// general incorrect
         if (userInput.length> 1){
           console.log(`\n${userInput} is not the word, but good try.`)
         }else{
@@ -135,22 +135,22 @@ function run() {
         }
       }
     }
-    if (lives === 0) {
+    if (lives === 0) {// continue check before it goes back to the while checks
       const cont = readline.question("\nOut of Lives, CONTINUE? y/n");
-      if (cont === 'y'){
+      if (cont === 'y'){// Only accepts y, everything else is no
         lives +=2
         continues += 1
         console.log('\n2 more lives added\n')
       }
     }
   }
-  if (wordDisplay.includes('_')){
+  if (wordDisplay.includes('_')){// check if game ended with an unsolved character
     console.log(`\nLost this time to "${word}."`)
-  }else if(continues === 0){
+  }else if(continues === 0){// Just for fun message if completed without continues
     console.log(`\nCongratulations ${playerName}, you got the word "${word}" with NO continues!!`)
   }else{console.log(`\nNot bad ${playerName}, you got the word "${word}" with ${continues} continues.`)}
   const newGame = readline.question('\nWould you like to start a new game? y/n\n')
-  if (newGame === 'y'){
+  if (newGame === 'y'){//check if user wants another round
     run()
   }else{console.log(`Thank you for playing ${playerName}!!`)}
 

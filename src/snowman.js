@@ -33,14 +33,20 @@ function validInputCheck (letter) {
 */
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
-
   // declare a variable for our random work
   const secretWord = getRandomWord();
   // declare variable for our incorrectGuess, set to length of secretWord.
+let incorrectGuess = secretWord.length;
   // declare a variable for already guessed -- set to empty array.
+  let arlreadyGuessed = [];
   // declare variable for displayWord -- set to empty array.
+  let displayedWord = [];
   // use a loop to push "_" based on secretWord.length.
+  while (displayedWord.length < secretWord.length){
+    displayedWord.push("_");
+  }
   // console.log "remaining Incorrect Guesses: 7, Letters Guessed: None, Word: _ _ _"
+  
   // Ask for an input = readline.question("Guess a letter: ");
 
   // check if input.toLowerCase() isn't valid with helper function.

@@ -90,7 +90,7 @@ function run() {
     // This line of code will print out whatever is inputted in by the user.
     if (guessCheck(userInput, word)){
       if (guessedLetters.includes(userInput)){
-        console.log(`Already guessed ${userInput}, but it's all good.`)
+        console.log(`\nAlready guessed ${userInput}, but it's all good.`)
       }else{
         guessedLetters.push(userInput)
         charReplacer(userInput, word, wordDisplay)
@@ -103,18 +103,18 @@ function run() {
     }else{
       lives -=1
       if (guessedLetters.includes(userInput)){
-        console.log(`Already guessed ${userInput}, still taking a life though.`)
+        console.log(`\nAlready guessed ${userInput}, still taking a life though.`)
         guessedLetters.push(userInput + ' again')
       }else{
         guessedLetters.push(userInput)
       }
     }
     if (lives === 0) {
-      const cont = readline.question("Out of Lives, CONTINUE? y/n");
+      const cont = readline.question("\nOut of Lives, CONTINUE? y/n");
       if (cont === 'y'){
         lives +=2
         continues += 1
-        console.log('2 more lives added\n')
+        console.log('\n2 more lives added\n')
       }
     }
   }

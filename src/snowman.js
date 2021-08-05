@@ -13,9 +13,9 @@ function getRandomWord() {
   return dictionary[index];
 }
 
-//this function will get a valid letter guess
+//This function returns a valid letter guess
 function getValidLetterGuess() {
-  //this helper function is used to determine if letter guess is valid
+  //This helper function is used to determine if letter guess is valid
   function guessIsValid(letter) {
     //use regex to determine if letter is in the alphabet and ignore case sensitivty
     const validEntries = /[a-z]/i;
@@ -40,7 +40,7 @@ function getValidLetterGuess() {
   }
   return letter.toLowerCase();
 }
-
+//This function returns a letter that wasn't guessed already
 function getNonRepeatingLetter(lettersGuessed) {
   //while letterGuess from user input is included in lettersGuessedArray
   let userInput = getValidLetterGuess();
@@ -54,35 +54,25 @@ function getNonRepeatingLetter(lettersGuessed) {
   return userInput;
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
-
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
-
 function runSnowman() {
-  //WHENEVER WE LOG TO THE USER WE WANT TO USE THE JOIN METHOD
   // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord(); //Word is "Apple"
+  const word = getRandomWord();
   //declare a variable called currentWordState and assign it an array filled with underscores depending on length of the word
   const currentWordState = new Array(word.length).fill("_"); //[_,_,_,_,_]
-  //declare a constant variable named lettersGuessed and initialize it as an empty array
   const lettersGuessed = [];
-  //declare a variable called remainingGuesses and assign it 5 to start off
   let remainingGuesses = 7;
   //declare a flag variable called userIsWinner and assign it false to start off
   let userIsWinner = false;
 
-  //while we still have remaining tries
+  console.log("☃️  Welcome To Snowman! ☃️\n\nRemaining Guesses: ", remainingGuesses + "\nWord: ", currentWordState.join(" ") + "\n");
+
+  //while we still have remaining guesses
   while (remainingGuesses > 0) {
     if (word === currentWordState.join("")) {
       userIsWinner = true;
       break;
     }
-    //declare a constant named userInput and assign it the evaluated result of invoking getValidLetterGuess
-    // const userInput = getValidLetterGuess();
+    //declare a constant variable named userInput and assign it the evaluated result of invoking getValidLetterGuess passing in the argument lettersGuessed
     const userInput = getNonRepeatingLetter(lettersGuessed);
     //push non repeating letter to lettersGuessed Array
     lettersGuessed.push(userInput);
@@ -95,9 +85,11 @@ function runSnowman() {
         if (letterInWord === userInput) {
           //assign currentWordState at index to userInput
           currentWordState[index] = userInput;
+          console.log("\nThat's correct!");
         }
       });
     } else {
+      console.log("\n That's incorrect, The word " + userInput + "is not in the word.");
       remainingGuesses--;
     }
     //post iteration log to the console Remaining Guesses, LettersGuessed comma space seperated, and currentWordState using join method space seperated

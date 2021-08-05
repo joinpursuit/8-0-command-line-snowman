@@ -7,12 +7,38 @@ const readline = require("readline-sync");
 */
 const dictionary = require("./dictionary");
 
-/*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
-*/
+//This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
+}
+
+//this function will get a valid letter guess
+function getValidLetterGuess() {
+  //this helper function is used to determine if letter guess is valid
+  function guessIsValid(letter) {
+    //use regex to determine if letter is in the alphabet and ignore case sensitivty
+    const validEntries = /[a-z]/i;
+    //if the letter is in the alphabet and the length of the letter is 1
+    if (validEntries.test(letter) && letter.length === 1) {
+      return letter;
+    } else {
+      return false;
+    }
+  }
+  //declare a variable named letter and assign it a falsy value to start off
+  let letter = "";
+  //while the letter is falsy
+  while (!letter) {
+    //get user input
+    let input = readline.question("Please enter your guess: ");
+    if (guessIsValid(input)) {
+      letter = input;
+    } else {
+      console.log("Please enter a valid letter");
+    }
+  }
+  return letter.toLowerCase();
 }
 
 /*

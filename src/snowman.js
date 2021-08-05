@@ -16,7 +16,7 @@ function getRandomWord() {
 }
 
 // importing valid inputs
-const validInput = require("./validinput")
+const validInput = require("./validinput");
 // New helper function
 
 function validInputCheck (letter) {
@@ -38,7 +38,7 @@ function run() {
   // declare variable for our incorrectGuess, set to length of secretWord.
 let incorrectGuess = secretWord.length;
   // declare a variable for already guessed -- set to empty array.
-  let arlreadyGuessed = [];
+  let alreadyGuessed = [];
   // declare variable for displayWord -- set to empty array.
   let displayedWord = [];
   // use a loop to push "_" based on secretWord.length.
@@ -46,7 +46,28 @@ let incorrectGuess = secretWord.length;
     displayedWord.push("_");
   }
   // console.log "remaining Incorrect Guesses: 7, Letters Guessed: None, Word: _ _ _"
-  
+  //create a loop for our game.
+  while (incorrectGuess !== 0 && displayedWord.includes("_")){
+
+    console.log(`Remaining Incorrect Guesses: ${incorrectGuess}\nLetters Guessed: ${alreadyGuessed.join(", ") || "None"}\nWord: ${displayedWord.join(" ")}`);
+// Ask for an input
+    let message = "";
+
+    const userInput = readline.question("Guess a letter: ");
+
+    if (!validInputCheck(userInput)){
+// if ins't, ask user to input valid input  
+      message = `\n\nInvalid input of ${userInput}.  Please enter a single letter.`
+      continue;
+    }
+
+    if (alreadyGuessed.includes(userInput)) {
+      // if it was entered, tell the user and don't penalized.
+      message = `Input of ${userInput} has already been guessed.`;
+      continue;
+    }
+
+  }
   // Ask for an input = readline.question("Guess a letter: ");
 
   // check if input.toLowerCase() isn't valid with helper function.
@@ -70,7 +91,7 @@ let incorrectGuess = secretWord.length;
 
     After a user hits the 'return' key, the rest of the code will run.
   */
-  const userInput = readline.question("Guess a letter: ");
+  
   // This line of code will print out whatever is inputted in by the user.
   console.log("THE USER INPUTTED:", userInput);
 

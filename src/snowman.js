@@ -24,6 +24,8 @@ function getRandomWord() {
 */
 
 //Create empty array of underscores to start
+
+//Loop start
 //Display
   //Remaining Guesses
   //Guessed letters/words
@@ -38,20 +40,22 @@ function getRandomWord() {
   //update word if applicable(maybe use splice(i,1,letter))
 
 //Check if done or out of lives
-  //If win return word and congrat msg
+  //if done break loop
+  //If win return word and congrat msg 
     //If win by word input return a different message
     
   //might include a continue option for like 2 extra lives or something
+    //should probably be asked for continues before the end of the loop
     //finished display, should have remaining lives, continues used if any, final word, random congrats msg
     //play again or finished prompt
 
 function guessCheck(input, word){
   if (input.length > 1){
-    if (input === word){
+    if (input.toLowerCase() === word){
       return true
     }else{return false}
   }else{
-    if (word.includes(input)){
+    if (word.includes(input.toLowerCase())){
       return true
     }else { return false}
   }
@@ -59,7 +63,7 @@ function guessCheck(input, word){
 
 function charReplacer(input, word, wordDisplay){//should be ran if guess check returned true
   for (let i = 0; i < word.length; i++){
-    if (word[i] === input){
+    if (word[i] === input.toLowerCase()){
       wordDisplay.splice(i,1,input)
     }
   }
@@ -71,6 +75,7 @@ function run() {
   let wordDisplay = []
   let guessedLetters = []
   let lives = 7
+  let continues = 0
   for (let i = 0; i< word.length; i++){
     wordDisplay.push('_')
   }
@@ -81,13 +86,35 @@ function run() {
 
     After a user hits the 'return' key, the rest of the code will run.
   */
- while(wordDisplay.includes('_') || lives > 0){
+  while(wordDisplay.includes('_') && lives > 0){
     console.log(`${wordDisplay.join('')}\n\nGuessed Values: ${guessedLetters.join(', ')}\n\nYou have ${lives} guesses remaining`)
     const userInput = readline.question("Guess a letter: ");
     // This line of code will print out whatever is inputted in by the user.
     console.log("THE USER INPUTTED:", userInput);
-
+    if (guessCheck(userInput, word)){
+      charReplacer(userInput, word, wordDisplay)
+    }else{
+      lives -=1
+      guessedLetters.push(userInput)
+    }
+    if (lives === 0) {
+      const cont = readline.question("Out of Lives, CONTINUE? y/n");
+      if (cont === 'y'){
+        lives +=2
+        continues += 1
+        console.log('2 more lives added\n')
+      }
+    }
   }
+  if (wordDisplay.includes('_')){
+    `Lost this time to "${word}."`
+  }else if(continues === 0){
+    console.log(`Congratulations you got the word "${word}" with no continues.`)
+  }else{console.log(`Congratulations you got the word "${word}" with ${continues} continues.`)}
+  const newGame = readline.question('Would you like to start a new game? y/n\n')
+  if (newGame === 'y'){
+    run()
+  }else{console.log('Thank you for playing!!')}
 
 }
 

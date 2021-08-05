@@ -22,9 +22,58 @@ function getRandomWord() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
+
+//Create empty array of underscores to start
+//Display
+  //Remaining Guesses
+  //Guessed letters/words
+  //Empty array above
+  //
+
+//Check Input
+  //I'm allowing full word guesses, maybe allow weird non letters but also return a message questioning your decisions
+
+//Update Display, 
+  //push to array of guessed
+  //update word if applicable(maybe use splice(i,1,letter))
+
+//Check if done or out of lives
+  //If win return word and congrat msg
+    //If win by word input return a different message
+    
+  //might include a continue option for like 2 extra lives or something
+    //finished display, should have remaining lives, continues used if any, final word, random congrats msg
+    //play again or finished prompt
+
+function guessCheck(input, word){
+  if (input.length > 1){
+    if (input === word){
+      return true
+    }else{return false}
+  }else{
+    if (word.includes(input)){
+      return true
+    }else { return false}
+  }
+}
+
+function charReplacer(input, word, wordDisplay){//should be ran if guess check returned true
+  for (let i = 0; i < word.length; i++){
+    if (word[i] === input){
+      wordDisplay.splice(i,1,input)
+    }
+  }
+}
+
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
+  let wordDisplay = []
+  let guessedLetters = []
+  let lives = 7
+  for (let i = 0; i< word.length; i++){
+    wordDisplay.push('_')
+  }
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
@@ -32,9 +81,14 @@ function run() {
 
     After a user hits the 'return' key, the rest of the code will run.
   */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+ while(wordDisplay.includes('_') || lives > 0){
+    console.log(`${wordDisplay.join('')}\n\nGuessed Values: ${guessedLetters.join(', ')}\n\nYou have ${lives} guesses remaining`)
+    const userInput = readline.question("Guess a letter: ");
+    // This line of code will print out whatever is inputted in by the user.
+    console.log("THE USER INPUTTED:", userInput);
+
+  }
+
 }
 
 run();

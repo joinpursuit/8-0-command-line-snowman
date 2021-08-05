@@ -42,10 +42,15 @@ function run() {
   // Declare variable for our random work
   const secretWord = getRandomWord();
   // Declare variable for our incorrectGuess, set to length of secretWord
+  let incorrectGuess = secretWord.length; 
   // Declare variable for alreadyGuessed, set to empty array
+  let alreadyGuessed = [];
   // Declare variable for displayedWord, set to empty array
+  let displayedWord = [];
   // Use a loop to fill our displayedWord with "_"'s, make it as long as our secretWord. 
-
+while (displayedWord.length < secretWord.length) {
+  displayedWord.push('_');
+}
   // Create loop for our game
   // Console log/Print our game \n
   // Ask for an input 

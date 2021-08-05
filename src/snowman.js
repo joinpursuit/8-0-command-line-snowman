@@ -80,12 +80,12 @@ function run() {
   *    /  \\     /  \\   .   *       _(__.__)_  _   ,--<(  . )>  .    .
       /    \\   /    \\          *   |       |  )),\`   (   .  )     *
    *   \`||\` ..  \`||\`   . *.   ... ==========='\`   ... '--\`-\` ... *    .
-      
+
       Hello and Welcome to the Snowman Game!!
   `
-
   )
   const word = getRandomWord();
+  const playerName = readline.question('Whose playing today?')
   let wordDisplay = []
   let guessedLetters = []
   let lives = 7
@@ -93,6 +93,7 @@ function run() {
   for (let i = 0; i< word.length; i++){
     wordDisplay.push('_')
   }
+  console.log(`Let's get started ${playerName}.`)
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
@@ -112,6 +113,7 @@ function run() {
           for (let letter of word){
             charReplacer(letter, word, wordDisplay)
           }
+          console.log(`Impressive ${playerName}, you managed to get the word exactly!!`)
         }
       }
     }else{
@@ -120,7 +122,11 @@ function run() {
         console.log(`\nAlready guessed ${userInput}, still taking a life though.`)
         guessedLetters.push(userInput + ' again')
       }else{
-        guessedLetters.push(userInput)
+        if (userInput.length> 1){
+          console.log(`\n${userInput} is not the word, but good try.`)
+        }else{
+          guessedLetters.push(userInput)
+        }
       }
     }
     if (lives === 0) {
@@ -135,12 +141,12 @@ function run() {
   if (wordDisplay.includes('_')){
     console.log(`\nLost this time to "${word}."`)
   }else if(continues === 0){
-    console.log(`\nCongratulations you got the word "${word}" with no continues.`)
-  }else{console.log(`\nCongratulations you got the word "${word}" with ${continues} continues.`)}
+    console.log(`\nCongratulations ${playerName}, you got the word "${word}" with NO continues!!`)
+  }else{console.log(`\nNot bad ${playerName}, you got the word "${word}" with ${continues} continues.`)}
   const newGame = readline.question('\nWould you like to start a new game? y/n\n')
   if (newGame === 'y'){
     run()
-  }else{console.log('Thank you for playing!!')}
+  }else{console.log(`Thank you for playing ${playerName}!!`)}
 
 }
 

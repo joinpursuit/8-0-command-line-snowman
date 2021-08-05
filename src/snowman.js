@@ -30,13 +30,18 @@ function validInputCheck(letter){
   Once you understand the code below, you may remove the comments if you like.
 */
 function run() {
-  //Declare variable for our random word
+  //Declare variable for our secretword
   const secretWord = getRandomWord();
   //Declare variable for our incorrectGuess, set to length of secretWord
+  let incorrectGuess = secretWord.length;
   //Declare variable for alreadyGuessed, set to empty array
+  let alreadyGuessed = [];
   //Declare variable for displayedWord, set to empty array
+  let displayedWord = [];
   //Use a loop to fill our displayedWord with "_"s, make it as long as our secretWord
-  
+  while (displayedWord.length < secretWord.length){
+    displayedWord.push("_");
+  }
   //Create loop for our game
   //Print our game
   //Ask for an input

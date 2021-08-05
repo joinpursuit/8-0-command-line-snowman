@@ -53,28 +53,49 @@ function run() {
     //check if input isnt valid with helper function
     if (!validInputCheck(userInput)){
       //if it isn't, ask user to input valid input
-      message = `\n\nInvalid input of ${userInput}. Please enter a single letter.`
+      message = `\n\nInvalid input of ${userInput}. Please enter a single letter.\n-------------------------------------\n`
       //send them back to the guess phase
       continue;
     }
     //check if input was already guess
     if (alreadyGuessed.includes(userInput)){
       //if it was, tell the user, and don't penalize them
-      message = `Input of ${userInput} has already been guessed.`;
+      message = `\n\nInput of ${userInput} has already been guessed.\n-------------------------------------\n`;
       continue;
     }
     //loop through our secretWord
-      //in loop, check if input = currentLetter
-        //if it is, change the value of displayedWord[i], to currentLetter
+    for (let i = 0; i < secretWord.length; i++){
+      //Declare variables for clarity
+      let currentLetter = secretWord[i];
+      let displayedLetter = displayedWord[i];
+      //in loop, check if input === currentLetter
+      if (userInput === currentLetter){
+        //if it is, change the value of displayedLetter, to currentLetter
+        displayedLetter = currentLetter;
+      }
+    }
     //after loop, check if displayWord includes input
-      //if it does, incorrect Guess -= 0;
+    if (displayedWord.includes(userInput)){
+      //if it does, change message
+      message = `\n\nYou guessed correctly!\n-------------------------------------\n`;
+    } else {
       //if it isn't, incorrectGuess -= 1;
-    //Add input to letters guessed
-    
-  }
+      incorrectGuess -= 1;
+      message = `\n\nYou guessed wrong :c\n-------------------------------------\n`
+    }
+     //Add input to letters guessed
+     alreadyGuessed.push(userInput);
+    //Send them back to guess phase
+    continue;
+  } 
   //check if they won
+  if (!displayedWord.includes("_")){
     //if they did, give winning message
+    console.log(`\n\nWINNER\n-------------------------------------\n`);
+  } else {
     //if they didn't, give losing message
+    console.log(`\n\nLOSER\n-------------------------------------\n`);
+  }
 }
 
 run();

@@ -7,46 +7,52 @@ const readline = require("readline-sync");
 */
 const dictionary = require("./dictionary");
 
-/*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
-*/
+//This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
 
-
-// this function will determine if the guess is valid
-// this function will determine if the guess is valid
+//this function will get a valid letter guess
 function getValidLetterGuess() {
-  //This helper function helps determine if the imput is a valid letter 
+  //this helper function is used to determine if letter guess is valid
   function guessIsValid(letter) {
-    //Use regex to determine if letter is in the alphabet and ignores case insesitivity.
+    //use regex to determine if letter is in the alphabet and ignore case sensitivty
     const validEntries = /[a-z]/i;
-    //if the letter is valid and letters length is only 1
-    if(validEntries.test(letter) && letter.length === 1) {
-      //return that letter.
+    //if the letter is in the alphabet and the length of the letter is 1
+    if (validEntries.test(letter) && letter.length === 1) {
       return letter;
     } else {
       return false;
     }
   }
-  // Declare a variable named letter with a falsy value to start
+  //declare a variable named letter and assign it a falsy value to start off
   let letter = "";
-  //while the letter is a falsy value run the while loop
+  //while the letter is falsy
   while (!letter) {
-    //Asking a question to get user's input
-    let input = readline.question("Please enter your guess: ");
-    if (guessIsValid(input)) {//checks if the imput id valid
+    //program will stop to get user input
+    let input = readline.question("Guess a letter: ");
+    if (guessIsValid(input)) {
       letter = input;
-    } else {//if the imput is invalid.
+    } else {
       console.log("Please enter a valid letter");
     }
   }
   return letter.toLowerCase();
 }
 
-
+function getNonRepeatingLetter(lettersGuessed) {
+  //while letterGuess from user input is included in lettersGuessedArray
+  let userInput = getValidLetterGuess();
+  while (lettersGuessed.includes(userInput)) {
+    //if the guess is included in letter guesses have the user type in another guess
+    if (lettersGuessed.includes(userInput)) {
+      console.log("\nYou already guessed this letter: ", userInput + "\n" + "These are all your guesses: ", lettersGuessed.join(" ") + "\nTry Again!\n");
+      userInput = getValidLetterGuess();
+    }
+  }
+  return userInput;
+}
 
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
@@ -55,19 +61,46 @@ function getValidLetterGuess() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
+
 function run() {
+  //WHENEVER WE LOG TO THE USER WE WANT TO USE THE JOIN METHOD
   // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+  const word = getRandomWord(); //Word is "Apple"
+  //declare a variable called currentWordState and assign it an array filled with underscores depending on length of the word
+  const currentWordState = new Array(word.length).fill("_"); //[_,_,_,_,_]
+  //declare a constant variable named lettersGuessed and initialize it as an empty array
+  const lettersGuessed = [];
+  //declare a variable called remainingGuesses and assign it 5 to start off
+  let remainingGuesses = 5;
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  //while we still have remaining tries
+  while (remainingGuesses > 0) {
+    //declare a constant named userInput and assign it the evaluated result of invoking getValidLetterGuess
+    // const userInput = getValidLetterGuess();
+    const userInput = getNonRepeatingLetter(lettersGuessed);
+    //push non repeating letter to lettersGuessed Array
+    lettersGuessed.push(userInput);
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
+    //if the user letter input is included in word
+    if (word.includes(userInput)) {
+      //use split method on word string no-space delimited to convert word to an array and then iterate through it
+      word.split("").forEach((letterInWord, index) => {
+        //if the current letter matches with userInput
+        if (letterInWord === userInput) {
+          //assign currentWordState at index to userInput
+          currentWordState[index] = userInput;
+        }
+      });
+    }
+    //post iteration log to the console Remaining Guesses, LettersGuessed comma space seperated, and currentWordState using join method space seperated
+    console.log("\nRemaining Guesses: ", remainingGuesses);
+    console.log("Letters Guessed: ", lettersGuessed.join(", "));
+    console.log("Word: ", currentWordState.join(" "));
+  }
+
   // This line of code will print out whatever is inputted in by the user.
   console.log("THE USER INPUTTED:", userInput);
+  console.log(currentWordState);
 }
 
 run();

@@ -15,26 +15,89 @@ function getRandomWord() {
   return dictionary[index];
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
+// This line of code gets a random word. The `word` variable will be a string.
+const word = getRandomWord();
 
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
+// How many times user is allowed to guess incorrect guesses
+let numOfGuesses = 7;
 
-  Once you understand the code below, you may remove the comments if you like.
-*/
+// An array of all the letters the user guesses (incorrect and correct)
+let lettersGuessed = [];
+
+// Check guesses and return dash format of correct guesses and missing letters
+function getGuessedWords(word, lettersGuessed) {
+  let dash = "";
+  for (let letter of word) {
+    if (lettersGuessed.includes(letter)) {
+      // add letters that user correctly guesses.
+      dash += letter;
+      dash += " ";
+    } else {
+      // maintain dashes for letters not yet guessed.
+      dash += "_";
+      dash += " ";
+    }
+  }
+  return dash;
+}
+
+// Validate the user input. Re-ask question if input is not a single letter without penatly.
+function userInputValidation() {
+  let userInput = readline.question("Please guess a letter: ");
+  // convert to lowercase for user, giving some flexibility
+  userInput = userInput.toLowerCase();
+  if (
+    userInput.length > 1 ||
+    !"abcdefghijklmnopqrstuvwxyz".includes(userInput)
+  ) {
+    console.log("Please enter a valid letter\n");
+    userInputValidation();
+  } else {
+    // update the global variable lettersGuessed that holds all user input (valid and invalid)
+    if (lettersGuessed.includes(userInput)) {
+      console.log(`${userInput} has already been inputed. \n`);
+      userInputValidation();
+    } else {
+      lettersGuessed.push(userInput);
+      // reduce while loop conditional penalizing user for incorrect guesses.
+      if (!word.includes(userInput)) {
+        numOfGuesses--;
+      }
+    }
+  }
+}
+// function to determine final result, if all letters are guessed correctly. Return Boolean.
+function answerValidation() {
+  let bol = true;
+  for (let letter of word) {
+    if (!lettersGuessed.includes(letter)) {
+      return false;
+    }
+  }
+  return bol;
+}
+
+console.log("\n------------------\n");
+
+//
 function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+  // while loop to run for as many guesses allowed or if the correct answer is found
+  while (numOfGuesses > 0 && !answerValidation()) {
+    // welcome console.logs()
+    console.log(`Letters Guessed: ${lettersGuessed.join()}\n`);
+    console.log(`Remaining Incorrect Guesses: ${numOfGuesses}`);
+    // validate input
+    userInputValidation();
+    // call  function to provide dash format
+    console.log(`\nWord: ${getGuessedWords(word, lettersGuessed)}\n`);
+  }
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+  // once loop terminates display winner or loser statements
+  if (answerValidation()) {
+    console.log(`Congratulations, you won! You guessed ${word} correctly! \n`);
+  } else {
+    console.log(`Sorry, you ran out of guesses. The word was ${word}. =(\n`);
+  }
 }
 
 run();

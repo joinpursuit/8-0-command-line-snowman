@@ -31,7 +31,7 @@ function getValidLetterGuess() {
   //while the letter is falsy
   while (!letter) {
     //program will stop to get user input
-    let input = readline.question("Guess a letter: ");
+    let input = readline.question("\nGuess a letter: ");
     if (guessIsValid(input)) {
       letter = input;
     } else {
@@ -63,17 +63,20 @@ function getNonRepeatingLetter(lettersGuessed) {
 */
 
 function run() {
-  //WHENEVER WE LOG TO THE USER WE WANT TO USE THE JOIN METHOD
   // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord(); //Word is "Apple"
+  const word = getRandomWord(); 
   //declare a variable called currentWordState and assign it an array filled with underscores depending on length of the word
   const currentWordState = new Array(word.length).fill("_"); //[_,_,_,_,_]
-  //declare a constant variable named lettersGuessed and initialize it as an empty array
+  
   const lettersGuessed = [];
-  //declare a variable called remainingGuesses and assign it 5 to start off
   let remainingGuesses = 7;
-  //declare a flag variable called userIsWinner and assign it false to start off
+  //Declare a flag variable called userIsWinner and assign it false to start off
   let userIsWinner = false;
+
+
+  console.log("☃️  Welcome To Snowman! ☃️\n\nRemaining Guesses: ", remainingGuesses + "\nWord: ", currentWordState.join(" "));
+
+
 
   //while we still have remaining tries
   while (remainingGuesses > 0) {
@@ -81,13 +84,13 @@ function run() {
       userIsWinner = true;
       break;
     }
-    //declare a constant named userInput and assign it the evaluated result of invoking getValidLetterGuess
-    // const userInput = getValidLetterGuess();
+    //declare a constant variable named userInput and assign it the evaluated result of invoking getValidLetterGuess 
+    
     const userInput = getNonRepeatingLetter(lettersGuessed);
     //push non repeating letter to lettersGuessed Array
     lettersGuessed.push(userInput);
 
-    //if the user letter input is included in word
+    //It checks if the user letter input is included in word
     if (word.includes(userInput)) {
       //use split method on word string no-space delimited to convert word to an array and then iterate through it
       word.split("").forEach((letterInWord, index) => {
@@ -95,9 +98,11 @@ function run() {
         if (letterInWord === userInput) {
           //assign currentWordState at index to userInput
           currentWordState[index] = userInput;
+          console.log(`\nThat's correct!`)
         }
       });
     } else {
+      console.log(`\nThat's incorrect, The word '${userInput}' is not in the word`)
       remainingGuesses--;
     }
     //post iteration log to the console Remaining Guesses, LettersGuessed comma space seperated, and currentWordState using join method space seperated

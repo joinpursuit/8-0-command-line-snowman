@@ -82,6 +82,7 @@ const playerName = readline.question(chalk.bold('Whose playing today?'))//Just a
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   let lives = 7
+  let livesColor = 'green'
   if (livesSetting){
     lives = Number(livesSetting)
   }
@@ -169,7 +170,12 @@ function run() {
     After a user hits the 'return' key, the rest of the code will run.
   */
   while(wordDisplay.includes('_') && lives > 0){
-    console.log(chalk`\n___________________________________________________________________\n___________________________________________________________________\n\n{bold ${wordDisplay.join(' ')}}\n\n{bold Guessed Values: ${guessedLetters.join(', ')}}\n\nYou have {red.bold ${lives}} guesses remaining\n${snowman[snowmanStage]}\n`)//display of everything, should repost every loop
+    if (lives< 3){
+      livesColor = 'red'
+    }else if(lives <5){
+      livesColor = 'yellow'
+    }
+    console.log(chalk`\n___________________________________________________________________\n___________________________________________________________________\n\n{bold ${wordDisplay.join(' ')}}\n\n{bold Guessed Values: ${guessedLetters.join(', ')}}\n\nYou have {${livesColor}.bold ${lives}} guesses remaining\n${snowman[snowmanStage]}\n`)//display of everything, should repost every loop
     const userInput = readline.question(chalk`{bold Guess a letter: }`);
     // This line of code will print out whatever is inputted in by the user.
     if (guessCheck(userInput, word)){// t/f check from helper function

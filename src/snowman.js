@@ -25,16 +25,102 @@ function getRandomWord() {
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
+  
+  //Declare variable called `dashes` empty string
+  let dashes = ''
+  
+  //iterate through `word` string, each element called `letter`
+  for (const letter of word) {
+    //ADD to `dashes` += '_'
+    dashes += '_'
+  }
+  
   /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
-    After a user hits the 'return' key, the rest of the code will run.
+  The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+  
+  The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  
+  After a user hits the 'return' key, the rest of the code will run.
   */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+ //Declare empty array called `guessesArray`
+ let guessesArray = []
+ 
+ //Declare variable called `tries` = 0
+ let tries = 7
+ 
+ 
+ //Keep looping if user has tries left or hasn't solved word
+ while (tries > 0 && dashes !== word) {
+   console.clear()
+   console.log(word)
+   
+    // Console.log `dashes`
+    console.log(dashes)
+    
+    // This line of code will print out whatever is inputted in by the user.
+    console.log("THE USER GUESSES:", guessesArray.join(', '));
+
+    console.log(`You have ${tries} guesses remaining`)
+
+    const userInput = readline.question("Guess a letter: ");
+
+    const userInput2 = userInput.toLowerCase()
+
+    // if (userInput2 === word){
+    //   dashes = word
+    //   break;
+    // }
+
+    if(userInput2.match(/[a-z]/g) !== null && userInput2.length === 1) {
+    
+    if(word.includes(userInput2)){
+      let arrDashes = dashes.split('')
+      for(const i in word){
+        if(userInput2 === word[i]){
+          arrDashes.splice(i, 1, word[i])
+
+        }
+      }
+      dashes = arrDashes.join('')
+      //console.log("Space")
+
+    } else if (!word.includes(userInput2) && !guessesArray.includes(userInput2)){
+      //`tries`++
+      tries--
+    }
+
+
+    //Compare `userInput2` to `guessesArray` using .includes
+    if (guessesArray.includes(userInput2)){
+      console.log(`You've guessed ${userInput2} already, try again`)
+
+    } else {
+      //if false .push `userInput2` into `guessesArray`
+      guessesArray.push(userInput2)
+    }
+    
+  } else {
+    console.log(`"${userInput2}" is not a valid input`)
+    readline.question("Press Enter to Continue...")
+  }
+   
+  }
+  
+  console.clear()
+
+  console.log(`The hidden word was ${word}`)
+  
+  if(dashes === word){
+    console.log('Congratulations you won!!')
+  } else {
+    console.log('You\'ve run out of tries, Try Again')
+  }
+
+
+
+
+
+  
 }
 
 run();

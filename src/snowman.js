@@ -16,21 +16,16 @@ function getRandomWord() {
 }
 
 // importing valid inputs
-const validInput = require("./validinput");
+const validInput = require("./validInput");
 // New helper function
 
 function validInputCheck (letter) {
-  return validInput.includes(letter.toLowerCase())
+  return validInput.includes(letter.toLowerCase());
 };
+
 //console.log("THE USER INPUTTED:", userInput);
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
 
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   // declare a variable for our random work
@@ -41,6 +36,7 @@ let incorrectGuess = secretWord.length;
   let alreadyGuessed = [];
   // declare variable for displayWord -- set to empty array.
   let displayedWord = [];
+  let message = "";
   // use a loop to push "_" based on secretWord.length.
   while (displayedWord.length < secretWord.length){
     displayedWord.push("_");
@@ -48,10 +44,9 @@ let incorrectGuess = secretWord.length;
   // console.log "remaining Incorrect Guesses: 7, Letters Guessed: None, Word: _ _ _"
   //create a loop for our game.
   while (incorrectGuess !== 0 && displayedWord.includes("_")){
-
-    console.log(`Remaining Incorrect Guesses: ${incorrectGuess}\nLetters Guessed: ${alreadyGuessed.join(", ") || "None"}\nWord: ${displayedWord.join(" ")}`);
+       console.log(`Remaining Incorrect Guesses: ${incorrectGuess}\n\nLetters Guessed: ${alreadyGuessed.join(", ") || "None"}\n\nWord: ${displayedWord.join(" ")}\n\n${message}\n`);
 // Ask for an input
-    let message = "";
+    
 
     const userInput = readline.question("Guess a letter: ");
 
@@ -70,11 +65,10 @@ let incorrectGuess = secretWord.length;
 
     for (let i = 0; i < secretWord.length; i++){
       let currentLetter = secretWord[i];
-      let displayedLetter = displayedWord[i];
 // in loop check if input === currentLetter
       if (userInput === currentLetter) {
 // if it is, change the value of displayedLetter, to currentLetter
-        displayedLetter = currentLetter;
+        displayedWord[i] = currentLetter;
       }
     }
 
@@ -97,7 +91,7 @@ let incorrectGuess = secretWord.length;
     if (!displayedWord.includes("_")){
       console.log ('WINNER'); 
     } else {
-      console.log('LOSER');
+      console.log(`You ran out of Guesses. The word was ${secretWord}\nWould you like to play again?`);
     }
     
   // Ask for an input = readline.question("Guess a letter: ");

@@ -22,19 +22,18 @@ function getRandomWord() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
-function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+function gameIntro() {
+  const userInput = readline.question("Do you want to play a Snowman? [Y][N] \n").toUpperCase();
+  switch(userInput) {
+    case "Y" : 
+    case "YES" : run(); break;
+    case "N" : 
+    case "NO" : console.log("You have now exit the game!"); break;
+    default : console.log("That is not one of the options"); gameIntro(); break;
+  }
 }
 
-run();
+
+
+gameIntro();

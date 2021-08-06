@@ -8,33 +8,56 @@ const readline = require("readline-sync");
 const dictionary = require("./dictionary");
 
 /*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
+This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
+// This helper function will convert the random word to be diplayed as a dashed word for the user to guess.
+function dashedVersion(word) {
+  let dashedWord = "";
+  for (i = 0; i < word.length; i++) {
+    dashedWord += "_ ";
+  }
+  return dashedWord;
+}
 
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  let state = {
+    lettersGuessed: [],
+    remainingGuesses: 7,
+    hiddenWord: dashedVersion(word),
+  };
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+  while (state.remainingGuesses > 0) {
+    console.log(`${state.hiddenWord}\n`);
+    const userInput = readline.question("Guess a letter: ");
+
+
+    if (typeof userInput !== "string" || userInput.length > 1) {
+      console.log("Please enter a valid letter.");
+    } else {
+      console.log("THE USER INPUTTED:", userInput);
+      state.hiddenWord = state.hiddenWord.split(" ");
+
+      for (let i = 0; i < word.length; i++) {
+        if (word[i] === userInput.toLowerCase()) {
+          //  state.hiddenWord[i] = userInput.toLowerCase()
+          state.hiddenWord.splice(i, 1, userInput.toLowerCase());
+          // console.log(state.hiddenWord);
+        }
+      }
+      state.hiddenWord = state.hiddenWord.join(" ");
+      state.lettersGuessed.push(userInput.toLowerCase());
+      state.remainingGuesses--;
+      console.log(`You have ${state.remainingGuesses} left.`);
+    }
+  }
 }
 
 run();

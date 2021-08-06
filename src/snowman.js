@@ -41,5 +41,19 @@ let status = {
   gameContinue: true,
 }
 
+function putDashes(randomWord) {
+  for(let l of randomWord) {
+    status.dashArr.push("_");
+  }
+  return status.dashArr.join(" ");
+}
+
+function replaceDashLetters(randomWord, guessLetter) {
+  for(let i = 0; i < randomWord.length; i++) {
+    if(randomWord[i] === guessLetter) status.dashArr.splice(i, 1, guessLetter);
+  }
+  return status.dashArr.join(" ");
+}
+
 
 gameIntro();

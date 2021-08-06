@@ -7,6 +7,8 @@ const readline = require("readline-sync");
 */
 const dictionary = require("./dictionary");
 
+const chalk = require("chalk");
+
 /*
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
@@ -68,28 +70,34 @@ function charReplacer(input, word, wordDisplay){//should be ran if guess check r
     }
   }
 }
-
+//extra setting to make the game easier or harder
+let livesSetting = process.argv[2]
 let streak = 0
 let sessionWins = 0
 let continueWins = 0
 let sessionLosses = 0
 let topStreak = 0
-const playerName = readline.question('Whose playing today?')//Just a random feature
+const playerName = readline.question(chalk.bold('Whose playing today?'))//Just a random feature
 
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
-  console.log(`
-  .      *    *           *.       *   .                      *     .
-               .   .                   __   *    .     * .     *
+  let lives = 7
+  if (livesSetting){
+    lives = Number(livesSetting)
+  }
+  console.log(
+    chalk.bgBlackBright(`
+  .      *    *           *.       *   .                      *     . 
+               .   .                   __   *    .     * .     *      
     *       *         *   .     .    _|__|_        *    __   .       *
-  .  *  /\\       /\\          *        ('')    *       _|__|_     .
-       /  \\   * /  \\  *          .  <( . )> *  .       ('')   *   *
+  .  *  /\\       /\\          *       ('')    *       _|__|_     .   
+       /  \\   * /  \\  *          .  <( . )> *  .       ('')   *   *   
   *    /  \\     /  \\   .   *       _(__.__)_  _   ,--<(  . )>  .    .
-      /    \\   /    \\          *   |       |  )),\`   (   .  )     *
-   *   \`||\` ..  \`||\`   . *.   ... ==========='\`   ... '--\`-\` ... *    .
-      
-      Hello and Welcome to the Snowman Game!!
-      Rules: I will give you the length of a word and 7 lives.
+      /    \\   /    \\          *   |       |  )),\`   (   .  )     *    
+   *   \`||\` ..  \`||\`   . *.   ... ==========='\`   ... '--\`-\` ... *    .`),
+  chalk`    
+      {green.bold Hello and Welcome to the Snowman Game!!}
+      {red.bold Rules:} I will give you the length of a word and ${lives} lives.
           You can take your time guessing either letters or full words,
           but for each wrong guess you make I will take a life. However,
           I will give you access to a continue for 2 more lives whenever 
@@ -149,25 +157,24 @@ function run() {
   const word = getRandomWord();
   let wordDisplay = []
   let guessedLetters = []
-  let lives = 7
   let snowmanStage = 7
   let continues = 0
   for (let i = 0; i< word.length; i++){
     wordDisplay.push('_')
   }
-  console.log(`Let's get started ${playerName}.\nThe word is ${word.length} letters long.`)
+  console.log(chalk`Let's get started {bold ${playerName}}.\nThe word is {green.bold ${word.length}} letters long.`)
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
     After a user hits the 'return' key, the rest of the code will run.
   */
   while(wordDisplay.includes('_') && lives > 0){
-    console.log(`\n___________________________________________________________________\n___________________________________________________________________\n\n${wordDisplay.join(' ')}\n\nGuessed Values: ${guessedLetters.join(', ')}\n\nYou have ${lives} guesses remaining\n${snowman[snowmanStage]}\n`)//display of everything, should repost every loop
-    const userInput = readline.question("Guess a letter: ");
+    console.log(chalk`\n___________________________________________________________________\n___________________________________________________________________\n\n{bold ${wordDisplay.join(' ')}}\n\n{bold Guessed Values: ${guessedLetters.join(', ')}}\n\nYou have {red.bold ${lives}} guesses remaining\n${snowman[snowmanStage]}\n`)//display of everything, should repost every loop
+    const userInput = readline.question(chalk`{bold Guess a letter: }`);
     // This line of code will print out whatever is inputted in by the user.
     if (guessCheck(userInput, word)){// t/f check from helper function
       if (guessedLetters.includes(userInput)){// Accounts for repeated correct guesses
-        console.log(`\nAlready guessed ${userInput}, but it's all good.`)
+        console.log(chalk`\n{red Already guessed ${userInput},} {green but it's all good.}`)
       }else{
         guessedLetters.push(userInput)
         charReplacer(userInput, word, wordDisplay)
@@ -175,7 +182,7 @@ function run() {
           for (let letter of word){
             charReplacer(letter, word, wordDisplay)
           }
-          console.log(`Impressive ${playerName}, you managed to get the word exactly!!`)
+          console.log(chalk`{green.bold Impressive ${playerName}, you managed to get the word exactly!!}`)
         }
       }
     }else{//subtract lives for every wrong guess
@@ -184,50 +191,50 @@ function run() {
         snowmanStage-=1
       }
       if (guessedLetters.includes(userInput)){// extra message for repeated wrong guess
-        console.log(`\nAlready guessed ${userInput}, still taking a life though.`)
+        console.log(chalk`\n{red.bold Already guessed ${userInput}, still taking a life though.}`)
         guessedLetters.push(userInput + ' again')
       }else{// general incorrect
         if (userInput.length> 1){
-          console.log(`\n${userInput} is not the word, but good try.`)
+          console.log(chalk`{red \n${userInput} is not the word, but good try.}`)
         }else{
           guessedLetters.push(userInput)
         }
       }
     }
     if (lives === 0) {// continue check before it goes back to the while checks
-      const cont = readline.question("\nOut of Lives, CONTINUE? y/n");
+      const cont = readline.question(chalk`\n{red Out of Lives,} {yellow.bold CONTINUE?} y/n`);
       if (cont === 'y'){// Only accepts y, everything else is no
         lives +=2
         continues += 1
-        console.log('\n2 more lives added\n')
+        console.log(chalk`\n{green 2 more lives added}\n`)
       }
     }
   }
   let msgFlag = true
   if (wordDisplay.includes('_')){// check if game ended with an unsolved character
-    console.log(`\nLost this time to "${word}."`)
+    console.log(chalk`\n{red Lost this time to "{bold.italic ${word}.}"}`)
     sessionLosses++
     streak = 0
   }else if(continues === 0){// Just for fun message if completed without continues
-    console.log(`\n${snowman[snowmanStage]}\nCongratulations ${playerName}, you got the word "${word}" with NO continues!!`)
+    console.log(chalk`\n${snowman[snowmanStage]}\n{green.bold.italic Congratulations ${playerName}}, {green you got the word "${word}" with {bold NO} continues!!}`)
     sessionWins++
     streak++
     if (streak> topStreak)(topStreak=streak)
-    const winStreak = readline.question(`Currently on a winning streak of ${streak}, would you like to start another round? y/n`)
+    const winStreak = readline.question(chalk`{green.bold Currently on a winning streak of ${streak}}, {yellow would you like to start another round?} y/n`)
     if (winStreak=== 'y'){
       run()
-    }else{console.log(`Thank you for playing ${playerName}!!\nSession record of: ${sessionWins} wins, ${sessionLosses} losses, ${continueWins} continued wins, and a top streak of ${topStreak} games in a row.`)}
+    }else{console.log(chalk`{green.bold.italic Thank you for playing ${playerName}!!}\nSession record of: {green.bold.italic ${sessionWins} wins}, {red.bold.italic ${sessionLosses} losses}, {yellow.bold.italic ${continueWins} continued wins}, and a {green.bold.italic top streak of ${topStreak} games in a row}.`)}
     msgFlag = false
   }else{
-    console.log(`\n${snowman[snowmanStage]}\nNot bad ${playerName}, you got the word "${word}" with ${continues} continues.\nJust a bit more to save the snowman.`)
+    console.log(chalk`\n${snowman[snowmanStage]}\n{yellow Not bad ${playerName}, you got the word "${word}" with ${continues} continues.}\n{cyan Just a bit more to save the snowman.}`)
     continueWins++
     streak = 0
   }
   if (msgFlag){
-    const newGame = readline.question('\nWould you like to start a new game? y/n\n')
+    const newGame = readline.question(chalk`\n{yellow.bold Would you like to start a new game?} y/n\n`)
     if (newGame === 'y'){//check if user wants another round
       run()
-    }else{console.log(`Thank you for playing ${playerName}!!\nSession record of: ${sessionWins} wins, ${sessionLosses} losses, ${continueWins} continued wins, and a top streak of ${topStreak} games in a row.`)}
+    }else{console.log(chalk`{green.bold.italic Thank you for playing ${playerName}!!}\nSession record of: {green.bold.italic ${sessionWins} wins}, {red.bold.italic ${sessionLosses} losses}, {yellow.bold.italic ${continueWins} continued wins}, and a {green.bold.italic top streak of ${topStreak} games in a row}.`)}
   }
 }
 

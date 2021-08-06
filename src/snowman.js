@@ -25,6 +25,35 @@ function getRandomWord() {
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
+  // declare 'alphabet' and assign an array of string letters, used to match the user input so the correct letter is inputed.
+  const alphabet = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ];
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
@@ -32,9 +61,21 @@ function run() {
 
     After a user hits the 'return' key, the rest of the code will run.
   */
-  const userInput = readline.question("Guess a letter: ");
+
   // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+  let userInput = readline.question("Guess a letter: ");
+  // lower cases any upper cased letters
+  userInput = userInput.toLocaleLowerCase();
+
+  // declare 'result' and assign and empty string
+
+  // edge cases for user errors. logs error if user input is not included in aphabet array
+  alphabet.map((letter) =>
+    alphabet.includes(userInput)
+      ? (result = `THE USER INPUTTED: ${userInput}`)
+      : (result = `Invalid input: ${userInput}, please type a valid letter`)
+  );
+  console.log(result);
 }
 
 run();

@@ -77,7 +77,7 @@ function run() {
   // first user text block OBJECT
   const outputTextBlock = {
     remainingIncorrectGuesses: 7,
-    lettersGuessed: "None",
+    lettersGuessed: "",
     word: `${lines}`,
   };
 
@@ -86,7 +86,7 @@ function run() {
   let guessed = outputTextBlock.lettersGuessed;
   let hiddenLetters = outputTextBlock.word;
 
-  while (remainingGuesses !== 0 && word !== hiddenLetters) {
+  while (remainingGuesses > -1 && word !== hiddenLetters) {
     // login the key values of the outputTextBlock object
     console.log(
       `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters}\n`
@@ -96,30 +96,24 @@ function run() {
     let userInput = readline.question("Guess a letter: ");
     // lower cases any upper cased letters
     userInput = userInput.toLocaleLowerCase();
+    //
 
-    // declare 'result' and assign and empty string
-    let result = "";
-
-    // edge cases or for user errors
+    // edge cases or for user errors and updates reamainig guesses based on user input.
 
     if (!alphabet.includes(userInput)) {
       console.log(`Invalid input: ${userInput}, please type a valid letter`);
     } else if (alphabet.includes(userInput)) {
       console.log(`THE USER INPUTTED: ${userInput}`);
-      if (!newWordArr.includes(userInput)) {
-        remainingGuesses = remainingGuesses - 1;
+
+      if (!guessed.includes(userInput)) {
+        guessed += `${userInput}, `;
+
+        if (!newWordArr.includes(userInput)) {
+          remainingGuesses = remainingGuesses - 1;
+        }
       }
+      //guessed += `${userInput}, `;
     }
-
-    //updates the remaining guesses based on user's each incorrect input
-
-    // newWordArr.includes(userInput)
-    //   ? (remainingGuesses = remainingGuesses - 0)
-    //   : (remainingGuesses = remainingGuesses - 1 / newWordLength)
-
-    // for (const letter of newWordArr){
-    //   if(letter !== userInput)
-    // }
   }
 }
 run();

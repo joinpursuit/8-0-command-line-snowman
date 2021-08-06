@@ -86,25 +86,40 @@ function run() {
   let guessed = outputTextBlock.lettersGuessed;
   let hiddenLetters = outputTextBlock.word;
 
-  // login the key values of the outputTextBlock object
-  console.log(
-    `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters}\n`
-  );
+  while (remainingGuesses !== 0 && word !== hiddenLetters) {
+    // login the key values of the outputTextBlock object
+    console.log(
+      `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters}\n`
+    );
 
-  // This line of code will print out whatever is inputted in by the user.
-  let userInput = readline.question("Guess a letter: ");
-  // lower cases any upper cased letters
-  userInput = userInput.toLocaleLowerCase();
+    // This line of code will print out whatever is inputted in by the user.
+    let userInput = readline.question("Guess a letter: ");
+    // lower cases any upper cased letters
+    userInput = userInput.toLocaleLowerCase();
 
-  // declare 'result' and assign and empty string
+    // declare 'result' and assign and empty string
+    let result = "";
 
-  // edge cases for user errors. logs error if user input is not included in aphabet array
-  alphabet.map((letter) =>
-    alphabet.includes(userInput)
-      ? (result = `THE USER INPUTTED: ${userInput}`)
-      : (result = `Invalid input: ${userInput}, please type a valid letter`)
-  );
-  console.log(result);
+    // edge cases or for user errors
+
+    if (!alphabet.includes(userInput)) {
+      console.log(`Invalid input: ${userInput}, please type a valid letter`);
+    } else if (alphabet.includes(userInput)) {
+      console.log(`THE USER INPUTTED: ${userInput}`);
+      if (!newWordArr.includes(userInput)) {
+        remainingGuesses = remainingGuesses - 1;
+      }
+    }
+
+    //updates the remaining guesses based on user's each incorrect input
+
+    // newWordArr.includes(userInput)
+    //   ? (remainingGuesses = remainingGuesses - 0)
+    //   : (remainingGuesses = remainingGuesses - 1 / newWordLength)
+
+    // for (const letter of newWordArr){
+    //   if(letter !== userInput)
+    // }
+  }
 }
-
 run();

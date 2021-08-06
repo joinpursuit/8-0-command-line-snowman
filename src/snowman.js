@@ -75,4 +75,40 @@ function isGameWon(secretWord) {
   return gameWon;
 }
 
+function run() {
+  const word = getRandomWord();
+  status.guessRemaining = word.length + 1;
+  console.log("\n");
+  console.log(putDashes(word)); //???...do I need this? will figure out later
+  console.log("\n");
+  console.log("Guessed Letters: ");
+  console.log("\n");
+  console.log(`You have ${word.length + 1} guesses remaining`);
+
+  while(status.gameContinue) {
+    const userInput = readline.question("Guess a letter: ");
+    let uiLetter = userInput.toLowerCase();
+    console.log("\n");
+    console.log(replaceDashLetters(word, uiLetter));
+    console.log("\n");
+    console.log(`Guessed Letters: ${guessLettersArr(uiLetter)}`);
+    console.log("\n");
+    if(isGameWon(word) === true) {
+      console.log(`You Win! You took ${status.lettersGuessArr.length} guesses`);
+      status.gameContinue = false;
+      gameIntro();
+    } else if(status.guessRemaining === 1) {
+      console.log("You ran out of guesses!");
+      status.gameContinue = false;
+      gameIntro();
+    } else if (status.guessRemaining === 2) {
+      console.log(`You have ${letterRemaining(word, uiLetter)} guess remaining`);
+    } else if (status.guessRemaining > 2) {
+      console.log(`You have ${letterRemaining(word, uiLetter)} guesses remaining`);
+    }
+
+  }
+  
+}
+
 gameIntro();

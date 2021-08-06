@@ -60,4 +60,13 @@ function guessLettersArr(guessLetter) {
   return status.lettersGuessArr.join(" ");
 }
 
+function letterRemaining(randomWord, guessLetter) {
+  let correctLetter = false;
+  for(let i = 0; i < randomWord.length; i++) {
+    if(randomWord[i] === guessLetter) correctLetter = true;
+  }
+  if(correctLetter === false) status.guessRemaining--;
+  return status.guessRemaining;
+}
+
 gameIntro();

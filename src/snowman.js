@@ -54,10 +54,11 @@ function run() {
   while(tries > 0 && dashes !== word){
     console.clear()
     console.log(word)
+    console.log(`The word is ${word.length} letters long`)
     console.log(dashes)
     //print whatever the user inputted
-    console.log("YOU GUESSED: ", guessesArray.join(', '))
-    console.log(`You have ${tries} guesses remaining`)
+    console.log("GUESSES MADE: ", guessesArray.join(', '))
+    console.log(`You have ${tries} guesses left`)
 
     const userInput = readline.question('Guess a letter: ')
 
@@ -91,12 +92,13 @@ function run() {
 
   console.clear()
 
-  console.log(`The word was ${word}`)
 
   if(dashes === word){
     console.log('Congratulations! You won!')
+    console.log(`"${word}" is correct`)
   }else{
-    console.log(`You/'ve run out of tries, try again.`)
+    console.log(`The word was ${word}`)
+    console.log(`You've run out of tries, try again.`)
   }
 
   

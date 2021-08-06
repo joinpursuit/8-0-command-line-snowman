@@ -49,21 +49,21 @@ function run() {
     } 
     while (remainingGuess > 0){
       const userInput = readline.question("Guess a letter: "); 
-
+      console.log(word);
       if (userInput.length > 1){
         console.log(`Please enter a valid letter`);
         console.log(`you have ${remainingGuess} guesses remaining.`);
         // if there is no matching userInput, I want the game to continue , and i will not subtract from remainingGuess
 
-    } if (!wordCharacterArr.includes(userInput)) {
+    } else if (!wordCharacterArr.includes(userInput)) {
       console.log("THE USER INPUTTED:", userInput);
       console.log(`you have ${remainingGuess} guesses remaining.`);
       console.log(letterSpaceArr);
         
-     } if (wordCharacterArr.includes(userInput)){
+     } else if (wordCharacterArr.includes(userInput)){
       let indexPosition = wordCharacterArr.indexOf(userInput)
-      count+=1;
-      letterSpaceArr.splice(indexPosition,count,userInput); // attempting to replace empty values in this array with matched letters (userImput).. 
+      //count+=1; I have to figure out how to replace all elements .. 
+      letterSpaceArr.splice(indexPosition,1,userInput); // attempting to replace empty values in this array with matched letters (userImput).. 
       //issue is its changing the length of array , each method ive tried .  
       remainingGuess--;
       console.log("THE USER INPUTTED:", userInput);

@@ -71,7 +71,7 @@ function run() {
       //in loop, check if input === currentLetter
       if (userInput === currentLetter){
         //if it is, change the value of displayedLetter, to currentLetter
-        displayedLetter = currentLetter;
+        displayedWord[i] = currentLetter;
       }
     }
     //after loop, check if displayWord includes input
@@ -94,7 +94,7 @@ function run() {
     console.log(`\n\nWINNER\n-------------------------------------\n`);
   } else {
     //if they didn't, give losing message
-    console.log(`\n\nLOSER\n-------------------------------------\n`);
+    console.log(`\n\nLOSER! the word was ${secretWord}\n-------------------------------------\n`);
   }
 }
 

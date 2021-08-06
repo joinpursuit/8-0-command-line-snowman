@@ -27,6 +27,7 @@ function validInputCheck (letter) {
 
 
 function run() {
+  const userName = readline.question(`Welcome!\n\nPlease type your name`) || "User";
   // This line of code gets a random word. The `word` variable will be a string.
   // declare a variable for our random work
   const secretWord = getRandomWord();
@@ -41,10 +42,12 @@ let incorrectGuess = secretWord.length;
   while (displayedWord.length < secretWord.length){
     displayedWord.push("_");
   }
+  // Declare variable message
+   message = `\n\nHello ${userName}. Enjoy your game!`;
   // console.log "remaining Incorrect Guesses: 7, Letters Guessed: None, Word: _ _ _"
   //create a loop for our game.
   while (incorrectGuess !== 0 && displayedWord.includes("_")){
-       console.log(`Remaining Incorrect Guesses: ${incorrectGuess}\n\nLetters Guessed: ${alreadyGuessed.join(", ") || "None"}\n\nWord: ${displayedWord.join(" ")}\n\n${message}\n`);
+       console.log(`\n-------------------------------\nRemaining Incorrect Guesses: ${incorrectGuess}\n\nLetters Guessed: ${alreadyGuessed.join(", ") || "None"}\n---------------------------------\n\nWord: ${displayedWord.join(" ")}\n\n----------------------------${message}\n`);
 // Ask for an input
     
 
@@ -52,7 +55,7 @@ let incorrectGuess = secretWord.length;
 
     if (!validInputCheck(userInput)){
 // if ins't, ask user to input valid input  
-      message = `\n\nInvalid input of ${userInput}.  Please enter a single letter.`
+      message = `\n\nInvalid input of ${userInput}.  Please enter a single letter.\n--------------------------------------\n`
       continue;
     }
 // check if input was already guess
@@ -74,11 +77,11 @@ let incorrectGuess = secretWord.length;
 
       if (displayedWord.includes(userInput)){
 // if it does, change message
-        message = `You guessed correctly!`;
+        message = `Awesome ${userName}, You guessed correctly!`;
       } else {
 // if input is incorrect
         incorrectGuess -= 1;
-        message = `You guessed wrong`;
+        message = `${userName}, You guessed wrong`;
       }
 // Add input to letters guessed
       alreadyGuessed.push(userInput);
@@ -89,9 +92,9 @@ let incorrectGuess = secretWord.length;
   }
  // checkif they won
     if (!displayedWord.includes("_")){
-      console.log ('WINNER'); 
+      console.log (`${userName} You are a WINNER`); 
     } else {
-      console.log(`You ran out of Guesses. The word was ${secretWord}\nWould you like to play again?`);
+      console.log(`${userName}, You ran out of Guesses. The word was ${secretWord}\n\nWould you like to play again?`);
     }
     
   // Ask for an input = readline.question("Guess a letter: ");

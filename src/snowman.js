@@ -70,6 +70,10 @@ function charReplacer(input, word, wordDisplay){//should be ran if guess check r
 }
 
 let streak = 0
+let sessionWins = 0
+let continueWins = 0
+let sessionLosses = 0
+let topStreak = 0
 const playerName = readline.question('Whose playing today?')//Just a random feature
 
 function run() {
@@ -202,24 +206,28 @@ function run() {
   let msgFlag = true
   if (wordDisplay.includes('_')){// check if game ended with an unsolved character
     console.log(`\nLost this time to "${word}."`)
+    sessionLosses++
     streak = 0
   }else if(continues === 0){// Just for fun message if completed without continues
     console.log(`\n${snowman[snowmanStage]}\nCongratulations ${playerName}, you got the word "${word}" with NO continues!!`)
+    sessionWins++
     streak++
+    if (streak> topStreak)(topStreak=streak)
     const winStreak = readline.question(`Currently on a winning streak of ${streak}, would you like to start another round? y/n`)
     if (winStreak=== 'y'){
       run()
-    }else{console.log(`Thank you for playing ${playerName}!!`)}
+    }else{console.log(`Thank you for playing ${playerName}!!\nSession record of: ${sessionWins} wins, ${sessionLosses} losses, ${continueWins} continued wins, and a top streak of ${topStreak} games in a row.`)}
     msgFlag = false
   }else{
     console.log(`\n${snowman[snowmanStage]}\nNot bad ${playerName}, you got the word "${word}" with ${continues} continues.\nJust a bit more to save the snowman.`)
+    continueWins++
     streak = 0
   }
   if (msgFlag){
     const newGame = readline.question('\nWould you like to start a new game? y/n\n')
     if (newGame === 'y'){//check if user wants another round
       run()
-    }else{console.log(`Thank you for playing ${playerName}!!`)}
+    }else{console.log(`Thank you for playing ${playerName}!!\nSession record of: ${sessionWins} wins, ${sessionLosses} losses, ${continueWins} continued wins, and a top streak of ${topStreak} games in a row.`)}
   }
 }
 

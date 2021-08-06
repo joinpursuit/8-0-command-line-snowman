@@ -69,4 +69,10 @@ function letterRemaining(randomWord, guessLetter) {
   return status.guessRemaining;
 }
 
+function isGameWon(secretWord) {
+  let gameWon = false;
+  if(secretWord === status.dashArr.join("")) gameWon = true;
+  return gameWon;
+}
+
 gameIntro();

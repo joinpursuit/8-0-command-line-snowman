@@ -26,46 +26,38 @@ function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
   // declare 'alphabet' and assign an array of string letters, for the user input
-  const alphabet = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-  ];
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+  const alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  // split 'word' into an array of string of letters, get the length
+  const newWordArr = word.split("");
+  console.log(newWordArr);
+  const newWordLength = newWordArr.length;
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
+  let lines = "";
+
+  for (const eachLetter of newWordArr) {
+    lines += "_";
+  }
+
+  // first user text block OBJECT
+  const outputTextBlock = {
+    remainingIncorrectGuesses: 7,
+    lettersGuessed: "None",
+    word: `${lines}`,
+  };
+
+  let remainingGuesses = outputTextBlock.remainingIncorrectGuesses;
+  let guessed = outputTextBlock.lettersGuessed;
+  let hiddenLetters = outputTextBlock.word;
+
+  console.log(
+    `\nRemaining Incorrect Guesses: ${remainingGuesses.toFixed()}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters}\n`
+  );
 
   // This line of code will print out whatever is inputted in by the user.
   let userInput = readline.question("Guess a letter: ");
   // lower cases any upper cased letters
-  userInput = userInput.toLocaleLowerCase();
+  userInput = userInput.toLowerCase();
 
 
   // edge cases or for user errors

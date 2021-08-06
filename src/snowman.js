@@ -96,13 +96,23 @@ let incorrectGuess = secretWord.length;
     } else {
       console.log(`${userName}, You ran out of Guesses. The word was ${secretWord}\n\nWould you like to play again?`);
     }
-    
-  // Ask for an input = readline.question("Guess a letter: ");
+const answers = ["y", "n"]
+let playAgain = "";
 
-  // check if input.toLowerCase() isn't valid with helper function.
-  // if it isn't -- ask user to input valid input.
-  
-      //if it was, tell the user, and don't penalize them
+while (!answers.includes(playAgain)) {
+// Ask if the user wants to play again
+// if yes, run the functoion
+// if no, "Thank you for playing";
+playAgain = readline.question(`${userName} would you like to play again? (y,n)`);
+// declare variablefor correct answers
+let replayMsg = "";
+if (playAgain.toLowerCase() === "y") {
+  // if yes, run the function
+  run();
+} else if (playAgain.toLowerCase() !== "n"){
+  replayMsg = `Hey there ${userName}, input of ${playAgain} is invalid.`
+}
+};  
   
   
  

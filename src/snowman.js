@@ -2,6 +2,7 @@
   `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
 */
 const readline = require("readline-sync");
+const { join } = require("./dictionary");
 /*
   The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
 */
@@ -15,26 +16,80 @@ function getRandomWord() {
   return dictionary[index];
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
+// Run //
+function run(UserInput){
+  function correctGuess(userInput){
+    let letter = userInput.toUpperCase()
+    const secretWord = getRandomword().toUpperCase();
+    return secretWord.includes(letter);
+  }
+  
+  function addCorrectGuessToList(userInput){
+    correctGuess.push(userInput)
+    return correctGuess;
+  }
+  
+  function generateLetters(getRandomWord){
+    for(let i=0; i < letters.length; i++){
+      letters[i] = new Letter (letters[i]);
+      letters[i].showCharacter();
+    }
+  }
+  const word = getRandomWord().toUpperCase();
+  let isCorrect = false;
+  let snowmanIndex = 5;
+  let letters = word.split('');
+  let long = letters.length;
+  let underscores = [];
+  for (let i=0; i < long; i++){
+    underscores.push("_ ");
+  }
+  let printUnderscores = console.log(underscores.join(' '));
+  let correctGuesses = [];
+  let wrongGuesses = [];
+  let snowman = [ `   __      
+   _==_ _________
+ _,(",)|Game_Over|
+ \\/. \\----|
+__( :  )    |_
+=========== `,
+`   __      
+   _==_  
+ _,(",) 
+ \\/. \\----
+__( :  ) 
+=========== `,
+`         
 
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
+ _,(",)
+ \\/. \\----
+__( :  )
 
-  Once you understand the code below, you may remove the comments if you like.
-*/
-function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+=========== `,
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+`         
+   
+ 
+ \\/. \\----
+__( :  )
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
+=========== `,
+
+`         
+   
+ 
+ 
+__( :  )
+
+=========== `,
+
+]
   const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
   console.log("THE USER INPUTTED:", userInput);
+  isCorrect = correctGuess(userInput);
 }
 
+
+
 run();
+

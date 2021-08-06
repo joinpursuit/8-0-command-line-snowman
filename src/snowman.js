@@ -34,7 +34,35 @@ function run() {
   */
   const userInput = readline.question("Guess a letter: ");
   // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+  wordCharacterArr =[];
+  // making an empty array that will contain letters of the word generated from getRandomWord(). Using an array so I can loop through & compare userInput
+  letterSpaceArr =[];  // creating an array that will hold dashes that will equal word.length
+  //below I create a variable for remaining guesses, starting with the number 6.
+  remainingGuess = 6;
+  for (let i =0;i < word.length; i++){
+    wordCharacterArr.push(word.charAt(i));
+    letterSpaceArr.push("_");
+
+    if (userInput === wordCharacterArr[i]){
+      remainingGuess--;
+      console.log("THE USER INPUTTED:", userInput);
+      console.log(`you have ${remainingGuess} guesses remaining.`)
+    } else {
+      console.log(`you have ${remainingGuess} guesses remaining.`);
+      console.log(userInput)
+    }
+  }
+
+  
+  
+  //console.log("THE USER INPUTTED:", userInput);
+  console.log(word);
+  wordLength = word.length 
+  console.log(wordLength);
+  console.log (wordCharacterArr);
+  console.log(letterSpaceArr);
+  
 }
+
 
 run();

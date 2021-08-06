@@ -1,6 +1,6 @@
-/*
-  `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
-*/
+
+//  `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
+
 const readline = require("readline-sync");
 
 const dictionary = require("./dictionary");
@@ -107,11 +107,11 @@ function run() {
     hiddenWord = hiddenArray.join("")
   }
   
-  //Check if you won or lost
+  //Check if user won or lost
   if (word === hiddenWord) {
-    console.log("You win! You took " + guessCount + " guesses\n")
+    console.log("You win! You took " + guessCount + " guesses.\n")
   } else {
-    console.log("You lost! The correct word is " + word + "\n")
+    console.log("You lost! The correct word is " + word + ".\n")
   }
 
 }

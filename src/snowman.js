@@ -62,6 +62,35 @@ function run() {
     After a user hits the 'return' key, the rest of the code will run.
   */
 
+  // split 'word' into an array of string of letters, get the lenght
+  const newWordArr = word.split("");
+  console.log(newWordArr);
+  const newWordLength = newWordArr.length;
+
+  // lines variable will be used to hold the value of the word key inside the outputTextBlock object.
+  let lines = "";
+
+  for (const eachLetter of newWordArr) {
+    lines += "_";
+  }
+
+  // first user text block OBJECT
+  const outputTextBlock = {
+    remainingIncorrectGuesses: 7,
+    lettersGuessed: "None",
+    word: `${lines}`,
+  };
+
+  // The bellow three variables are going to be used to access the outputTextBlock object key values.
+  let remainingGuesses = outputTextBlock.remainingIncorrectGuesses;
+  let guessed = outputTextBlock.lettersGuessed;
+  let hiddenLetters = outputTextBlock.word;
+
+  // login the key values of the outputTextBlock object
+  console.log(
+    `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters}\n`
+  );
+
   // This line of code will print out whatever is inputted in by the user.
   let userInput = readline.question("Guess a letter: ");
   // lower cases any upper cased letters

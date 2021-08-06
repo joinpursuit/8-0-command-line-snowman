@@ -1,14 +1,18 @@
 /*
-  The `getNonRepeatingLetter` variable is a function that will return a letter that has not been repeated
+  The `getNonRepeatingLetter` variable is a function that when invoked will return a letter that has not been repeated
 */
 const getNonRepeatingLetter = require("./getNonRepeatingLetter.js");
+/*
+  The `logSnowMan` variable is a function that when invoked will log a snowman to the console
+*/
+const logSnowMan = require("./logSnowMan.js");
 
 function getWinOrLoss(word) {
   //declare a variable called currentWordState and assign it an array filled with underscores depending on length of the word
   const currentWordState = new Array(word.length).fill("_"); //[_,_,_,_,_]
   const lettersGuessed = []; // put inside game state
   let remainingGuesses = 7; // put inside game state
-
+  logSnowMan();
   console.log("☃️  Welcome To Snowman! ☃️\n\nRemaining Guesses: ", remainingGuesses + "\nWord: ", currentWordState.join(" ") + "\n");
   //while we still have remaining guesses
   while (remainingGuesses > 0) {

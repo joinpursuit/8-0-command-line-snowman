@@ -16,6 +16,6 @@ const getWinOrLoss = require("./getWinOrLoss.js");
   if (userIsWinner) {
     console.log("\n🏆 You Won! 🏆\nThe word was: " + word + "!\n🌟 You're a star! 🌟");
   } else {
-    console.log("\nYou Lost! The word was: " + word + "!\n keep failing forward, you'll get em next time!");
+    console.log("\nYou Lost! The word was: " + word + "!\nKeep failing forward, you'll get em next time!");
   }
 })();

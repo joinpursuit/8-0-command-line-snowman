@@ -31,7 +31,7 @@ function validInputCheck(letter){
 */
 function run() {
   //Ask for their name
-  const userName = readline.question("Enter your username!") || "User";
+  const userName = userName || readline.question("Enter your username!") || "User";
   //Declare variable for our secretword
   const secretWord = getRandomWord();
   //Declare variable for our incorrectGuess, set to length of secretWord
@@ -86,8 +86,8 @@ function run() {
       incorrectGuess -= 1;
       message = `\n\nSorry ${userName}, you guessed wrong :c\n-------------------------------------\n`
     }
-     //Add input to letters guessed
-     alreadyGuessed.push(userInput);
+    //Add input to letters guessed
+    alreadyGuessed.push(userInput);
     //Send them back to guess phase
     continue;
   } 
@@ -98,6 +98,27 @@ function run() {
   } else {
     //if they didn't, give losing message
     console.log(`\nSorry ${userName}, better luck next time! Your word was: ${secretWord}\n\n-------------------------------------\n`);
+  }
+
+  //declare replayMsg as empty string
+  let replayMsg = "";
+  //declare variable for correct answers
+  const answers = ["y", "n"];
+  //declare playAgain as an empty string "";
+  let playAgain = "";
+  //Create replay loop
+  while (!answers.includes(playAgain)){
+    //print our message
+    console.log(replayMsg)
+    //ask if they would like to play again
+    playAgain = readline.question(`${userName}, would you like to play again? (y,n)`);
+    //check for their answer
+    if (playAgain.toLowerCase() === "y"){
+      //if yes, run the function
+      run();
+    } else if (playAgain.toLowerCase() !== "n"){
+      replayMsg = `Hey there ${userName}, input of ${playAgain} is invalid.`
+    }
   }
 }
 

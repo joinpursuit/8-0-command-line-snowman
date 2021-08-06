@@ -17,14 +17,18 @@ function displayMainMenu() {
   //until user selects play the game
   while (options[index] !== "Play Snowman Game") {
     if (options[index] === "Read Rules") {
+      console.clear();
       console.log(
         "Snowman is a simple word guessing game. Players try to figure out an unknown word by guessing letters.\nIn order to win, the player must at least have 1 remaining try when figuring out the unknown word.\nIf the player guesses incorrectly, they lose a try and once they lose all tries the game is over.\n"
       );
       readline.question("Hit Enter key to continue.", { hideEchoBack: true, mask: "" });
+      console.clear();
       index = readline.keyInSelect(options, "What would you like to do now?");
     } else if (options[index] === "View High Scores") {
+      console.clear();
       console.log("High Scores");
       readline.question("Hit Enter key to continue.", { hideEchoBack: true, mask: "" });
+      console.clear();
       index = readline.keyInSelect(options, "What would you like to do now?");
     } else {
       process.exit();

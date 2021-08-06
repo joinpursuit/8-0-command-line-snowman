@@ -42,14 +42,18 @@ function run() {
   for (let i =0;i < word.length; i++){
     wordCharacterArr.push(word.charAt(i));
     letterSpaceArr.push("_");
-
+      // I want to put a while conditional here but it seems to be throwing off the results.  while (remaining guess > 0) , we want to continue to guess letters
     if (userInput === wordCharacterArr[i]){
+      letterSpaceArr.splice(i,0,userInput); // attempting to replace empty values in this array with matched letters (userImput).. 
+      //issue is its changing the length of array , each method ive tried .  
       remainingGuess--;
       console.log("THE USER INPUTTED:", userInput);
       console.log(`you have ${remainingGuess} guesses remaining.`)
+      console.log(letterSpaceArr);
     } else {
       console.log(`you have ${remainingGuess} guesses remaining.`);
       console.log(userInput)
+      console.log(letterSpaceArr);
     }
   }
 
@@ -60,7 +64,7 @@ function run() {
   wordLength = word.length 
   console.log(wordLength);
   console.log (wordCharacterArr);
-  console.log(letterSpaceArr);
+  
   
 }
 

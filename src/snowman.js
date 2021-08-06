@@ -32,38 +32,48 @@ function run() {
 
     After a user hits the 'return' key, the rest of the code will run.
   */
-  const userInput = readline.question("Guess a letter: ");
+  //const userInput = readline.question("Guess a letter: ");
   // This line of code will print out whatever is inputted in by the user.
-  wordCharacterArr =[];
+  let wordCharacterArr =[];
   // making an empty array that will contain letters of the word generated from getRandomWord(). Using an array so I can loop through & compare userInput
-  letterSpaceArr =[];  // creating an array that will hold dashes that will equal word.length
+  let letterSpaceArr =[];  // creating an array that will hold dashes that will equal word.length
   //below I create a variable for remaining guesses, starting with the number 6.
-  remainingGuess = 6;
+  let remainingGuess = 6;
+  let count = 0; // trying to tally the muliple matched letters.  I will use this in spice hopefully to elminate proper number pf spaces, also , to add back to remaining guesses
+
+
   for (let i =0;i < word.length; i++){
-    wordCharacterArr.push(word.charAt(i));
-    letterSpaceArr.push("_");
+      wordCharacterArr.push(word.charAt(i));
+      letterSpaceArr.push("_");
       // I want to put a while conditional here but it seems to be throwing off the results.  while (remaining guess > 0) , we want to continue to guess letters
-    if (userInput === wordCharacterArr[i]){
-      letterSpaceArr.splice(i,0,userInput); // attempting to replace empty values in this array with matched letters (userImput).. 
+    } 
+    while (remainingGuess > 0){
+      const userInput = readline.question("Guess a letter: "); 
+
+      if (userInput.length > 1){
+        console.log(`Please enter a valid letter`);
+        console.log(`you have ${remainingGuess} guesses remaining.`);
+        // if there is no matching userInput, I want the game to continue , and i will not subtract from remainingGuess
+
+    } if (!wordCharacterArr.includes(userInput)) {
+      console.log("THE USER INPUTTED:", userInput);
+      console.log(`you have ${remainingGuess} guesses remaining.`);
+      console.log(letterSpaceArr);
+        
+     } if (wordCharacterArr.includes(userInput)){
+      let indexPosition = wordCharacterArr.indexOf(userInput)
+      count+=1;
+      letterSpaceArr.splice(indexPosition,count,userInput); // attempting to replace empty values in this array with matched letters (userImput).. 
       //issue is its changing the length of array , each method ive tried .  
       remainingGuess--;
       console.log("THE USER INPUTTED:", userInput);
-      console.log(`you have ${remainingGuess} guesses remaining.`)
-      console.log(letterSpaceArr);
-    } else {
       console.log(`you have ${remainingGuess} guesses remaining.`);
-      console.log(userInput)
       console.log(letterSpaceArr);
-    }
-  }
+     }
 
-  
-  
-  //console.log("THE USER INPUTTED:", userInput);
-  console.log(word);
-  wordLength = word.length 
-  console.log(wordLength);
+  }
   console.log (wordCharacterArr);
+  console.log(word);
   
   
 }

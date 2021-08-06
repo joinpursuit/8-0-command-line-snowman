@@ -22,19 +22,106 @@ function getRandomWord() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
+
+function removeSpaces(guessBox) {
+  for (let guess of guessBox) {
+    guessBox = guessBox.replace(" ", "");
+  }
+  return guessBox;
+}
+
+function letterChecker(userInput) {
+  if (
+    userInput.toLowerCase() === "a" ||
+    userInput.toLowerCase() === "b" ||
+    userInput.toLowerCase() === "c" ||
+    userInput.toLowerCase() === "d" ||
+    userInput.toLowerCase() === "e" ||
+    userInput.toLowerCase() === "f" ||
+    userInput.toLowerCase() === "g" ||
+    userInput.toLowerCase() === "h" ||
+    userInput.toLowerCase() === "i" ||
+    userInput.toLowerCase() === "j" ||
+    userInput.toLowerCase() === "k" ||
+    userInput.toLowerCase() === "l" ||
+    userInput.toLowerCase() === "m" ||
+    userInput.toLowerCase() === "n" ||
+    userInput.toLowerCase() === "o" ||
+    userInput.toLowerCase() === "p" ||
+    userInput.toLowerCase() === "q" ||
+    userInput.toLowerCase() === "r" ||
+    userInput.toLowerCase() === "s" ||
+    userInput.toLowerCase() === "t" ||
+    userInput.toLowerCase() === "u" ||
+    userInput.toLowerCase() === "v" ||
+    userInput.toLowerCase() === "w" ||
+    userInput.toLowerCase() === "x" ||
+    userInput.toLowerCase() === "y" ||
+    userInput.toLowerCase() === "z"
+  ) {
+    return true;
+  }
+}
+
 function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  let arr = [0];
+  let guessBox = "";
+  let guessLetters = "None";
+  let remainingGuesses = word.length + 5;
+  // create string of _
+  for (let letter of word) {
+    guessBox += "_ ";
+  }
+  console.log("Remaining Incorrect Guesses: " + remainingGuesses);
+  console.log("Letters Guessed: " + guessLetters);
+  console.log("word: " + guessBox);
+  //console.log(word);
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+  for (let i = 0; i < arr.length; i++) {
+    const userInput = readline.question("Guess a letter: ");
+    for (let i = 0; i < word.length; i++) {
+      let letter = word[i];
+      // put letter into _ array
+      if (userInput.toLowerCase() === letter) {
+        guessBox = guessBox.split("");
+        guessBox.splice(i * 2, 1, letter);
+        guessBox = guessBox.join("");
+      }
+    }
+    // -1 if letter is wrong
+    if (!word.includes(userInput.toLowerCase())) {
+      remainingGuesses -= 1;
+      //
+      if (!letterChecker(userInput) || userInput.length >= 2) {
+        remainingGuesses += 1;
+      }
+      // lose msg
+      if (remainingGuesses === 0) {
+        return console.log(`Word was ${word} \nLoser!`);
+      }
+    }
+    // loop infinite
+    console.log("THE USER INPUTTED:", userInput);
+    if (removeSpaces(guessBox) !== word) {
+      i = -1;
+      // add letter to guessed
+      if (guessLetters === "None") {
+        guessLetters = userInput;
+      } else {
+        guessLetters = guessLetters + ", " + userInput;
+      }
+    }
+    console.log("Remaining Incorrect Guesses: " + remainingGuesses);
+    console.log("Letters Guessed: " + guessLetters);
+    console.log("word: " + guessBox);
+    if (!letterChecker(userInput) || userInput.length >= 2) {
+      console.log("Invalid guess");
+    }
+  }
+  // win msg
+  console.log("Winner!");
 }
 
 run();

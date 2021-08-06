@@ -20,9 +20,9 @@ const validInput = require("./validinput");
 // New helper function
 
 function validInputCheck (letter) {
-  return validInput.includes(letter.toLowerCase());
-}
-
+  return validInput.includes(letter.toLowerCase())
+};
+//console.log("THE USER INPUTTED:", userInput);
 
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
@@ -60,25 +60,55 @@ let incorrectGuess = secretWord.length;
       message = `\n\nInvalid input of ${userInput}.  Please enter a single letter.`
       continue;
     }
-
+// check if input was already guess
     if (alreadyGuessed.includes(userInput)) {
       // if it was entered, tell the user and don't penalized.
       message = `Input of ${userInput} has already been guessed.`;
       continue;
     }
+// loop through our secretWord
+
+    for (let i = 0; i < secretWord.length; i++){
+      let currentLetter = secretWord[i];
+      let displayedLetter = displayedWord[i];
+// in loop check if input === currentLetter
+      if (userInput === currentLetter) {
+// if it is, change the value of displayedLetter, to currentLetter
+        displayedLetter = currentLetter;
+      }
+    }
+
+      if (displayedWord.includes(userInput)){
+// if it does, change message
+        message = `You guessed correctly!`;
+      } else {
+// if input is incorrect
+        incorrectGuess -= 1;
+        message = `You guessed wrong`;
+      }
+// Add input to letters guessed
+      alreadyGuessed.push(userInput);
+// Send them back to guess phase
+      continue;
+
 
   }
+ // checkif they won
+    if (!displayedWord.includes("_")){
+      console.log ('WINNER'); 
+    } else {
+      console.log('LOSER');
+    }
+    
   // Ask for an input = readline.question("Guess a letter: ");
 
   // check if input.toLowerCase() isn't valid with helper function.
   // if it isn't -- ask user to input valid input.
-  // check if input was already guess
+  
       //if it was, tell the user, and don't penalize them
   
   
-  // loop through our secretWord
-    //in loop, check if input = currentletter
-    // if it is, change the value of displayedWord[i], to current letter
+ 
     // after the loop, check if secretWord includes input
       // if it does, incorrect Guess -= 0;
       // if it isn't, incorrect guess -= 1;
@@ -93,7 +123,7 @@ let incorrectGuess = secretWord.length;
   */
   
   // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+
 
   // The game is a loop.
   // Loop ends when incorrect guess is 0 or the random word doesn't include "_".

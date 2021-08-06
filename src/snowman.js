@@ -34,6 +34,12 @@ function gameIntro() {
   }
 }
 
+let status = {
+  dashArr: [],
+  lettersGuessArr: [],
+  guessRemaining: null,
+  gameContinue: true,
+}
 
 
 gameIntro();

@@ -55,5 +55,9 @@ function replaceDashLetters(randomWord, guessLetter) {
   return status.dashArr.join(" ");
 }
 
+function guessLettersArr(guessLetter) {
+  status.lettersGuessArr.push(guessLetter);
+  return status.lettersGuessArr.join(" ");
+}
 
 gameIntro();

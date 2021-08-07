@@ -152,26 +152,37 @@ function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = 'follow'
   //getRandomWord();
-
+  // declared variables
   let incorrectGuesses = word.length + 1
   let lettersGuessed = ["None"];
   let theBlanks = "";
   let winningMsg = "Congrats! You Win!";
   let losingMsg = "Sorry, Game Over. :(";
-  //assign underscores to a var called theBlanks
+  //reassigns underscores to the variable called `theBlanks`.
   for (let i = 0; i < word.length; i++){
     theBlanks += "_ "
   }
+  // for i loop that logs start of game and continues to loop it through over again until conditions are met.
   for (let i = word.length - 1; i < word.length; i++){
+    //'prints' concatenated strings into terminal 
     console.log("Remaining Incorrect Guesses: " + incorrectGuesses);
     console.log("Letters Guessed: " + lettersGuessed);
     console.log("Word: " + theBlanks);
     // console.log (typeof theBlanks)
     // console.log(theBlanks);
+    // variable that lets instructs user to choose a letter
     let userInput = readline.question("Pick a letter: ");
+    //If the user enters an invalid guess (e.g. `3` or `apple`), a message should display telling the user to enter a letter. Invalid guesses should not count against the guess count.
+    // make sure its one character
+    // make sure its a letter and that its lower case
+
     if (userInput) {
+      // 'pushes' `userInput` selection into "Letters Guessed" line
       lettersGuessed.push(userInput)
-      //Create nested `if` to remove 'None'. Can use shift or splice.
+      // nested `if` condition to remove 'None'.
+      if (lettersGuessed.includes("None")){
+        lettersGuessed.shift();
+      }
     }
     //loop through word.length to check if userInput is correct or not and modify theBlanks appropriately
     for (let i = 0; i < word.length; i++){
@@ -186,6 +197,7 @@ function run() {
       }
     
     }
+    // condition that states if word.includes doesn't 
     if (!word.includes(userInput)){ 
       incorrectGuesses--;
     }

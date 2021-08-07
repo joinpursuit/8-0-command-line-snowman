@@ -46,14 +46,11 @@ function run() {
 
   let incorrectGuesses = 0;
   const word = getRandomWord();
-  //console.log(word.length)
 
-  //===PRINTS RANDOM WORD TO CONSOLE===DELETE THIS WHEN DONE===
-  console.log(`${space}${word}`);
   //THIS CODE IS MAX AMOUNT OF ATTEMPTS
   let attempts = word.length + 1;
-
   console.log(`${space}You have ${attempts} guesses`);
+
   //ARRAY OF UNDERSCORES TO FILL LETTER SPACE MATCHING THE LENGTH OF RANDOM WORD
   const underscore_word = new Array(word.length).fill("_");
 
@@ -80,6 +77,7 @@ function run() {
     //IF LETTER IS INVALID
     //THE GUESSED LETTER IS NOT IN THE RANDOM WORD
     if (!word.includes(userInput)) {
+      
       //IF WE CAPITALIZED THE RANDOM WORD AND IT INCLUDES A CAPITALIZED GUESSED LETTER
       if (word.toUpperCase().includes(userInput)) {
         console.log(
@@ -100,15 +98,14 @@ function run() {
         console.log(space + "🙅‍♀️  PLEASE ENTER A VALID LETTER 🙅‍♀️" + space);
         console.log("GUESSED LETTERS:", answerArray);
         continue;
-      
-      } 
-      else if (userInput.length > 1) {
+        
+        //IF GUESS IS MORE THAN ONE LETTER
+      } else if (userInput.length > 1) {
         console.log(space + "👆 ONE LETTER AT A TIME PLEASE 👆")
         console.log("GUESSED LETTERS:", answerArray);
         continue;
+      
       }
-
-
       //COUNT DOESN'T CHANGE FOR INVALID GUESSES
       //COUNT INCREASES WITH INCORRECT GUESSES ONLY
       incorrectGuesses++;
@@ -118,23 +115,23 @@ function run() {
       //IF GUESS IS INVALID, CONTINUE; WILL SKIP INNER LOOP AND RETURN TO OUTTER LOOP TO START AGAIN UNTIL GUESSES RUN OUT BUTTTTT
       continue;
     }
-    
     //IF GUESS IS VALID, INNER LOOP STARTS
     if (word.includes(userInput)) {
+      
       //LOOPS THRU EACH LETTER OF THE RANDOM WORD TO COMPARE GUESS
       for (let k = 0; k < word.length; k++) {
+        
         //AND SAVE THAT GUESS INTO CORRESPONDING UNDERSCORE[K] SPACE OF RANDOM WORD[K]
         if (word[k] === userInput) {
           underscore_word[k] = userInput;
         }
-        
+
         //ONCE ALL UNDERSCORES ARE REPLACED, YOU WIN. WE HAVE TO USE .JOIN TO CONVERT THE ARRAY INTO A STRING. COMPARING A STRING TO A STRING.
         if (underscore_word.join("") === word) {
           console.log(space + "🎉 CONGRATS, YOU WIN THE GAME 🎉");
-          //PRINTS COMPLETE WORD AS STRING
+          //PRINTS COMPLETE RANDOM WORD AS A STRING
           console.log("THE WORD IS" + " " + underscore_word.join(""));
-    
-          
+
           //QUESTION ASKED AFTER WINNING
           let continuedPlay = readline.question(
             `${space}💭 DO YOU WANT TO PLAY AGAIN?❓❓${space}Yes: press Y      No: press N`
@@ -142,7 +139,6 @@ function run() {
 
           if (continuedPlay.toUpperCase() === "Y") {
             console.log("YOU'RE A COOL CAT, LET'S PLAY!!" + space);
-            //RECURSION
             run();
 
           } else if (continuedPlay.toUpperCase() === "N") {
@@ -151,10 +147,8 @@ function run() {
           return;
         }
       }
-
       console.log(`${space} 💪 YOU GOT IT!!! 💪`);
     }
-
     console.log("GUESSED LETTERS:", answerArray);
   }
   //GAME OVER
@@ -165,20 +159,12 @@ function run() {
   let continuedPlay = readline.question(
     `${space}💭 DO YOU WANT TO PLAY AGAIN?❓❓${space}Yes: press Y                 No: press N`
   );
-
   if (continuedPlay.toUpperCase() === "Y") {
-    console.log("😼 YOU'RE A COOL CAT, LET'S PLAY!! 😼 " + space);
-    //RECURSION
+    console.log(space + "😼 YOU'RE A COOL CAT, LET'S PLAY!! 😼 ");
     run();
     
   } else if (continuedPlay.toUpperCase() === "N") {
-    console.log(space + " 🖐️ MAYBE NEXT TIME, BYE 🖐️ ");
+    console.log(space + " 🖐️  MAYBE NEXT TIME, BYE 🖐️ ");
   }
 }
-
 run();
-
-  
-
-
-//3.IF USERINPUT IS A NOT A STRING RETURN ((PLEASE ENTER A VALID LETTER)) 4.IF USERINPUT IS A CAPITALIZE LETTER RETURN ((PLEASE ENTER A LOWERCASE LETTER))

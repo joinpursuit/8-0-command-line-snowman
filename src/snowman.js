@@ -26,12 +26,12 @@ let snowman = {
         arrayHiddenWord: [],
         guessedWords: '',
         arrayGuessedWords: [],
-        guessLeft: 8,
         solvedWord: '',
         arrayCurrentSolvedWord: []
       }
-      //to start the game
-  let choice = readline.keyInYN('👺 Hi! Would you like to play a game? 👺')
+let guessLeft = 8;
+//to start the game
+let choice = readline.keyInYN('👺 Hi! Would you like to play a game? 👺')
     if(choice) {
       console.log("\nWelcome! Let's start!")
       //function here to show hiddenWord to user
@@ -44,7 +44,7 @@ let snowman = {
       }
 //quit the test after the user is done
 function quitTest() {
-        console.log("Goodbye!")
+        console.log("Goodbye! 👋")
         //stop program from running
           process.exit()
       }
@@ -52,7 +52,7 @@ function quitTest() {
 //replace the hidden word with letters if guessed correctly
 function gamePlay() {
   //make the function run until no guesses left
-    while (snowman.guessLeft !== 0) {
+    while (guessLeft !== 0) {
   getValidLetterGuess()
     snowman.arrayChosenWord = word.split(''); 
     snowman.arrayHiddenWord = snowman.hiddenWord.split('');
@@ -66,12 +66,12 @@ function gamePlay() {
           //negate the subtraction from receiving a guess by adding a point to guessLeft if a correct guess is given
       for (let i = 0; i < word.length; i++) {
         if (word[i] === snowman.letter) {
-          snowman.guessLeft = snowman.guessLeft + 1
+          guessLeft += 1
             break;
           }
         }
           //subtract from guessLeft when wrong guess is given
-          snowman.guessLeft = snowman.guessLeft - 1;
+          guessLeft -= 1;
           word = snowman.arrayChosenWord.join(''); 
           snowman.hiddenWord = snowman.arrayHiddenWord.join('');
           snowman.solvedWord = snowman.arrayCurrentSolvedWord.join('');
@@ -96,7 +96,7 @@ function showGuessedWord() {
     if (snowman.arrayGuessedWords.length === 0) {
       snowman.arrayGuessedWords.push(snowman.letter)
     } else {
-      snowman.arrayGuessedWords.push((', ' + snowman.letter))
+      snowman.arrayGuessedWords.push((`, ${snowman.letter}`))
     }
     snowman.guessedWords = snowman.arrayGuessedWords.join('')
       //prints guessed letters for user to see 
@@ -104,9 +104,9 @@ function showGuessedWord() {
     }
 //count how many guesses the user has left until loses
 function guessLeftCounter() {
-  console.log("\nYou have " + snowman.guessLeft + " guess(es) remaining")
+  console.log(`\nYou have ${guessLeft} guess(es) remaining`)
     // print losing message if user has no more guesses left
-    if (snowman.guessLeft === 0) {
+    if (guessLeft === 0) {
       console.log('\nGAME OVER, 😔 better luck next time!')
       //prints chosenWord for the losing user
       console.log(`The word was "${word}"`)

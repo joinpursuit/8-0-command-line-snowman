@@ -39,9 +39,10 @@ function run() {
   ///SKIP A LINE VARIABLE
   const space = "\n";
   console.log(
-    "Let's build a snowman ⛄" + space + "❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️"
+    "Let's build a snowman ⛄" +
+      space +
+      "❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️"
   );
-
 
   let incorrectGuesses = 0;
   const word = getRandomWord();
@@ -59,23 +60,24 @@ function run() {
   //DEFAULT VARIABLE TO STORE ARRAY OF GUESSED LETTERS
   let answerArray = [];
 
-  //LOOP TRACKS IF USER WON OR LOST
+  //THIS LOOP TRACKS IF USER WON OR LOST GAME
   for (let i = 0; incorrectGuesses < attempts; i++) {
-    console.log(`${space}${underscore_word.join(' ')}${space}`);
+    console.log(`${space}${underscore_word.join(" ")}${space}`);
 
     // This line of code will print out whatever is inputted in by the user.
     const userInput = readline.question("Please enter your guess: ");
     console.log(`You have ${attempts - incorrectGuesses} guess(es) left`);
-    
+
+    //IF THE LETTER IS ALREADY INSIDE THE GUESSED ARRAY
     if (answerArray.includes(userInput)) {
       console.log(space + "🔁 ALREADY GUESSED, TRY ANOTHER LETTER 🔁 " + space);
       continue;
     }
-       //EACH GUESS IS PUSHED INTO AN EMPTY ARRAY
-      answerArray.push(userInput);
-      
-      //IF LETTER IS INVALID
-      //THE GUESSED LETTER IS NOT IN THE RANDOM WORD
+    //EACH GUESS IS PUSHED INTO AN EMPTY ARRAY
+    answerArray.push(userInput);
+
+    //IF LETTER IS INVALID
+    //THE GUESSED LETTER IS NOT IN THE RANDOM WORD
     if (!word.includes(userInput)) {
       //IF WE CAPITALIZED THE RANDOM WORD AND IT INCLUDES A CAPITALIZED GUESSED LETTER
       if (word.toUpperCase().includes(userInput)) {
@@ -94,11 +96,11 @@ function run() {
 
         //IF GUESS IS A NUMBER
       } else if (Number(userInput)) {
-        console.log(space + "🙅‍♀️ PLEASE ENTER A VALID LETTER 🙅‍♀️" + space);
+        console.log(space + "🙅‍♀️  PLEASE ENTER A VALID LETTER 🙅‍♀️" + space);
         console.log("GUESSED LETTERS:", answerArray);
         continue;
-      } 
-       
+      }
+
       //COUNT DOESN'T CHANGE FOR INVALID GUESSES
       //COUNT INCREASES WITH INCORRECT GUESSES ONLY
       incorrectGuesses++;
@@ -122,6 +124,17 @@ function run() {
           console.log(space + "🎉 CONGRATS, YOU WIN THE GAME 🎉");
           //PRINTS COMPLETE WORD AS STRING
           console.log("THE WORD IS" + " " + underscore_word.join(""));
+
+          let continuedPlay = readline.question(
+            `DO YOU WANT TO PLAY AGAIN?${space}Yes: press Y      No: press N`
+          );
+
+          if (continuedPlay.toUpperCase() === "Y") {
+            console.log("YOU'RE A COOL CAT, LET'S PLAY!!" + space);
+            run();
+          } else if (continuedPlay.toUpperCase() === "N") {
+            console.log("MAYBE NEXT TIME, YOU'RE STILL COOL");
+          }
           return;
         }
       }
@@ -133,21 +146,23 @@ function run() {
   }
   //GAME OVER
   if (incorrectGuesses === attempts) {
-    console.log(`${space}👀 LOSER... try again. The word was ${word}`);
-  }
-  
-  console.log(`DO YOU WANT TO PLAY AGAIN?${space}Yes: press y                 No: press n`)
-
-  let continuedPlay = readline.keyInYN(["\n"[""]])
-
-  if (continuedPlay) {
-    console.log("YOU'RE A COOL CAT, LET'S PLAY!!" + space)
-    run()
-  
-  } else if (!continuedPlay) {
-    console.log("MAYBE NEXT TIME, YOU'RE STILL COOL")
+    console.log(`${space}👀 LOSER... try again. The word was "${word}"`);
   }
 
+  // console.log(`DO YOU WANT TO PLAY AGAIN?${space}Yes: press Y                 No: press N`)
+
+  //
+  let continuedPlay = readline.question(
+    `DO YOU WANT TO PLAY AGAIN?${space}Yes: press Y                 No: press N`
+  );
+
+  if (continuedPlay.toUpperCase() === "Y") {
+    console.log("YOU'RE A COOL CAT, LET'S PLAY!!" + space);
+    //RECURSION
+    run();
+  } else if (continuedPlay.toUpperCase() === "N") {
+    console.log("MAYBE NEXT TIME, YOU'RE STILL COOL");
+  }
 }
 run();
 

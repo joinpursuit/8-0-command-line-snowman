@@ -42,6 +42,7 @@ function run() {
     "Let's build a snowman ⛄" + space + "❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️ ❄️"
   );
 
+
   let incorrectGuesses = 0;
   const word = getRandomWord();
   //console.log(word.length)
@@ -118,9 +119,9 @@ function run() {
 
         //ONCE ALL UNDERSCORES ARE REPLACED, ITS AN ARRAY. WE HAVE TO USE .JOIN TO CONVERT ARRAY INTO A STRING. COMPARING A STRING TO A STRING.
         if (underscore_word.join("") === word) {
-          console.log(space + "🎉 CONGRATS, YOU WIN THE GAME 🎉" + space);
+          console.log(space + "🎉 CONGRATS, YOU WIN THE GAME 🎉");
           //PRINTS COMPLETE WORD AS STRING
-          console.log(space + "The word is" + underscore_word.join(""));
+          console.log("THE WORD IS" + " " + underscore_word.join(""));
           return;
         }
       }
@@ -134,6 +135,19 @@ function run() {
   if (incorrectGuesses === attempts) {
     console.log(`${space}👀 LOSER... try again. The word was ${word}`);
   }
+  
+  console.log(`DO YOU WANT TO PLAY AGAIN?${space}Yes: press y                 No: press n`)
+
+  let continuedPlay = readline.keyInYN(["\n"[""]])
+
+  if (continuedPlay) {
+    console.log("YOU'RE A COOL CAT, LET'S PLAY!!" + space)
+    run()
+  
+  } else if (!continuedPlay) {
+    console.log("MAYBE NEXT TIME, YOU'RE STILL COOL")
+  }
+
 }
 run();
 

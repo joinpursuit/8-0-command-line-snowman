@@ -7,6 +7,8 @@ const readline = require("readline-sync");
 */
 const dictionary = require("./dictionary");
 
+
+
 /*
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
@@ -37,15 +39,16 @@ let snowman = {
       //function here for user to play the game
       gamePlay()
       } else {
-        console.log('Oh well! I tried')
+        console.log('👎 Oh well! I tried 👎')
           quitTest()
       }
 //quit the test after the user is done
 function quitTest() {
         console.log("Goodbye!")
         //stop program from running
-        process.exit()
+          process.exit()
       }
+
 //replace the hidden word with letters if guessed correctly
 function gamePlay() {
   //make the function run until no guesses left
@@ -74,14 +77,14 @@ function gamePlay() {
           snowman.solvedWord = snowman.arrayCurrentSolvedWord.join('');
       //winning message when word is guessed
       if (snowman.solvedWord === word) {
-          console.log("Congratulations! 🎉 🎊 🥳")
+          console.log("🎉 🎊 🥳 Congratulations! 🎉 🎊 🥳")
           //print chosenWord for user to see
-          console.log('The word was ' + '"' + word + '"')
+          console.log(`The word was "${word}"`)
           //function here to show ending message and stop if user wins
           quitTest() 
         }
           //print hidden word for user
-          console.log('WORD: '+ snowman.hiddenWord)
+          console.log(`WORD: ${snowman.hiddenWord}`)
           //function here to show user the letters that are already guessed
           showGuessedWord()
         }
@@ -97,7 +100,7 @@ function showGuessedWord() {
     }
     snowman.guessedWords = snowman.arrayGuessedWords.join('')
       //prints guessed letters for user to see 
-      console.log('\nGuessed Letters: ' + snowman.guessedWords)
+      console.log(`\nGuessed Letters: ${snowman.guessedWords}`)
     }
 //count how many guesses the user has left until loses
 function guessLeftCounter() {
@@ -106,18 +109,15 @@ function guessLeftCounter() {
     if (snowman.guessLeft === 0) {
       console.log('\nGAME OVER, 😔 better luck next time!')
       //prints chosenWord for the losing user
-      console.log('The word was ' + '"' + word + '"')
+      console.log(`The word was "${word}"`)
         //function here to show ending message and stop if user loses
         quitTest()
       }
     }
 //turns the dictionary word into a hidden word
 function makeTheBlanks() {
-  //assign value for getRandomWord() to chosenWord
-  
-  // snowman.chosenWord = word
   snowman.hiddenWord = ''
-    // iterate through chosen word to determine the hiddenWord
+    // iterate through chosenWord to determine the hiddenWord
     for (let i = 0; i < word.length; i++) {
       if (i === 0) {
         snowman.hiddenWord += '_'
@@ -126,7 +126,7 @@ function makeTheBlanks() {
     }
   }
   //prints the hiddenWord and the chosenWord(hint)
-  console.log('WORD: ' + snowman.hiddenWord + ` (${word})`)
+  console.log(`WORD: ${snowman.hiddenWord} (${word})`)
 } 
 //checks for a valid guess
 function getValidLetterGuess() {
@@ -146,7 +146,6 @@ function guessIsValid(letterGiven) {
     }
   }
 }
-    
 
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!

@@ -36,9 +36,9 @@ function getRandomWord() {
 /*
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
-let secretWord = getRandomWord();
-let wrongGuesses = [];
-let correctGuesses = [];
+// let secretWord = getRandomWord();
+// let wrongGuesses = [];
+// let correctGuesses = [];
 
 // //HELPER FUNCTIONS
 // //TODO: Need a diiferent secret word every game
@@ -100,7 +100,6 @@ let validLetters = [
 
 function run() {
   const space = "\n";
-  console.log(word);
   let repeatedString = "";
   let i = 0;
   while (i < word.length) {
@@ -120,6 +119,14 @@ function run() {
     );
 
     const guess = readline.question("Guess a letter: ");
+    if (!validLetters.includes(guess)) {
+      console.log(`Opps! Please enter a letter...`);
+      continue; // sends the user back to the game start (breaking out of the loop) after they enter a (number, multiple letters, etc.)
+    }
+    if (guesses.includes(guess)) {
+      console.log("You have already guessed that letter. Try Again");
+      continue;
+    }
     guesses.push(guess);
     for (let i = 0; i < word.length; i++) {
       if (word[i] === guess) {
@@ -129,11 +136,7 @@ function run() {
     if (!word.includes(guess)) {
       incorrectGuesses -= 1;
     }
-    if (!validLetters.includes(guess)) {
-      console.log(`Opps! Please enter a letter...`);
-    }
-    //} else if ()
-    //}
+
     //below signals when game ends
     if (incorrectGuesses === 0) {
       // This line of code gets a random word. The `word` variable will be a string.
@@ -150,10 +153,10 @@ function run() {
         `Oh no, It's alive! You are out of guesses! \n
       The correct word was ${word}`
       );
-    } else {
-      console.log("You're a Winner! Snow-tastic!");
+    }
+    if (!repeatedString.includes("_")) {
+      console.log("Winner!  Snow-tastic!");
     }
   }
 }
-
 run();

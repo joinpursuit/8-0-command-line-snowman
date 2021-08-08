@@ -46,6 +46,7 @@ function run() {
 
   let incorrectGuesses = 0;
   const word = getRandomWord();
+  //console.log(`${space}${word}`);
 
   //THIS CODE IS MAX AMOUNT OF ATTEMPTS
   let attempts = word.length + 1;
@@ -138,11 +139,11 @@ function run() {
           );
 
           if (continuedPlay.toUpperCase() === "Y") {
-            console.log("YOU'RE A COOL CAT, LET'S PLAY!!" + space);
+            console.log(" 😼 YOU'RE A COOL CAT, LET'S PLAY!! 😼 " + space);
             run();
 
           } else if (continuedPlay.toUpperCase() === "N") {
-            console.log("MAYBE NEXT TIME, YOU'RE STILL COOL");
+            console.log(" 🖐️ MAYBE NEXT TIME, YOU'RE STILL COOL 🖐️ ");
           }
           return;
         }

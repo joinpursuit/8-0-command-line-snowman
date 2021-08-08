@@ -46,7 +46,7 @@ function run() {
 
   let incorrectGuesses = 0;
   const word = getRandomWord();
-  //console.log(`${space}${word}`);
+  console.log(`${space}${word}`);
 
   //THIS CODE IS MAX AMOUNT OF ATTEMPTS
   let attempts = word.length + 1;
@@ -64,8 +64,7 @@ function run() {
 
     // This line of code will print out whatever is inputted in by the user.
     const userInput = readline.question("Please enter your guess: ");
-    console.log(`You have ${attempts - incorrectGuesses} guess(es) left`);
-
+  
     //IF THE LETTER IS ALREADY INSIDE THE GUESSED ARRAY
     if (answerArray.includes(userInput)) {
       console.log(space + "🔁 ALREADY GUESSED, TRY ANOTHER LETTER 🔁 " + space);
@@ -79,39 +78,46 @@ function run() {
     //THE GUESSED LETTER IS NOT IN THE RANDOM WORD
     if (!word.includes(userInput)) {
       
+      
       //IF WE CAPITALIZED THE RANDOM WORD AND IT INCLUDES A CAPITALIZED GUESSED LETTER
       if (word.toUpperCase().includes(userInput)) {
+        console.log(`You have ${attempts - incorrectGuesses} guess(es) left`)
         console.log(
-          space + "✅ CORRECT!!! BUT PLEASE ENTER A lowercase LETTER " + space
-        );
-        console.log("GUESSED LETTERS:", answerArray);
-        continue;
-
-        //IF GUESS IS THE SAME AS A CAPITALIZED GUESS && IF GUESS IS NOT A NUMBER
-      } else if (userInput === userInput.toUpperCase() && !Number(userInput)) {
-        console.log(space + "❗ PLEASE ENTER A lowercase LETTER ❗ " + space);
+          space + "✅ CORRECT!!! BUT PLEASE ENTER A lowercase LETTER "
+          );
+          console.log("GUESSED LETTERS:", answerArray);
+          continue;
+          
+          //IF GUESS IS THE SAME AS A CAPITALIZED GUESS && IF GUESS IS NOT A NUMBER
+        } else if (userInput === userInput.toUpperCase() && !Number(userInput)) {
+          console.log(`You have ${attempts - incorrectGuesses} guess(es) left`)
+          console.log(space + "❗ PLEASE ENTER A lowercase LETTER ❗ " + space);
+          
+          console.log("GUESSED LETTERS:", answerArray);
+          continue;
+          
+          //IF GUESS IS A NUMBER
+        } else if (Number(userInput)) {
+          console.log(`You have ${attempts - incorrectGuesses} guess(es) left`)
+          console.log(space + "🙅‍♀️  PLEASE ENTER A VALID LETTER 🙅‍♀️");
+          console.log("GUESSED LETTERS:", answerArray);
+          continue;
+          
+          //IF GUESS IS MORE THAN ONE LETTER
+        } else if (userInput.length > 1) {
+          console.log(`You have ${attempts - incorrectGuesses} guess(es) left`)
+          console.log(space + "👆 ONE LETTER AT A TIME PLEASE 👆")
+          console.log("GUESSED LETTERS:", answerArray);
+          continue;
+          
+        }
         incorrectGuesses++;
+        console.log(`You have ${attempts - incorrectGuesses} guess(es) left`);
+        //COUNT DOESN'T CHANGE FOR INVALID GUESSES
+        //COUNT INCREASES WITH INCORRECT GUESSES ONLY
+        //incorrectGuesses++;
+        console.log(`${space} 🤔 UH UH UH, GUESS AGAIN 🤔`);
         console.log("GUESSED LETTERS:", answerArray);
-        continue;
-
-        //IF GUESS IS A NUMBER
-      } else if (Number(userInput)) {
-        console.log(space + "🙅‍♀️  PLEASE ENTER A VALID LETTER 🙅‍♀️" + space);
-        console.log("GUESSED LETTERS:", answerArray);
-        continue;
-        
-        //IF GUESS IS MORE THAN ONE LETTER
-      } else if (userInput.length > 1) {
-        console.log(space + "👆 ONE LETTER AT A TIME PLEASE 👆")
-        console.log("GUESSED LETTERS:", answerArray);
-        continue;
-      
-      }
-      //COUNT DOESN'T CHANGE FOR INVALID GUESSES
-      //COUNT INCREASES WITH INCORRECT GUESSES ONLY
-      incorrectGuesses++;
-      console.log(`${space} 🤔 UH UH UH, GUESS AGAIN 🤔`);
-      console.log("GUESSED LETTERS:", answerArray);
 
       //IF GUESS IS INVALID, CONTINUE; WILL SKIP INNER LOOP AND RETURN TO OUTTER LOOP TO START AGAIN UNTIL GUESSES RUN OUT BUTTTTT
       continue;
@@ -148,7 +154,8 @@ function run() {
           return;
         }
       }
-      console.log(`${space} 💪 YOU GOT IT!!! 💪`);
+      console.log(`💪 YOU GOT IT!!! 💪 ${space}`);
+      console.log(`You have ${attempts - incorrectGuesses} guess(es) left`);
     }
     console.log("GUESSED LETTERS:", answerArray);
   }

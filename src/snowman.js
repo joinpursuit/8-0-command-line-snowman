@@ -11,9 +11,8 @@ const dictionary = require("./dictionary");
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
 function getRandomWord() {
-  //   const index = Math.floor(Math.random() * dictionary.length);
-  //   return dictionary[index];
-  return "advertisement";
+  const index = Math.floor(Math.random() * dictionary.length);
+  return dictionary[index];
 }
 
 /*
@@ -28,34 +27,7 @@ function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
   // declare 'alphabet' and assign an array of string letters, used to match the user input so the correct letter is inputed.
-  const alphabet = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-  ];
+  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
@@ -72,7 +44,6 @@ function run() {
   //lines variable will be used to hold the value of the word key inside the outputTextBlock object.
 
   let lines = "";
-
   for (const eachLetter of newWordArr) {
     lines += "_";
   }
@@ -111,26 +82,22 @@ function run() {
       if (!guessed.includes(userInput)) {
         guessed += `${userInput}, `;
       }
+      // deducts a guess when user guesses wrong.
+      if (!newWordArr.includes(userInput)) {
+        remainingGuesses = remainingGuesses - 1;
+      }
       // logs the correct letters to word key value.
-      if (newWordArr.includes(userInput)) {
-        for (const letter in newWordArr) {
-          if (userInput === newWordArr[letter]) {
-            hiddenLetters.splice(letter, 1, userInput);
-          }
+      for (const letter in newWordArr) {
+        if (userInput === newWordArr[letter]) {
+          hiddenLetters.splice(letter, 1, userInput);
         }
       }
-    }
-    // deducts a guess when user guesses wrong.
-    if (!newWordArr.includes(userInput)) {
-      remainingGuesses = remainingGuesses - 1;
     }
     console.log(`THE USER INPUTTED: ${userInput}`);
 
     if (remainingGuesses === 0) {
       console.log(
-        `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters.join(
-          ""
-        )}\nYou Lost!`
+        `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${word}\nYou Lost!`
       );
     } else if (word === hiddenLetters.join("")) {
       console.log(

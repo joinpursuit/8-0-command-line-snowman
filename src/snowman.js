@@ -22,85 +22,7 @@ function getRandomWord() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
-// function run() {
-//   // This line of code gets a random word. The `word` variable will be a string.
-//   const word = getRandomWord();
-//   /*
-//     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-//     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-//     After a user hits the 'return' key, the rest of the code will run.
-//   */
-//   const userInput = readline.question("Guess a letter: ");
-//   // This line of code will print out whatever is inputted in by the user.
-//   console.log("THE USER INPUTTED:", userInput);
-//   // Grab random word (line 27)
-//   // Return string length with appropriate amount of `_`
-//   // Assign word.length to a var placeholder (will return num)
-//   let secretWord = getRandomWord();
-//   let correctGuess = [];
-//   let incorrectGuess = [];
-//   let guessCount = 5;
-//   // let maxNumIncorrectGuess =
-
-//   // HELPER FUNCTIONS
-//   function isGuessCorrect(guess){
-//     // let secretWord = "apple";
-//     return secretWord.includes(guess);
-//   }
-//   function addCorrectGuessToList(guess){
-//     // let correctGuess = [];
-//     correctGuess.push(guess)
-//     return correctGuess;
-//   }
-//   function addIncorrectGuessToList(guess){
-//     // let correctGuess = [];
-//     incorrectGuess.push(guess)
-//     return correctGuess;
-//   }
-//   // function getRandomWord(){
-//   // }
-//   function run(){
-//     const secretWord = getRandomWord();
-//     // TODO: Put that random word into state!
-//     secretWord = word;
-//     const userInput = readline.question("Guess a letter: ");
-//     // TODO: Check if guess is correct!
-//     let isCorrect = isGuessCorrect(userInput);
-//     // TODO: If the guess is correct, add it to correct guess.
-//     //loop through secretword
-//     for(let i = 0; i < secretWord.length; i++){
-//       //if userinput is included in secretWord do ....
-//       if(secretWord.includes(userInput)) {
-//       addCorrectGuessToList(guess);
-//       } else { //else, push into incorrect list arr and decrease guessCount
-//       addIncorrectGuessToList(guess);
-//       guessCount--;
-//       }
-//       //if guess correct if '_' === 0 then Congrats you won!
-//       if(guessCount === 0) {
-//         return errorMsg;
-//       }
-//     }
-//   }
-
-//   console.log(addCorrectGuessToList("p"));
-//   console.log(addCorrectGuessToList("l"));
-//   // Use result of word.length to determine  `_`
-//   // Use for loop so were able to replace letters or decrease guess count
-//   // for (let i = 0; i < word.length; i++){
-//   // }
-//   // If user enters invalid input, return msg `enter letter`. Invalid guess should not decrease guess count. All guesses should be displayed.
-//   // if (!userInput){
-//   // }
-//   // return
-//   // If valid letter is inputted, update word to replace all `_` with correct letter. Should also not change guess count.
-//   // else, if user inputs incorrect guess, decrease guess count.
-//   // Regardless of whether or not the guess is correct, the number of remaining guesses should be shown to the user.
-//   // The game should continue until user wins or guess count reaches 0
-//   // If user wins, display congrats msg
-//   // Else, if user loses, reveal word and display defeat msg
-// }
-// run();
+//
 
 //follow
 //012345
@@ -114,22 +36,63 @@ function run() {
   //getRandomWord();
 
   let incorrectGuesses = word.length + 1;
-  let lettersGuessed = "";
+  let lettersGuessed = ["None"];
   let theBlanks = "";
-  let winningMsg = "Congrats You Won!";
+  let winningMsg = "Congratulations, You Won!";
   let losingMsg = "Game Over!";
+  let validEntries = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ];
+  let invalidMsg = "Please enter a valid input";
 
   //assign underscores to a var called theBlanks to hide secret word
   for (let i = 0; i < word.length; i++) {
     theBlanks += "_ ";
-  } //------------=>5-------------5 < 4
+  }
   for (let i = word.length - 1; i < word.length; i++) {
     console.log("Remaining Incorrect Guesses: " + incorrectGuesses);
     console.log("Letters Guessed: " + lettersGuessed);
     console.log("Word: " + theBlanks);
-    // console.log (typeof theBlanks)
-    // console.log(theBlanks);
     let userInput = readline.question("Pick a letter: ");
+    console.log("\n");
+    userInput.toLowerCase();
+
+    if (userInput) {
+      if (validEntries.includes(userInput)) {
+        lettersGuessed.push(" " + userInput);
+      } else {
+        return console.log(invalidMsg);
+      }
+      //if "None" is present after first push, remove with shift method
+      if (lettersGuessed.includes("None")) {
+        lettersGuessed.shift();
+      }
+    }
     //loop through word.length to check if userInput is correct or not and modify theBlanks appropriately
     for (let i = 0; i < word.length; i++) {
       //if userInput matches an element witihin word.length, replace theBlanks with i
@@ -149,7 +112,7 @@ function run() {
       console.log("Remaining Incorrect Guesses: " + incorrectGuesses);
       console.log("Letters Guessed: " + lettersGuessed);
       console.log("Word: " + theBlanks);
-      return console.log(losingMsg);
+      return console.log(losingMsg + ` The Secret Word was: ` + word);
     }
     /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!

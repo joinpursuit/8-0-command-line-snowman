@@ -27,24 +27,24 @@ function run() {
       arrayGuessedWords: [],
   }
 //to start the game
-let choice = readline.keyInYN('👺 Hi! Would you like to play a game? 👺')
+let choice = readline.keyInYN("\x1b[1;39m" + '👺 Hi! Would you like to play a game? 👺' + "\x1b[39m")
     if(choice) {
-      console.log("\nWelcome! Let's start!")
+      console.log("\x1b[1;93m" + "\nWelcome! Let's start!" + "\x1b[39m")
       //function here to show hiddenWord to user
       makeTheBlanks()
       //function here for user to play the game
       gamePlay()
       } else {
-          console.log('👎 Oh well! I tried 👎')
+          console.log("\x1b[1;91m" + '👎 Oh well! I tried 👎' + "\x1b[39m")
             //function to quit game 
             quitTest()
       }
 //restart function when user wins or loses
 function restartGame() {
-  leaveChoice = readline.keyInYN('Would you like to play again?')
+  leaveChoice = readline.keyInYN("\x1b[1;95m" + 'Would you like to play again?' + "\x1b[39m")
     if (leaveChoice) {
       word = getRandomWord()
-      console.log("\nWelcome back, Let's start!")
+      console.log("\x1b[1;93m" + "\nWelcome back, Let's start!" + "\x1b[39m")
       guessLeft = 8;
       //recreate initial starting object
       snowman = {
@@ -60,7 +60,7 @@ function restartGame() {
         
     } else {
       //print if user chooses not to play
-      console.log("Too bad, come back soon!")
+      console.log("\x1b[1;91m" + "Too bad, come back soon!" + "\x1b[39m")
         //function to quit game
         quitTest()
     }
@@ -100,14 +100,14 @@ function gamePlay() {
          let solvedWord = snowman.CurrentSolvedWord.join('');
       //winning message when word is guessed
       if (solvedWord === word) {
-          console.log("🎉 🎊 🥳 Congratulations! 🎉 🎊 🥳")
+          console.log("\x1b[1;92m" + "🎉 🎊 🥳 Congratulations! 🎉 🎊 🥳" + "\x1b[39m")
           //print chosenWord for user to see
-          console.log(`The word was "${word}"`)
+          console.log('The word was ' + "\x1b[1;36m" + `"${word}"` + "\x1b[39m")
           //function here to show ending message and stop if user wins
           restartGame() 
         }
           //print hidden word for user
-          console.log(`WORD: ${hiddenWord}`)
+          console.log("\x1b[1;94m" + 'WORD: ' + "\x1b[39m" + `${hiddenWord}`)
           //function here to show user the letters that are already guessed
           showGuessedWord()
         }
@@ -124,16 +124,16 @@ function showGuessedWord() {
     }
       snowman.guessedWords = snowman.arrayGuessedWords.join(', ')
       //prints guessed letters for user to see 
-      console.log(`\nGuessed Letters: ${snowman.guessedWords}`)
+      console.log("\x1b[1;93m" + '\nGuessed Letters: ' + snowman.guessedWords + "\x1b[39m")
     }
 //count how many guesses the user has left until loses
 function guessLeftCounter() {
   console.log(`\nYou have ${guessLeft} guess(es) remaining`)
     // print losing message if user has no more guesses left
     if (guessLeft === 0) {
-      console.log('\nGAME OVER, 😔 better luck next time!')
+      console.log("\x1b[1;91m" + '\nGAME OVER, 😔 better luck next time!' + "\x1b[39m")
       //prints chosenWord for the losing user
-      console.log(`The word was "${word}"`)
+      console.log('The word was ' + "\x1b[1;36m" + `"${word}"` + "\x1b[39m")
         //function here to show ending message and stop if user loses
         restartGame()
       }
@@ -150,7 +150,7 @@ function makeTheBlanks() {
     }
   }
   //prints the hiddenWord and the chosenWord(hint)
-  console.log(`WORD: ${hiddenWord} (${word})`)
+  console.log("\x1b[1;94m" + 'WORD: ' + "\x1b[39m" + `${hiddenWord} (${word})`)
 } 
 //checks for a valid guess
 function getValidLetterGuess() {
@@ -160,7 +160,7 @@ function getValidLetterGuess() {
 function guessIsValid(userInput) {
   return (userInput.length === 1) && (userInput.toUpperCase() !== userInput.toLowerCase()) && (!(snowman.guessedWords.includes(userInput)))
 }
-//needs to stop taking in the same letter again
+//needs to stop taking in the same letter && invalid input.
   snowman.letter = ''
     while (!snowman.letter) {
   const userInput = readline.question("\nGuess a letter: ");

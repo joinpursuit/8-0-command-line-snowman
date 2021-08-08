@@ -22,8 +22,9 @@ let guessLeft = 8;
 function run() {
   let snowman = {
       letter: '',
-      guessedWords: '',
       CurrentSolvedWord: [],
+      guessedWords: '',
+      arrayGuessedWords: [],
   }
 //to start the game
 let choice = readline.keyInYN('👺 Hi! Would you like to play a game? 👺')
@@ -48,13 +49,15 @@ function restartGame() {
       //recreate initial starting object
       snowman = {
         letter: '',
-        guessedWords: '',
         CurrentSolvedWord: [],
+        guessedWords: '',
+        arrayGuessedWords: [],
     }
         //function here to show hiddenWord to user
         makeTheBlanks()
         //function for gamePlay
         gamePlay()
+        
     } else {
       //print if user chooses not to play
       console.log("Too bad, come back soon!")
@@ -114,13 +117,12 @@ function gamePlay() {
 
 //show the letters the user already guessed
 function showGuessedWord() {
-  let arrayGuessedWords = [];
-    if (arrayGuessedWords.length === 0) {
-      arrayGuessedWords.push(snowman.letter)
+    if (snowman.arrayGuessedWords.length === 0) {
+      snowman.arrayGuessedWords.push(snowman.letter)
     } else {
-      arrayGuessedWords.push((`, ${snowman.letter}`))
+      snowman.arrayGuessedWords.push((`${snowman.letter}`))
     }
-      snowman.guessedWords = arrayGuessedWords.join(', ')
+      snowman.guessedWords = snowman.arrayGuessedWords.join(', ')
       //prints guessed letters for user to see 
       console.log(`\nGuessed Letters: ${snowman.guessedWords}`)
     }
@@ -156,6 +158,7 @@ function getValidLetterGuess() {
   guessLeftCounter()
 //same inputted letters and numbers are invalid 
 function guessIsValid(letterGiven) {
+  let guessedWords = '';
   return (letterGiven.length === 1) && (letterGiven.toUpperCase() !== letterGiven.toLowerCase()) && (!(snowman.guessedWords.includes(letterGiven)))
 }
   snowman.letter = ''

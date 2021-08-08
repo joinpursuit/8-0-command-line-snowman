@@ -33,7 +33,8 @@ const word = getRandomWord() // get random word
     
     correctGuesses: [], // correctGuesses = []; // --> we have updated the state from empty array [] to ['p']
     wrongGuesses: [], // wrongGuesses = [];
-    maxNumWrongGuesses: 5, // array, string? what is the data type of this? How are we going to use it to know if the game is won or lost?
+    maxNumOfGuesses: 3, // stores how many guesses are left
+
 
     guessedLetters: [], // keep track of the guessed letters
     wordArr: [], // keep track of unknown blank letters
@@ -62,20 +63,26 @@ const word = getRandomWord() // get random word
     }
   }
 
-
   // HELPER FUNCTION #3 - reveal secret word function
   // function revealSecretWord() {
   //   // reveal secret word from current game
   //   setTimeout(() => {  console.log(`It was: ${word}`) }, 2000); // 2 sec delay
   // }
 
-
   /*
   While Loop that keeps the game running. `readline.question( `Write input question here` )` stops the execution of the program to ask for user input. The user enters whatever they want! The value the user inputs will be assigned to the variable `userInput`. After user hits the 'return' key, the rest of the code will run.
   */
-  // TODO: Currently, there is no limit to the number of guesses. Set the `maxNumOfGuesses`. If number of guesses matches `maxNumOfGuesses` && `word` has not been found, EndOfGame message - `You did not guess the word in ${maxNumOfGuesses} guesses. game over.`
+  // TODO: Currently, there is no limit to the number of guesses. Set the `maxNumOfGuesses`. If number of guesses matches `maxNumOfGuesses` && `word` has not been found, EndOfGame message - `You did not guess the word in ${state.maxNumOfGuesses} guesses. game over.`
   // This would be if the `state.wrongGuesses.length` > `state.maxNumWrongGuesses`
-  while (state.shouldKeepPlaying) {
+  // while you have remaining guesses > 0
+/*
+[ ] If the guess is incorrect, the number of remaining guesses should decrease.
+[ ] If the guess is correct, the number of remaining guesses should stay the same.
+[ ] Regardless of whether or not the guess is correct, the number of remaining guesses should be shown to the user.
+*/
+
+  // while (state.shouldKeepPlaying) {
+  while (state.maxNumOfGuesses > 0) {
     // Variable that stores the user input and is lowercased
     const userInput = readline.question("\nGuess a letter: ").toLowerCase();
     // if more than one character, do not push to array.
@@ -89,19 +96,6 @@ const word = getRandomWord() // get random word
     // else if letter doesn't match random `word`, continue to `wrongGuesses` array.
       // if letter does not exist in `wrongGuesses` array, add it.
       // if letter already exists in the `wrongGuesses` array, don't add it.
-
-
-    // TODO: Do not push invalid characters to `guessedLetters` array
-    // TODO: Separate `guessedLetters` array into `correctGuesses` and `wrongGuesses` arrays, and print to the console.
-
-    // TODO: Limit number of guesses `maxNumOfGuesses` allowed before the game ends.
-    // edge case: number of guesses `maxNumOfGuesses` allowed before the game ends.
-    // if (state.wrongGuesses.length === (state.maxNumWrongGuesses -1)) {
-    //   console.log(`You've gotten ${state.maxNumWrongGuesses} wrong. Game over.`);
-    //   // play again?
-    //   // playAgain();
-    // }
-
 
     // If `maxNumWrongGuesses` has been reached, don't continue - console.log message - `Max guesses has been reached. Game over.`
 
@@ -139,44 +133,60 @@ const word = getRandomWord() // get random word
     console.log(`Input invalid - type in only one letter.\n\n`);
   }
 
+  // declare variable to say how many guesses are left.
+  // subtract number of `state.wrongGuesses.length` from the `maxNumGuesses` to see how many `guessesLeft`.
+  let guessesLeft = state.maxNumOfGuesses - state.wrongGuesses.length;
+  if (guessesLeft >= 0) {
+    console.log(`You have ${guessesLeft} guesses remaining.`); // number of wrong guesses made
+    // nested 'if' - for having zero guesses left, you lose. ends game.
+    if (guessesLeft === 0) {
+      console.log(`Sorry, You lost! ${guessesLeft} guesses are left. The word was: ${word}.`);
+      // play again?
+      playAgain();
+    }
+  }
+
     // ALL guesses the user has typed in so far, stored in array `guessedLetters`. Use .sort() to make it in alphabetical order
     // console.log("All guesses made:", state.guessedLetters.sort().join(', '));
     // log correct guesses array:
     console.log("Correct guesses made:", state.correctGuesses.sort().join(', '));
     // log wrong guesses array:
     console.log("Wrong guesses made:", state.wrongGuesses.sort().join(', '));
-
+    
     // Call Helper Function #2 inside `run()` providing `userInput` as argument
     spliceUserInput(userInput);
     console.log(state.wordArr.join(' ')); // Output: a p p _ _
-
-
 
     // Once word has been guessed, stop the game.
     // Conditions for ending the game:
     if (state.wordArr.join('') === state.secretWord) {
       state.shouldKeepPlaying = false; // while loop for stops
-      console.log(`\nYou guessed the word!`);
-       // reveal secret word from current game
+      console.log(`\nYou guessed the word! It was ${word}.`);
+      //  reveal secret word from current game
       //  revealSecretWord();
-
       // play again?
       playAgain();
     }
   }
+
+  // WHAT SCOPE DOES THIS NEED TO BE IN???
+  // Play again function - outside run() function
+  function playAgain(){
+    let userInput = readline.question("Would you like to play again? (Y or n) ").toLowerCase();
+    // Conditional logic that handles where to stop the game
+    if (userInput === "n" || userInput === "no") {
+      // If the user doesn't enter "n" or "no"
+      console.log(`game over. The word was ${word}.`);
+      state.shouldKeepPlaying = false; // while loop for stops
+    } 
+    else {
+        // Starts the game again - reset from beginning.
+        run();
+    }
+  }
+
+
+
 }
 run();
 
-
-// Play again function - outside run() function
-function playAgain(){
-  let userInput2 = readline.question("Would you like to play again? (Y or n) ").toLowerCase();
-  // Conditional logic that handles where to stop the game
-  if (userInput2 === "n" || userInput2 === "no") {
-    console.log("Stopping the game.");
-    // If the user doesn't enter "n" or "no"
-  } else {
-      // Starts the game again - reset from beginning.
-      run();
-  }
-}

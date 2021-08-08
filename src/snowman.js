@@ -72,33 +72,11 @@ const word = getRandomWord() // get random word
   /*
   While Loop that keeps the game running. `readline.question( `Write input question here` )` stops the execution of the program to ask for user input. The user enters whatever they want! The value the user inputs will be assigned to the variable `userInput`. After user hits the 'return' key, the rest of the code will run.
   */
-  // TODO: Currently, there is no limit to the number of guesses. Set the `maxNumOfGuesses`. If number of guesses matches `maxNumOfGuesses` && `word` has not been found, EndOfGame message - `You did not guess the word in ${state.maxNumOfGuesses} guesses. game over.`
-  // This would be if the `state.wrongGuesses.length` > `state.maxNumWrongGuesses`
-  // while you have remaining guesses > 0
-/*
-[ ] If the guess is incorrect, the number of remaining guesses should decrease.
-[ ] If the guess is correct, the number of remaining guesses should stay the same.
-[ ] Regardless of whether or not the guess is correct, the number of remaining guesses should be shown to the user.
-*/
-
   // while (state.shouldKeepPlaying) {
   while (state.maxNumOfGuesses > 0) {
     // Variable that stores the user input and is lowercased
     const userInput = readline.question("\nGuess a letter: ").toLowerCase();
     // if more than one character, do not push to array.
-
-
-    // How to get the correct letter into the empty `correctGuesses` array:
-    // Only one letter at a time
-    // if letter matches random `word`, continue to `correctGuesses` array.
-      // if letter does not exist in `correctGuesses` array, add it.
-      // if letter already exists in the `correctGuesses` array, don't add it.
-    // else if letter doesn't match random `word`, continue to `wrongGuesses` array.
-      // if letter does not exist in `wrongGuesses` array, add it.
-      // if letter already exists in the `wrongGuesses` array, don't add it.
-
-    // If `maxNumWrongGuesses` has been reached, don't continue - console.log message - `Max guesses has been reached. Game over.`
-
     // If only one character, push to array.
     if (userInput.length === 1) {
       // if guessedLetter is in guessedLetters array, do not push.
@@ -145,7 +123,6 @@ const word = getRandomWord() // get random word
       playAgain();
     }
   }
-
     // ALL guesses the user has typed in so far, stored in array `guessedLetters`. Use .sort() to make it in alphabetical order
     // console.log("All guesses made:", state.guessedLetters.sort().join(', '));
     // log correct guesses array:
@@ -184,9 +161,6 @@ const word = getRandomWord() // get random word
         run();
     }
   }
-
-
-
 }
 run();
 

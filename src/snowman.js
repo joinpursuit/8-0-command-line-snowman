@@ -22,7 +22,7 @@ let guessLeft = 8;
 function run() {
   let snowman = {
       letter: '',
-      CurrentSolvedWord: [],
+      currentSolvedWord: [],
       guessedWords: '',
       arrayGuessedWords: [],
   }
@@ -49,7 +49,7 @@ function restartGame() {
       //recreate initial starting object
       snowman = {
         letter: '',
-        CurrentSolvedWord: [],
+        currentSolvedWord: [],
         guessedWords: '',
         arrayGuessedWords: [],
     }
@@ -83,7 +83,7 @@ function gamePlay() {
         for (let i = 0; i < word.length; i++) {
           if (word[i] === snowman.letter) {
             arrayHiddenWord[i * 2] = arrayChosenWord[i];
-            snowman.CurrentSolvedWord[i] = arrayChosenWord[i];
+            snowman.currentSolvedWord[i] = arrayChosenWord[i];
           }
         }
       //add a point to guessLeft if a correct guess is given
@@ -97,7 +97,7 @@ function gamePlay() {
           guessLeft -= 1;
           word = arrayChosenWord.join(''); 
           hiddenWord = arrayHiddenWord.join('');
-         let solvedWord = snowman.CurrentSolvedWord.join('');
+         let solvedWord = snowman.currentSolvedWord.join('');
       //winning message when word is guessed
       if (solvedWord === word) {
           console.log("\x1b[1;92m" + "🎉 🎊 🥳 Congratulations! 🎉 🎊 🥳" + "\x1b[39m")
@@ -167,7 +167,7 @@ function guessIsValid(userInput) {
       if (guessIsValid(userInput) && userInput !== userInput.toUpperCase()) {
         snowman.letter = userInput
       } else {
-        console.log("Please enter a valid letter")
+        console.log("\x1b[1;91m" + "Please enter a valid letter" + "\x1b[39m")
     }
   }
 }
@@ -186,4 +186,4 @@ function guessIsValid(userInput) {
   
 }
 
-  run();
+run();

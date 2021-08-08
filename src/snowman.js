@@ -44,7 +44,7 @@ function restartGame() {
   leaveChoice = readline.keyInYN('Would you like to play again?')
     if (leaveChoice) {
       word = getRandomWord()
-      console.log("Welcome back, Let's start!")
+      console.log("\nWelcome back, Let's start!")
       guessLeft = 8;
       //recreate initial starting object
       snowman = {
@@ -157,14 +157,14 @@ function getValidLetterGuess() {
   //function here for user to know how many guesses left
   guessLeftCounter()
 //same inputted letters and numbers are invalid 
-function guessIsValid(letterGiven) {
-  let guessedWords = '';
-  return (letterGiven.length === 1) && (letterGiven.toUpperCase() !== letterGiven.toLowerCase()) && (!(snowman.guessedWords.includes(letterGiven)))
+function guessIsValid(userInput) {
+  return (userInput.length === 1) && (userInput.toUpperCase() !== userInput.toLowerCase()) && (!(snowman.guessedWords.includes(userInput)))
 }
+//needs to stop taking in the same letter again
   snowman.letter = ''
     while (!snowman.letter) {
   const userInput = readline.question("\nGuess a letter: ");
-      if (guessIsValid(userInput)) {
+      if (guessIsValid(userInput) && userInput !== userInput.toUpperCase()) {
         snowman.letter = userInput
       } else {
         console.log("Please enter a valid letter")

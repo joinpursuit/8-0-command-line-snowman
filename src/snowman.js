@@ -11,8 +11,9 @@ const dictionary = require("./dictionary");
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
 function getRandomWord() {
-  const index = Math.floor(Math.random() * dictionary.length);
-  return dictionary[index];
+  //   const index = Math.floor(Math.random() * dictionary.length);
+  //   return dictionary[index];
+  return "advertisement";
 }
 
 /*
@@ -22,6 +23,7 @@ function getRandomWord() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
+
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
@@ -67,7 +69,8 @@ function run() {
   console.log(newWordArr);
   const newWordLength = newWordArr.length;
 
-  // lines variable will be used to hold the value of the word key inside the outputTextBlock object.
+  //lines variable will be used to hold the value of the word key inside the outputTextBlock object.
+
   let lines = "";
 
   for (const eachLetter of newWordArr) {
@@ -78,7 +81,7 @@ function run() {
   const outputTextBlock = {
     remainingIncorrectGuesses: 7,
     lettersGuessed: "",
-    word: `${lines}`,
+    word: lines.split(""),
   };
 
   // The bellow three variables are going to be used to access the outputTextBlock object key values.
@@ -86,10 +89,12 @@ function run() {
   let guessed = outputTextBlock.lettersGuessed;
   let hiddenLetters = outputTextBlock.word;
 
-  while (remainingGuesses > -1 && word !== hiddenLetters) {
+  while (remainingGuesses > 0 && word !== hiddenLetters.join("")) {
     // login the key values of the outputTextBlock object
     console.log(
-      `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters}\n`
+      `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters.join(
+        ""
+      )}\n`
     );
 
     // This line of code will print out whatever is inputted in by the user.
@@ -98,21 +103,41 @@ function run() {
     userInput = userInput.toLocaleLowerCase();
     //
 
-    // edge cases or for user errors and updates reamainig guesses based on user input.
-
+    // edge cases  for user invalid input.
     if (!alphabet.includes(userInput)) {
       console.log(`Invalid input: ${userInput}, please type a valid letter`);
+      // logs the guessed letters.
     } else if (alphabet.includes(userInput)) {
-      console.log(`THE USER INPUTTED: ${userInput}`);
-
       if (!guessed.includes(userInput)) {
         guessed += `${userInput}, `;
-
-        if (!newWordArr.includes(userInput)) {
-          remainingGuesses = remainingGuesses - 1;
+      }
+      // logs the correct letters to word key value.
+      if (newWordArr.includes(userInput)) {
+        for (const letter in newWordArr) {
+          if (userInput === newWordArr[letter]) {
+            hiddenLetters.splice(letter, 1, userInput);
+          }
         }
       }
-      //guessed += `${userInput}, `;
+    }
+    // deducts a guess when user guesses wrong.
+    if (!newWordArr.includes(userInput)) {
+      remainingGuesses = remainingGuesses - 1;
+    }
+    console.log(`THE USER INPUTTED: ${userInput}`);
+
+    if (remainingGuesses === 0) {
+      console.log(
+        `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters.join(
+          ""
+        )}\nYou Lost!`
+      );
+    } else if (word === hiddenLetters.join("")) {
+      console.log(
+        `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters.join(
+          ""
+        )}\nYou Won!`
+      );
     }
   }
 }

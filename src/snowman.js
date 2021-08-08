@@ -27,69 +27,56 @@ function run() {
   const word = getRandomWord();
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+    //const userInput = readline.question("Guess a letter: ");
 
     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
 
     After a user hits the 'return' key, the rest of the code will run.
   */
-  //const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  let wordCharacterArr =[];
-  // making an empty array that will contain letters of the word generated from getRandomWord(). Using an array so I can loop through & compare userInput
-  let letterSpaceArr =[];  // creating an array that will hold dashes that will equal word.length
-  //below I create a variable for remaining guesses, starting with the number 6.
-  let remainingGuess = 6;
-   // trying to tally the muliple matched letters.  I will use this in spice hopefully to elminate proper number pf spaces, also , to add back to remaining guesses
-  let guessedLetters = []
-  let count = 0;
+  
 
-  for (let i =0;i < word.length; i++){
+  let wordCharacterArr =[]; // making an empty array that will contain letters of the word generated from getRandomWord(). Using an array so I can loop through & compare userInput
+  let letterSpaceArr =[];  // creating an array that will hold dashes that will equal word.length
+  let remainingGuess = 6; // a variable for remaining guesses, starting with the number 6.
+  let guessedLetters = []; // Will push guessed letters that are  = 1 character into this array 
+  let count = 0; // 
+
+  for (let i =0;i < word.length; i++){  // this loop pushes all charcters of word into an array , and creates a second array with " _ " equal to word.length
       wordCharacterArr.push(word.charAt(i));
       letterSpaceArr.push("_");
-      // I want to put a while conditional here but it seems to be throwing off the results.  while (remaining guess > 0) , we want to continue to guess letters
     } 
-    while (remainingGuess > 0){
-      console.log("\n");
-      console.log(letterSpaceArr.join(" ") + "\n");
-      console.log("Guessed letters: " +  guessedLetters + "\n");
-      console.log(`You have ${remainingGuess} guesses remaining`);
-      const userInput = readline.question("Please enter your guess: \n"); 
+      while (remainingGuess > 0){ // conditional set for the game. As long as remainingGuess is > 0 , the game will continue. 
+        console.log("\n");
+        console.log(letterSpaceArr.join(" ") + "\n");  // this line generates the number of dashes equal to word being guessed
+        console.log("Guessed letters: " +  guessedLetters + "\n");
+        console.log(`You have ${remainingGuess} guesses remaining`);
+        const userInput = readline.question("Please enter your guess: \n"); 
 
-      console.log(word);// this is a helper for me to test my results
+        console.log(word);// this is a helper for me to test my results
 
       
-      if (userInput.length > 1){
-        console.log(`Please enter a valid letter`);
-        //console.log(letterSpaceArr);
-        //console.log(`you have ${remainingGuess} guesses remaining.`);
-        // if there is no matching userInput, I want the game to continue , and i will not subtract from remainingGuess
+        if (userInput.length > 1){ // if more than one letter is entered , request for a valid entry is returned 
+          console.log(`Please enter a valid letter`);
 
-      }  if (userInput.length === 1 && !wordCharacterArr.includes(userInput)) {
-              guessedLetters.push(userInput);
-              remainingGuess--;
-              
-              //console.log("THE USER INPUTTED:" +  guessedLetters);
-              
-              //console.log (letterSpaceArr);        
-      } 
-        if (wordCharacterArr.includes(userInput)){
-            guessedLetters.push(userInput);
-            count++;
+        }  
+          if (userInput.length === 1 && !wordCharacterArr.includes(userInput)) { // This is the conditional for an incorrect guess that is one character length
+              guessedLetters.push(userInput); // this enters the guessed letter into guessed letters array to be returned later.
+              remainingGuess--; // for each wrong guess, a guess is subtracted from remaining guesses    
+        } 
+          if (wordCharacterArr.includes(userInput)){ // conditional statement for each correct letter that is guessed.
+              guessedLetters.push(userInput); // guessed letter will be pushed into guessedLetters array
+              count++; // for each guessed letter, count is increased by 1 
 
-          for (let j =0; j < wordCharacterArr.length; j++){
-                if (userInput === wordCharacterArr[j]){
-                  letterSpaceArr.splice(j,1,userInput);
+          for (let j =0; j < wordCharacterArr.length; j++){ // loop to iterate through wordcharacterArr & find matching input to specific index postions
+                if (userInput === wordCharacterArr[j]){  
+                  letterSpaceArr.splice(j,1,userInput); // each matching userImput will be spliced into letterSpaceArray
 
                     console.log("Guessed letters: " +  guessedLetters);
-                    
-                    
 
-                    //uyconsole.log(letterSpaceArr); 
-
-                }   if (wordCharacterArr.toString() === letterSpaceArr.toString()) {
+                }   if (wordCharacterArr.toString() === letterSpaceArr.toString()) { // if all letters match , the following code executes to end game 
                       remainingGuess = 0;
                       console.log(letterSpaceArr.join(" "))
-                      console.log (word);
+                      //console.log (word);
                       console.log (`You win! You took ${count} guesses`);
                     break;  
                   }

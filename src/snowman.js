@@ -15,8 +15,6 @@ function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index]; // returns a string
 }
-// Variable that stores the random word. The `word` variable will be a string.
-const word = getRandomWord() // get random word
 
 /*
   This function runs your game. Everything you want to happen in your game should happen inside of here.
@@ -24,6 +22,9 @@ const word = getRandomWord() // get random word
   Then call these helper functions inside `run()`.
 */
 function run() {
+// Variable that stores the random word. The `word` variable will be a string.
+const word = getRandomWord() // get random word
+
   // A (global scope) object that stores the current `state` of our application; Can access these from anywhere in the code.
   let state = {
     shouldKeepPlaying: true,
@@ -31,8 +32,8 @@ function run() {
     secretWord: word, // the random word
     
     correctGuesses: [], // correctGuesses = []; // --> we have updated the state from empty array [] to ['p']
-    // wrongGuesses: [], // wrongGuesses = [];
-    maxNumWrongGuesses: 8, // array, string? what is the data type of this? How are we going to use it to know if the game is won or lost?
+    wrongGuesses: [], // wrongGuesses = [];
+    maxNumWrongGuesses: 5, // array, string? what is the data type of this? How are we going to use it to know if the game is won or lost?
 
     guessedLetters: [], // keep track of the guessed letters
     wordArr: [], // keep track of unknown blank letters
@@ -60,14 +61,23 @@ function run() {
       }
     }
   }
+
+
+  // HELPER FUNCTION #3 - reveal secret word function
+  // function revealSecretWord() {
+  //   // reveal secret word from current game
+  //   setTimeout(() => {  console.log(`It was: ${word}`) }, 2000); // 2 sec delay
+  // }
+
+
   /*
   While Loop that keeps the game running. `readline.question( `Write input question here` )` stops the execution of the program to ask for user input. The user enters whatever they want! The value the user inputs will be assigned to the variable `userInput`. After user hits the 'return' key, the rest of the code will run.
   */
   // TODO: Currently, there is no limit to the number of guesses. Set the `maxNumOfGuesses`. If number of guesses matches `maxNumOfGuesses` && `word` has not been found, EndOfGame message - `You did not guess the word in ${maxNumOfGuesses} guesses. game over.`
-  // This would be if the `state.wrongGuesses.length` > `maxNumOfGuesses`
+  // This would be if the `state.wrongGuesses.length` > `state.maxNumWrongGuesses`
   while (state.shouldKeepPlaying) {
     // Variable that stores the user input and is lowercased
-    const userInput = readline.question("Guess a letter: ").toLowerCase();
+    const userInput = readline.question("\nGuess a letter: ").toLowerCase();
     // if more than one character, do not push to array.
 
 
@@ -81,23 +91,47 @@ function run() {
       // if letter already exists in the `wrongGuesses` array, don't add it.
 
 
+    // TODO: Do not push invalid characters to `guessedLetters` array
+    // TODO: Separate `guessedLetters` array into `correctGuesses` and `wrongGuesses` arrays, and print to the console.
+
+    // TODO: Limit number of guesses `maxNumOfGuesses` allowed before the game ends.
+    // edge case: number of guesses `maxNumOfGuesses` allowed before the game ends.
+    // if (state.wrongGuesses.length === (state.maxNumWrongGuesses -1)) {
+    //   console.log(`You've gotten ${state.maxNumWrongGuesses} wrong. Game over.`);
+    //   // play again?
+    //   // playAgain();
+    // }
+
+
+    // If `maxNumWrongGuesses` has been reached, don't continue - console.log message - `Max guesses has been reached. Game over.`
+
     // If only one character, push to array.
     if (userInput.length === 1) {
       // if guessedLetter is in guessedLetters array, do not push.
       if (state.guessedLetters.includes(userInput) === true) {
         console.log('You guessed this letter already.')
-      } else {
+        // if the guessed letter is in the valid letters
+      } else if (state.validLetters.includes(userInput) === true) {
         // if letter is new, push user input into the array of `guessedLetters`
         state.guessedLetters.push(userInput);
+        // nested 'if' - if letter was correct:
+        // if the guessed letter is in the word
+        if (word.includes(userInput) === true) {
+          console.log(`Great! You got a letter.`);
+           // push wrong letter to `correctGuesses` array
+           state.correctGuesses.push(userInput);
+        } else {
+          console.log(`that letter was wrong.`)
+          // push wrong letter to `wrongGuesses` array
+          state.wrongGuesses.push(userInput);
+        }
       }
 
       // nested 'if' - does `userInput` match any letter in `validLetters` array?
-      if (state.validLetters.includes(userInput) === false) {
+      else if (state.validLetters.includes(userInput) === false) {
         // error message for symbols, numbers, etc.
-        console.log(`This is not a valid letter of the alphabet.\n\n`);
-      } else {
-        // error message - incorrect letter.
-        console.log(`Sorry, This letter is incorrect.\n\n`);
+        console.log(`This is not a valid letter of the alphabet. Try a letter.\n\n`);
+        // make sure the first character isn't marked as incorrect
       }
     } 
     else {
@@ -106,26 +140,43 @@ function run() {
   }
 
     // ALL guesses the user has typed in so far, stored in array `guessedLetters`. Use .sort() to make it in alphabetical order
-    console.log("All guesses made:", state.guessedLetters.sort().join(', '));
+    // console.log("All guesses made:", state.guessedLetters.sort().join(', '));
+    // log correct guesses array:
+    console.log("Correct guesses made:", state.correctGuesses.sort().join(', '));
+    // log wrong guesses array:
+    console.log("Wrong guesses made:", state.wrongGuesses.sort().join(', '));
 
     // Call Helper Function #2 inside `run()` providing `userInput` as argument
     spliceUserInput(userInput);
     console.log(state.wordArr.join(' ')); // Output: a p p _ _
 
-    // Keep track of wrong guesses
-    // Tell how many guesses are remaining, based on number of wrong guesses
-    // console.log(`You have ${} guesses remaining.`);
-    // if (wrongGuesses.length > 8) {
 
-    // }
 
     // Once word has been guessed, stop the game.
     // Conditions for ending the game:
     if (state.wordArr.join('') === state.secretWord) {
       state.shouldKeepPlaying = false; // while loop for stops
       console.log(`\nYou guessed the word!`);
-      setTimeout(() => {  console.log(`It was: ${word}`) }, 2000); // 2 sec delay
+       // reveal secret word from current game
+      //  revealSecretWord();
+
+      // play again?
+      playAgain();
     }
   }
 }
 run();
+
+
+// Play again function - outside run() function
+function playAgain(){
+  let userInput2 = readline.question("Would you like to play again? (Y or n) ").toLowerCase();
+  // Conditional logic that handles where to stop the game
+  if (userInput2 === "n" || userInput2 === "no") {
+    console.log("Stopping the game.");
+    // If the user doesn't enter "n" or "no"
+  } else {
+      // Starts the game again - reset from beginning.
+      run();
+  }
+}

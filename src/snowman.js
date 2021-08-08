@@ -39,139 +39,8 @@ let lives = 7
 let playAgain = true
   
 
-// function run(hint) {
-//   // This line of code gets a random word. The `word` variable will be a string.
 
-  
-//   //Declare variable called `dashes` empty string
-//   let dashes = ''
-  
-//   //iterate through `word` string, each element called `letter`
-//   for (const letter of word) {
-//     //ADD to `dashes` += '_'
-//     dashes += '_ '
-//   }
-  
-//   /*
-//   The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-  
-//   The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-  
-//   After a user hits the 'return' key, the rest of the code will run.
-//   */
-//  //Declare empty array called `guessesArray`
-//  let guessesArray = []
- 
-//  //Declare variable called `tries` = 0
-//  let tries = 7
-
-//  let foundWord
- 
- 
-//  //Keep looping if user has tries left or hasn't solved word
-//  while (tries > 0 && foundWord !== word) {
-//    console.clear()
-//    console.log(word)
-   
-   
-//    console.log(`💜 ${tries}`)
-   
-//    if(tries < 6){
-//      console.log(`\t\tHINT: ${hint}\n`)
-     
-//     } else {
-//       console.log('\n')
-//     }
-    
-//     // wd.getDef(word, "en", null, function(definition) {
-//       //   console.log(definition.definition);
-//       // });
-      
-      
-    
-      
-      
-//       // Console.log `dashes`
-//       console.log(`\n\t\t\t${dashes}\n`)
-      
-      
-//       // This line of code will print out whatever is inputted in by the user.
-//       console.log("\n\t\tLETTERS GUESSED\n\t\t", guessesArray.join(', '));
-      
-//       //console.log(`\t\tYou have ${tries} guesses remaining`)
-      
-//       const userInput = readline.question("\n\n\t\tGuess a letter: ");
-      
-//       const userInput2 = userInput.toLowerCase()
-      
-//       if (userInput2 === word){
-//         foundWord = word
-//         break;
-//       }
-      
-//       if(userInput2.match(/[a-z]/g) !== null && userInput2.length === 1) {
-        
-//         if(word.includes(userInput2)){
-//           let arrDashes = dashes.split(' ')
-//           for(const i in word){
-//             if(userInput2 === word[i]){
-//               arrDashes.splice(i, 1, word[i])
-              
-//             }
-//           }
-//           dashes = arrDashes.join(' ')
-//           //console.log("Space")
-          
-//         } else if (!word.includes(userInput2) && !guessesArray.includes(userInput2)){
-//           //`tries`++
-//           tries--
-//         }
-        
-        
-//         //Compare `userInput2` to `guessesArray` using .includes
-//         if (guessesArray.includes(userInput2)){
-//           console.log(`You've guessed ${userInput2} already, try again`)
-          
-//         } else {
-//           //if false .push `userInput2` into `guessesArray`
-//           guessesArray.push(userInput2)
-
-//         }
-        
-//       } else {
-//         console.log(`\n"${userInput2}" is not a valid input`)
-//         readline.question("\nPress Enter to Continue...")
-//       }
-      
-//       foundWord = dashes.trim().split(' ').join('')
-//       console.log(foundWord.length)
-//       console.log(foundWord === word)
-//     }
-    
-//     console.clear()
-    
-//     console.log(`The hidden word was ${word}`)
-    
-//     if(foundWord === word){
-//     console.log('Congratulations you won!!')
-//   } else {
-//     console.log('You\'ve run out of tries, Try Again')
-//   }
-
-//  if(readline.keyInYN("\nPlay Again....?")){
-//     word = getRandomWord()
-//     startGame()
-//  } else {
-//    console.clear()
-//  }
-
-
-
-  
-// }
-
-
- 
+//Gets the word and its definition and starts the game 
 function startGame(){
     const word = getRandomWord();
     wd.getDef(word, "en", null, function(definition){
@@ -183,6 +52,7 @@ function startGame(){
     });
 }
 
+//Restarts the game 
 function isPlayingAgain(word){
   console.clear()
   console.log(`The word was ${word}`)
@@ -197,7 +67,7 @@ function isPlayingAgain(word){
 function wordUnderScore(word){
   let underScore = ''
   for(const i in word){
-    underScore += '_'
+    underScore += '_ '
   }
   return underScore
 }
@@ -212,7 +82,7 @@ function isValidChar(input, word){
     valid = "Enter one letter at a time"
   } else if (guessesArray.includes(input)){
     valid = "You've already guessed that letter"
-  } else {
+  } else if (!word.includes(input)) {
     guessesArray.push(input)
   }
 
@@ -223,17 +93,17 @@ function isValidChar(input, word){
 function revealLetter(underScore, input, word){
   if(input === word){return word}
 
-  let reveal = underScore.split('')
+  let reveal = underScore.split(' ')
   for(const i in word){
     if(input === word[i]){
-      reveal.splice(i, 1, word[i])
+      reveal.splice(i, 1, "\033[32m"+`${word[i]}`+"\033[39m")
     }
   }
   
-  return reveal.join('')
+  return reveal.join(' ')
 }
 
-
+//Removes a live if guess is the wrong letter
 function removeLives(validChar, userInput, word){
   let removeLife = false
   if(validChar && !(word.includes(userInput))){
@@ -243,7 +113,10 @@ function removeLives(validChar, userInput, word){
   return removeLife
 }
 
+//Stops the game if player is out of lives or the word is guessed
 function isStillPlaying(lives, underScore, word){
+  underScore = underScore.split(' ').join('').trim()
+  underScore = underScore.split('\033[32m').join('').split('\033[39m').join('').trim()
   let keepLooping = true
   if(lives === 0 || underScore === word){
     keepLooping = false
@@ -251,46 +124,46 @@ function isStillPlaying(lives, underScore, word){
   return keepLooping
 }
 
+function livesColor(lives){
+  switch (true) {
+    case lives > 6:
+      return "\033[32m"+`🐵 `+lives+"\033[39m"
+    case lives > 4:
+      return "\033[33m"+`🙊 `+lives+"\033[39m"
+    case lives > 2:
+      return "\033[31m"+`🙉 `+lives+"\033[39m"
+    case lives > 0:
+      return "\033[31m"+`🙈 `+lives+"\033[39m"
+  }
+}
+
 
 function run(hint, word){
   //CC- Get `userInput`
   //CC- Send `userInput` to function `isValidChar()` to check for valid characters
-
   guessesArray = []
-
   //Declare variable `underScore` = `wordUnderScore(`word`)`
   let underScore = wordUnderScore(word)
-
   //Declare variable `keepLooping` = true
   let keepLooping = true
-  
   //Declare variable `lives` = 7
   lives = 7
-
   //While `keepLooping`
   while (keepLooping){
     console.clear()
-
-    console.log(word)
-
-    console.log(lives)
-
+    //console.log(word)
+    console.log(`❌`+"\033[31m"+` ${guessesArray.sort().join(', ')}`+"\033[39m"+`\n\n${livesColor(lives)}`)
     //Console log `hint`
-    console.log(`HINT: ${hint}`)
-
+    console.log(`\n\tHINT: ${hint}`)
     //Console log `underScore`
-    console.log(underScore)
-
+    console.log(`\n\t\t${underScore}`)
     //Letters Guessed
-    console.log(`LETTERS GUESSED: ${guessesArray.sort().join(', ')}`)
-
+    //console.log(`\tLETTERS GUESSED: ${guessesArray.sort().join(', ')}`)
     //Declare const `userInput` equal to `readline.question("Guess a letter: ")`
-    const userInput = (readline.question("Guess a letter: ")).toLowerCase()
+    const userInput = (readline.question("\n\t\tGuess a letter: ")).toLowerCase()
     //const userInput = 'zz'
-    
     //Declare variable `validChar` = isValidChar(`userInput`)
     const validChar = isValidChar(userInput, word)
-
     //Compare `validChar` to/=== true
     if(validChar === true){
       //if true ressign `underScore` = `revealLetter(`underScore`, `userInput`)`
@@ -299,36 +172,29 @@ function run(hint, word){
     //Compare typeof `validChar` to === 'string'
     else if (typeof validChar === 'string'){
       //if 'string' console log `validChar` ---> "You've already guessed that letter"
-      console.log(validChar)
+      console.log(`\n\t   ${validChar}`)
       //---> press enter to try again ---> continue
-      readline.question("Press Enter to continue...")
+      readline.question(`\n\n\t   Press Enter to continue...`)
       continue;
     } else {
       //if false console log "`userInput` is not a letter"
-      console.log(`${userInput} is not a letter`)
+      console.log(`\n\t\t${userInput} is not a letter`)
       //---> press enter to try again ---> continue
-      readline.question("Press Enter to continue...")
+      readline.question(`\n\t   Press Enter to continue...`)
       continue;
     }
-
     //Set `removeLife` equal to/= `removeLives(`validChar`, `userInput`)`
     let removeLife = removeLives(validChar, userInput, word)
-
     //Compare `removeLife` to/=== true
     if (removeLife){
       //if true `lives`--
       lives--
-
     }
-    
     //Set `keepLooping` equal to/= `isStillPlaying(`lives`, `underScore`)`
     keepLooping = isStillPlaying(lives, underScore, word)
-
   }
-
   //Declare variable const `playAgain` = `isPlayingAgain()`
-  let playAgain = isPlayingAgain(word)
-
+  playAgain = isPlayingAgain(word)
   //return `playAgain`
   return playAgain
 }

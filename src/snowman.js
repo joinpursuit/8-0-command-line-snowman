@@ -14,18 +14,7 @@ function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
-function gameInPlay(){
-  const userInput = readline.question("Please enter your guess: \n"); 
-  return userInput;
-}
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
-
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
 function run() {
   const word = getRandomWord();
 
@@ -33,18 +22,17 @@ function run() {
   let letterSpaceArr =[];  // creating an array that will hold dashes that will equal word.length
   let remainingGuess = 6; // a variable for remaining guesses, starting with the number 6.
   let guessedLetters = []; // Will push guessed letters that are  = 1 character into this array 
-  let count = 0; // 
+  let count = 0; // count for number of correct guesses
   
 
-  for (let i =0;i < word.length; i++){  // this loop pushes all charcters of word into an array , and creates a second array with " _ " equal to word.length
+  for (let i =0;i < word.length; i++){  // this loop pushes all charcters of secret word into an array , and creates a second array with " _ " equal to word.length
       wordCharacterArr.push(word.charAt(i));
       letterSpaceArr.push("_");
     } 
       while (remainingGuess > 0){ // conditional set for the game. As long as remainingGuess is > 0 , the game will continue. 
-        //console.log("\n");
         console.log(letterSpaceArr.join(" ") + "\n");  // this line generates the number of dashes equal to word being guessed
-        console.log("Guessed letters: " +  guessedLetters + "\n");
-        console.log(`You have ${remainingGuess} guesses remaining`);
+        console.log("Guessed letters: " +  guessedLetters + "\n"); // prints guessed letters
+        console.log(`You have ${remainingGuess} guesses remaining`); 
         const userInput = readline.question("Please enter your guess: \n"); 
 
           if (userInput.length > 1){ // if more than one letter is entered , request for a valid entry is returned 

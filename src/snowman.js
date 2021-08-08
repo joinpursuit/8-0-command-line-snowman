@@ -17,19 +17,13 @@ function getRandomWord() {
   return dictionary[index];
 }
 let word = getRandomWord();
+let guessLeft = 8;
 
 function run() {
-
-  let arrayChosenWord = [];
-  let letter = '';
-  let hiddenWord = '';
-  let arrayHiddenWord = [];
-  let guessedWords = '';
-  let arrayGuessedWords = [];
-  let solvedWord = '';
-  let arrayCurrentSolvedWord = [];
-      
-let guessLeft = 8;
+let letter = '';
+let guessedWords = '';
+let arrayGuessedWords = [];
+let arrayCurrentSolvedWord = [];
 //to start the game
 let choice = readline.keyInYN('👺 Hi! Would you like to play a game? 👺')
     if(choice) {
@@ -39,31 +33,49 @@ let choice = readline.keyInYN('👺 Hi! Would you like to play a game? 👺')
       //function here for user to play the game
       gamePlay()
       } else {
-        console.log('👎 Oh well! I tried 👎')
-          quitTest()
+          console.log('👎 Oh well! I tried 👎')
+            //function to quit game 
+            quitTest()
       }
+
+//restart function when user wins or loses
+function restartGame() {
+  leaveChoice = readline.keyInYN('Would you like to play again?')
+    if (leaveChoice) {
+      console.log("Welcome back, Let's start!")
+        //function here to show hiddenWord to user
+        makeTheBlanks()
+        //function for gamePlay
+        gamePlay()
+    } else {
+      //user no longer wants to play
+      console.log("Too bad, come back soon!")
+        //function to quit game
+        quitTest()
+    }
+}
 //quit the test after the user is done
 function quitTest() {
         console.log("Goodbye! 👋")
         //stop program from running
           process.exit()
       }
-
 //replace the hidden word with letters if guessed correctly
 function gamePlay() {
   //make the function run until no guesses left
-    while (guessLeft !== 0) {
-  getValidLetterGuess()
-    arrayChosenWord = word.split(''); 
-    arrayHiddenWord = hiddenWord.split('');
-    //add letter to hidden word if correct letter is given
-      for (let i = 0; i < word.length; i++) {
-        if (word[i] === letter) {
-          arrayHiddenWord[i * 2] = arrayChosenWord[i];
-          arrayCurrentSolvedWord[i] = arrayChosenWord[i];
-            }
+  while (guessLeft !== 0) {
+    //function for valid guess
+    getValidLetterGuess()
+      let arrayChosenWord = word.split(''); 
+      let arrayHiddenWord = hiddenWord.split('');
+        //add letter to hidden word if correct letter is given
+        for (let i = 0; i < word.length; i++) {
+          if (word[i] === letter) {
+            arrayHiddenWord[i * 2] = arrayChosenWord[i];
+            arrayCurrentSolvedWord[i] = arrayChosenWord[i];
           }
-          //negate the subtraction from receiving a guess by adding a point to guessLeft if a correct guess is given
+        }
+      //add a point to guessLeft if a correct guess is given
       for (let i = 0; i < word.length; i++) {
         if (word[i] === letter) {
           guessLeft += 1
@@ -74,23 +86,24 @@ function gamePlay() {
           guessLeft -= 1;
           word = arrayChosenWord.join(''); 
           hiddenWord = arrayHiddenWord.join('');
-          solvedWord = arrayCurrentSolvedWord.join('');
+         let solvedWord = arrayCurrentSolvedWord.join('');
       //winning message when word is guessed
       if (solvedWord === word) {
           console.log("🎉 🎊 🥳 Congratulations! 🎉 🎊 🥳")
           //print chosenWord for user to see
           console.log(`The word was "${word}"`)
           //function here to show ending message and stop if user wins
-          quitTest() 
+          restartGame() 
         }
           //print hidden word for user
           console.log(`WORD: ${hiddenWord}`)
           //function here to show user the letters that are already guessed
           showGuessedWord()
         }
-        //function here for user to know how many guesses left
-        guessLeftCounter()
+          //function here for user to know how many guesses left
+          guessLeftCounter()
       }
+
 //show the letters the user already guessed
 function showGuessedWord() {
     if (arrayGuessedWords.length === 0) {
@@ -98,7 +111,7 @@ function showGuessedWord() {
     } else {
       arrayGuessedWords.push((`, ${letter}`))
     }
-    guessedWords = arrayGuessedWords.join('')
+      guessedWords = arrayGuessedWords.join('')
       //prints guessed letters for user to see 
       console.log(`\nGuessed Letters: ${guessedWords}`)
     }
@@ -111,7 +124,7 @@ function guessLeftCounter() {
       //prints chosenWord for the losing user
       console.log(`The word was "${word}"`)
         //function here to show ending message and stop if user loses
-        quitTest()
+        restartGame()
       }
     }
 //turns the dictionary word into a hidden word

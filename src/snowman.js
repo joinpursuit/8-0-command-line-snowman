@@ -35,7 +35,6 @@ const word = getRandomWord() // get random word
     wrongGuesses: [], // wrongGuesses = [];
     maxNumOfGuesses: 3, // stores how many guesses are left
 
-
     guessedLetters: [], // keep track of the guessed letters
     wordArr: [], // keep track of unknown blank letters
     validLetters: ['z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
@@ -139,12 +138,13 @@ const word = getRandomWord() // get random word
     if (state.wordArr.join('') === state.secretWord) {
       state.shouldKeepPlaying = false; // while loop for stops
       console.log(`\nYou guessed the word! It was ${word}.`);
-      //  reveal secret word from current game
-      //  revealSecretWord();
       // play again?
       playAgain();
     }
   }
+
+}
+run();
 
   // WHAT SCOPE DOES THIS NEED TO BE IN???
   // Play again function - outside run() function
@@ -161,6 +161,3 @@ const word = getRandomWord() // get random word
         run();
     }
   }
-}
-run();
-

@@ -39,8 +39,9 @@ function run() {
   let letterSpaceArr =[];  // creating an array that will hold dashes that will equal word.length
   //below I create a variable for remaining guesses, starting with the number 6.
   let remainingGuess = 6;
-  let count = 0; // trying to tally the muliple matched letters.  I will use this in spice hopefully to elminate proper number pf spaces, also , to add back to remaining guesses
+   // trying to tally the muliple matched letters.  I will use this in spice hopefully to elminate proper number pf spaces, also , to add back to remaining guesses
   let guessedLetters = []
+  let count = 0;
 
   for (let i =0;i < word.length; i++){
       wordCharacterArr.push(word.charAt(i));
@@ -48,8 +49,11 @@ function run() {
       // I want to put a while conditional here but it seems to be throwing off the results.  while (remaining guess > 0) , we want to continue to guess letters
     } 
     while (remainingGuess > 0){
-      console.log(letterSpaceArr);
-      const userInput = readline.question("Guess a letter: "); 
+      console.log("\n");
+      console.log(letterSpaceArr.join(" ") + "\n");
+      console.log("Guessed letters: " +  guessedLetters + "\n");
+      console.log(`You have ${remainingGuess} guesses remaining`);
+      const userInput = readline.question("Please enter your guess: \n"); 
 
       console.log(word);// this is a helper for me to test my results
 
@@ -61,34 +65,33 @@ function run() {
         // if there is no matching userInput, I want the game to continue , and i will not subtract from remainingGuess
 
       }  if (userInput.length === 1 && !wordCharacterArr.includes(userInput)) {
-            guessedLetters.push(userInput);
-            console.log("THE USER INPUTTED:" +  guessedLetters);
-            console.log(`you have ${remainingGuess} guesses remaining.`);
-            console.log (letterSpaceArr);        
+              guessedLetters.push(userInput);
+              remainingGuess--;
+              
+              //console.log("THE USER INPUTTED:" +  guessedLetters);
+              
+              //console.log (letterSpaceArr);        
       } 
         if (wordCharacterArr.includes(userInput)){
             guessedLetters.push(userInput);
+            count++;
 
           for (let j =0; j < wordCharacterArr.length; j++){
-            //let allCharacters = wordCharacterArr[j]; // Im creating variable for each array to compare values once letterspaceArr is complete.
-            //let newAnswer  = letterSpaceArr[j];
-
                 if (userInput === wordCharacterArr[j]){
-                  
-                    remainingGuess--;
-                    count++;
-                    letterSpaceArr.splice(j,1,userInput);
+                  letterSpaceArr.splice(j,1,userInput);
 
-                    console.log("THE USER INPUTTED: " +  guessedLetters);
-                    console.log(`You took ${count} guesses, you have ${remainingGuess} guesses remaining.`);
+                    console.log("Guessed letters: " +  guessedLetters);
+                    
                     
 
-                    console.log(letterSpaceArr); 
+                    //uyconsole.log(letterSpaceArr); 
 
-                } if (wordCharacterArr.toString() === letterSpaceArr.toString()) {
+                }   if (wordCharacterArr.toString() === letterSpaceArr.toString()) {
                       remainingGuess = 0;
+                      console.log(letterSpaceArr.join(" "))
+                      console.log (word);
                       console.log (`You win! You took ${count} guesses`);
-                    break; // else if it does match then we will print you win ! # of turns remaining 
+                    break;  
                   }
         }
   

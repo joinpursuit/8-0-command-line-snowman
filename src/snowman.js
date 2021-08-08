@@ -20,10 +20,11 @@ let word = getRandomWord();
 let guessLeft = 8;
 
 function run() {
-let letter = '';
-let guessedWords = '';
-let arrayGuessedWords = [];
-let arrayCurrentSolvedWord = [];
+  let snowman = {
+      letter: '',
+      guessedWords: '',
+      CurrentSolvedWord: [],
+  }
 //to start the game
 let choice = readline.keyInYN('👺 Hi! Would you like to play a game? 👺')
     if(choice) {
@@ -37,18 +38,25 @@ let choice = readline.keyInYN('👺 Hi! Would you like to play a game? 👺')
             //function to quit game 
             quitTest()
       }
-
 //restart function when user wins or loses
 function restartGame() {
   leaveChoice = readline.keyInYN('Would you like to play again?')
     if (leaveChoice) {
+      word = getRandomWord()
       console.log("Welcome back, Let's start!")
+      guessLeft = 8;
+      //recreate initial starting object
+      snowman = {
+        letter: '',
+        guessedWords: '',
+        CurrentSolvedWord: [],
+    }
         //function here to show hiddenWord to user
         makeTheBlanks()
         //function for gamePlay
         gamePlay()
     } else {
-      //user no longer wants to play
+      //print if user chooses not to play
       console.log("Too bad, come back soon!")
         //function to quit game
         quitTest()
@@ -70,14 +78,14 @@ function gamePlay() {
       let arrayHiddenWord = hiddenWord.split('');
         //add letter to hidden word if correct letter is given
         for (let i = 0; i < word.length; i++) {
-          if (word[i] === letter) {
+          if (word[i] === snowman.letter) {
             arrayHiddenWord[i * 2] = arrayChosenWord[i];
-            arrayCurrentSolvedWord[i] = arrayChosenWord[i];
+            snowman.CurrentSolvedWord[i] = arrayChosenWord[i];
           }
         }
       //add a point to guessLeft if a correct guess is given
       for (let i = 0; i < word.length; i++) {
-        if (word[i] === letter) {
+        if (word[i] === snowman.letter) {
           guessLeft += 1
             break;
           }
@@ -86,7 +94,7 @@ function gamePlay() {
           guessLeft -= 1;
           word = arrayChosenWord.join(''); 
           hiddenWord = arrayHiddenWord.join('');
-         let solvedWord = arrayCurrentSolvedWord.join('');
+         let solvedWord = snowman.CurrentSolvedWord.join('');
       //winning message when word is guessed
       if (solvedWord === word) {
           console.log("🎉 🎊 🥳 Congratulations! 🎉 🎊 🥳")
@@ -106,14 +114,15 @@ function gamePlay() {
 
 //show the letters the user already guessed
 function showGuessedWord() {
+  let arrayGuessedWords = [];
     if (arrayGuessedWords.length === 0) {
-      arrayGuessedWords.push(letter)
+      arrayGuessedWords.push(snowman.letter)
     } else {
-      arrayGuessedWords.push((`, ${letter}`))
+      arrayGuessedWords.push((`, ${snowman.letter}`))
     }
-      guessedWords = arrayGuessedWords.join('')
+      snowman.guessedWords = arrayGuessedWords.join(', ')
       //prints guessed letters for user to see 
-      console.log(`\nGuessed Letters: ${guessedWords}`)
+      console.log(`\nGuessed Letters: ${snowman.guessedWords}`)
     }
 //count how many guesses the user has left until loses
 function guessLeftCounter() {
@@ -147,13 +156,13 @@ function getValidLetterGuess() {
   guessLeftCounter()
 //same inputted letters and numbers are invalid 
 function guessIsValid(letterGiven) {
-  return (letterGiven.length === 1) && (letterGiven.toUpperCase() !== letterGiven.toLowerCase()) && (!(guessedWords.includes(letterGiven)))
+  return (letterGiven.length === 1) && (letterGiven.toUpperCase() !== letterGiven.toLowerCase()) && (!(snowman.guessedWords.includes(letterGiven)))
 }
-  letter = ""
-    while (!letter) {
+  snowman.letter = ''
+    while (!snowman.letter) {
   const userInput = readline.question("\nGuess a letter: ");
       if (guessIsValid(userInput)) {
-        letter = userInput
+        snowman.letter = userInput
       } else {
         console.log("Please enter a valid letter")
     }

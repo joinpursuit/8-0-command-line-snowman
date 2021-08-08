@@ -94,12 +94,21 @@ let validLetters = [
   "u",
   "v",
   "w",
+  "x",
   "y",
   "z",
 ];
 
 function run() {
   const space = "\n";
+  console.log(
+    "S N O W M A N  G A M E" +
+      space +
+      space +
+      "The game begins when you enter a letter you believe is in the mystery word" +
+      space +
+      "You have 8 chances to guess the complete word.. but be careful you may awaken the Snowman monster!"
+  );
   let repeatedString = "";
   let i = 0;
   while (i < word.length) {
@@ -107,24 +116,24 @@ function run() {
     i++;
   }
   console.log(repeatedString);
+  console.log(`${space}This is a ${word.length} Letter Word${space}`);
 
   while (repeatedString.includes("_") && incorrectGuesses > 0) {
     console.log(
-      ` Word: ${repeatedString
-        .split("")
-        .join(
-          " "
-        )} \n Remaining Incorrect Guesses: ${incorrectGuesses}\nLetters Guessed: ${guesses} \n
+      ` Word: ${repeatedString.split("").join(" ")} 
+        ${space}Remaining Incorrect Guesses: ${incorrectGuesses}${space}${space}Letters Guessed: ${guesses}${space}
         `
     );
 
     const guess = readline.question("Guess a letter: ");
     if (!validLetters.includes(guess)) {
-      console.log(`Opps! Please enter a letter...`);
+      console.log(`${space}Opps! Please enter a lower-case letter...${space}`);
       continue; // sends the user back to the game start (breaking out of the loop) after they enter a (number, multiple letters, etc.)
     }
     if (guesses.includes(guess)) {
-      console.log("You have already guessed that letter. Try Again");
+      console.log(
+        `${space}You have already guessed that letter. Try Again${space}`
+      );
       continue;
     }
     guesses.push(guess);
@@ -132,9 +141,14 @@ function run() {
       if (word[i] === guess) {
         repeatedString = repeatedString.replaceAt(i, guess);
       }
+      continue;
+    }
+    if (word.includes(guess)) {
+      console.log(space + "You got it! Keep up the good work!" + space);
     }
     if (!word.includes(guess)) {
       incorrectGuesses -= 1;
+      console.log(`${space}There is no ${guess}, try again${space}`);
     }
 
     //below signals when game ends
@@ -150,12 +164,12 @@ function run() {
   */
       // This line of code will print out whatever is inputted in by the user.
       console.log(
-        `Oh no, It's alive! You are out of guesses! \n
-      The correct word was ${word}`
+        `${space}Oh no, It's alive! You are out of guesses! \n
+      The correct word was ${word}${space}`
       );
     }
     if (!repeatedString.includes("_")) {
-      console.log("Winner!  Snow-tastic!");
+      console.log(`${space}Winner!  Snow-tastic!${space}`);
     }
   }
 }

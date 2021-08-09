@@ -89,13 +89,13 @@ function run() {
   console.log(
     chalk.bgBlackBright(`
   .      *    *           *.       *   .                      *     . 
-               .   .                   __   *    .     * .     *      
-    *       *         *   .     .    _|__|_        *    __   .       *
-  .  *  /\\       /\\          *       ('')    *       _|__|_     .   
+               .   .                  __   *    .     * .     *       
+    *       *         *   .     .   _|__|_        *     __   .       *
+  .  *  /\\       /\\          *       ('')    *        _|__|_     .    
        /  \\   * /  \\  *          .  <( . )> *  .       ('')   *   *   
-  *    /  \\     /  \\   .   *       _(__.__)_  _   ,--<(  . )>  .    .
-      /    \\   /    \\          *   |       |  )),\`   (   .  )     *    
-   *   \`||\` ..  \`||\`   . *.   ... ==========='\`   ... '--\`-\` ... *    .`),
+  *    /  \\     /  \\   .   *       _(__.__)_  _   ,--<(  . )>  .    . 
+      /    \\   /    \\          *   |       |  )),\`   (   .  )     *   
+   *   \`||\` ..  \`||\`   . *.   ... ==========='\`   ... '--\`-\` ... *   .`),
   chalk`    
       {green.bold Hello and Welcome to the Snowman Game!!}
       {red.bold Rules:} I will give you the length of a word and ${lives} lives.
@@ -160,7 +160,7 @@ function run() {
   let guessedLetters = []
   let snowmanStage = 7
   let continues = 0
-  for (let i = 0; i< word.length; i++){
+  for (let i = 0; i< word.length; i++){//create empty array of '_' of size word length
     wordDisplay.push('_')
   }
   console.log(chalk`Let's get started {bold ${playerName}}.\nThe word is {green.bold ${word.length}} letters long.`)
@@ -202,6 +202,10 @@ function run() {
       }else{// general incorrect
         if (userInput.length> 1){
           console.log(chalk`{red \n${userInput} is not the word, but good try.}`)
+          guessedLetters.push(userInput)
+        }else if(!['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'].includes(userInput.toLowerCase())){
+          console.log(chalk`{red "${userInput}" is an invalid input, but still taking the life.}`)
+          guessedLetters.push(userInput)
         }else{
           guessedLetters.push(userInput)
         }

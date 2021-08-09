@@ -2,7 +2,7 @@ const readline = require("readline-sync");
 
 const dictionary = require("./dictionary");
 
-const word = getRandomWord();
+let word = getRandomWord();
 // This line of code gets a random word. The `word` variable will be a string.
 
 let win = "You lived! Victory is yours! 👑 ";
@@ -59,7 +59,7 @@ let remainingLetters = word.length;
 let lives = 10 ;
 while(remainingLetters > 0 && lives > 0){
 // This is saying while letters and lives remain you can play 
-  console.log(underScore.join(' ')); 
+  console.log(underScore.join(' ') +word); 
   //shows letters
   console.log(guesses.join(' '))
   //shows guessed valid letters only
@@ -110,24 +110,26 @@ if (underScore.join("") === word) { // If the player won
     const newGame = readline.question(`Try again? \n\n 'Y',  'N':`) 
 
   if (newGame === 'y') { // If the player wishes to continue
+    word = getRandomWord();
+    //it needed a fuction within the scope for get random to restart the game with a new word
     console.log(`\nGood Luck Player!\n`)
-    getRandomWord()
     run()
   } else { // If No
     console.log(`\nThank you for playing!\n`)
+    process.exit()
+    //exits the game
   }
 }
   let reTry = ""
-
+  
 if (lives === 0) { // If the player lost
     console.log(lose)
     console.log(`The word was: ${word}.`)
   
   } reTry = readline.question(`Try again? \n\n 'Y',  'N':`)
   if (reTry === 'y') {
+    word = getRandomWord();
       console.log(`\nGood Luck Player!\n`)
-      getRandomWord()
-      run()
   } else {
     console.log(`\nThank you for playing!\n`)
 }

@@ -7,12 +7,12 @@ const readline = require("readline-sync");
 */
 const logSnowMan = require("./logSnowMan.js");
 
-function displayMainMenu() {
+function displayMainMenu(name) {
   //This line of code will be used to give the player the option to play the game or read rules
   const options = ["Play Snowman Game", "Read Rules", "View High Scores"];
 
   logSnowMan();
-  console.log(`☃️  Welcome To Snowman! ☃️\n\n`);
+  console.log(`☃️  Welcome To Snowman, ${name}! ☃️\n\n`);
   let index = readline.keyInSelect(options, "What would you like to do?");
   //until user selects play the game
   while (options[index] !== "Play Snowman Game") {

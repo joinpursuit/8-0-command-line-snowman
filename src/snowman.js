@@ -16,29 +16,32 @@ function getRandomWord() {
   return dictionary[index]; // returns a string
 }
 
-// Variable that stores the random word. The `word` variable will be a string.
-const word = getRandomWord() // get random word
-// A (global scope) object that stores the current `state` of our application; Can access these from anywhere in the code.
-let state = {
-  shouldKeepPlaying: true,
-  // Put a random secret word into state
-  secretWord: word, // the random word
-  
-  correctGuesses: [], // correctGuesses = []; // --> we have updated the state from empty array [] to ['p']
-  wrongGuesses: [], // wrongGuesses = [];
-  maxNumOfGuesses: 3, // stores how many guesses are left
-
-  guessedLetters: [], // keep track of the guessed letters
-  wordArr: [], // keep track of unknown blank letters
-  validLetters: ['z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
-}
 /*
-  MAIN FUNCTION - run() . You can make helper functions.
+  This function runs your game. Everything you want to happen in your game should happen inside of here.
+  Define other functions outside `run()` that have a single specific purpose, such as: getting user input; checking if a guess is correct.
   Then call these helper functions inside `run()`.
 */
 function run() {
-  // FOR TESTING THE GAME WHILE WORKING ON IT: see what the random word is:
-  // console.log(`HINT: This is NOT the secret word: ${word}`);
+// Variable that stores the random word. The `word` variable will be a string.
+const word = getRandomWord() // get random word
+
+  // A (global scope) object that stores the current `state` of our application; Can access these from anywhere in the code.
+  let state = {
+    shouldKeepPlaying: true,
+    // Put a random secret word into state
+    secretWord: word, // the random word
+    
+    correctGuesses: [], // correctGuesses = []; // --> we have updated the state from empty array [] to ['p']
+    wrongGuesses: [], // wrongGuesses = [];
+    maxNumOfGuesses: 3, // stores how many guesses are left
+
+
+    guessedLetters: [], // keep track of the guessed letters
+    wordArr: [], // keep track of unknown blank letters
+    validLetters: ['z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
+  }
+  // see what the random word is:
+  console.log(`HINT: This is NOT the secret word: ${word}`);
   
   // HELPER FUNCTION #1: Fill word array with underscores
   function fillArrWithUnderscores() {
@@ -109,7 +112,7 @@ function run() {
   }
 
   // declare variable to say how many guesses are left.
-  // Subtract number of `state.wrongGuesses.length` from the `maxNumGuesses` to see how many `guessesLeft`.
+  // subtract number of `state.wrongGuesses.length` from the `maxNumGuesses` to see how many `guessesLeft`.
   let guessesLeft = state.maxNumOfGuesses - state.wrongGuesses.length;
   if (guessesLeft >= 0) {
     console.log(`You have ${guessesLeft} guesses remaining.`); // number of wrong guesses made
@@ -134,27 +137,29 @@ function run() {
     // Once word has been guessed, stop the game.
     // Conditions for ending the game:
     if (state.wordArr.join('') === state.secretWord) {
-      state.shouldKeepPlaying = false; // while loop stops
+      state.shouldKeepPlaying = false; // while loop for stops
       console.log(`\nYou guessed the word! It was ${word}.`);
+      //  reveal secret word from current game
+      //  revealSecretWord();
       // play again?
       playAgain();
     }
   }
 
-}
-run();
-
+  // WHAT SCOPE DOES THIS NEED TO BE IN???
   // Play again function - outside run() function
   function playAgain(){
     let userInput = readline.question("Would you like to play again? (Y or n) ").toLowerCase();
     // Conditional logic that handles where to stop the game
     if (userInput === "n" || userInput === "no") {
-      // If the user enters "n" or "no"
-      state.shouldKeepPlaying = false; // while loop stops
-      process.exit();
+      // If the user doesn't enter "n" or "no"
+      console.log(`game over. The word was ${word}.`);
+      state.shouldKeepPlaying = false; // while loop for stops
     } 
     else {
         // Starts the game again - reset from beginning.
         run();
     }
   }
+}
+run();

@@ -150,7 +150,7 @@ function getRandomWord() {
 
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
-  const word = 'follow'
+  const word = 'follow';
   //getRandomWord();
   // declared variables
   let incorrectGuesses = word.length + 1
@@ -158,6 +158,8 @@ function run() {
   let theBlanks = "";
   let winningMsg = "Congrats! You Win!";
   let losingMsg = "Sorry, Game Over. :(";
+  let validEntry = /^[a-z]+$/;
+  let invalidGuess = "Invalid input. Please enter a lowercase letter.";
   //reassigns underscores to the variable called `theBlanks`.
   for (let i = 0; i < word.length; i++){
     theBlanks += "_ "
@@ -172,13 +174,21 @@ function run() {
     // console.log(theBlanks);
     // variable that lets instructs user to choose a letter
     let userInput = readline.question("Pick a letter: ");
+    console.log("\n");
+    //makes sure that correct letter needs to be lower case
+    //userInput.toLowerCase();
     //If the user enters an invalid guess (e.g. `3` or `apple`), a message should display telling the user to enter a letter. Invalid guesses should not count against the guess count.
     // make sure its one character
     // make sure its a letter and that its lower case
-
+    
     if (userInput) {
+      if (userInput.match(validEntry)) {
+        lettersGuessed.push(userInput)
+      } else {
+        incorrectGuesses++
+        console.log(invalidGuess)
+      }
       // 'pushes' `userInput` selection into "Letters Guessed" line
-      lettersGuessed.push(userInput)
       // nested `if` condition to remove 'None'.
       if (lettersGuessed.includes("None")){
         lettersGuessed.shift();
@@ -197,7 +207,7 @@ function run() {
       }
     
     }
-    // condition that states if word.includes doesn't 
+    // condition that states if word.includes isn't true,
     if (!word.includes(userInput)){ 
       incorrectGuesses--;
     }
@@ -205,7 +215,7 @@ function run() {
     console.log("Remaining Incorrect Guesses: " + incorrectGuesses);
     console.log("Letters Guessed: " + lettersGuessed);
     console.log("Word: " + theBlanks);
-    return console.log(losingMsg);
+    return console.log(losingMsg + " The correct word was: " + word);
   }
   /*
   The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!

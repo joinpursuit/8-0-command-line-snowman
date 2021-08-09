@@ -12,7 +12,7 @@ gameState = {
   word: 'apple', // getRandomWord(),
   correctGuesses: [],
   wrongGuesses: [],
-  maxWrongGuesses: 0
+  maxWrongGuesses: 6
 }
 
 function isLetterGuessCorrect(userGuess){
@@ -53,12 +53,17 @@ function run() {
       gameState.playSnowman = false;
     } else {
       getBlankWord();
+      while (gameState.maxWrongGuesses > 0){
+        console.log('Number of guesses left: ' + gameState.maxWrongGuesses);
+        userGuess = readline.question("Please guess a letter: ");
+        if (gameState.word.includes(userGuess)){
+          console.log('TRUE');
+        } else {
+          gameState.maxWrongGuesses--;
+        }
       
-      userGuess = readline.question("Please guess a letter: ");
-      if (gameState.word.includes(userGuess)){
-        console.log('TRUE');
-      }
       console.log("Guessed Letters: ", );
+      }
     }
   }
   

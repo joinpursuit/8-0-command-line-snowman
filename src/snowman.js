@@ -64,6 +64,18 @@ function userInputCheck(userInput){
            && (userInput >= "a" && userInput <= "z" );
   
 }
+/**
+ * helper function to avoid repeated letter
+ * @param {string} str - string that keep track of all inputs from the player
+ * @param {string} letter - letter inputted by the player
+ * @returns boolean
+ */
+function repeatedLetter(str, letter) {
+  if (str.includes(letter)) {
+    return `You have already tried the letter: ${letter}.\nPlease try another one!`;
+  }
+  return false;
+}
 
 
 
@@ -86,7 +98,7 @@ function run() {
   const word = getRandomWord();
   //console.log(word);
   // print snow man image
-  console.log(imageStr);
+  console.log(imageStr + "\n\n\n");
   // get correct number of underscores
   let wordInUnderScores = "_ ".repeat(word.length);
   /*
@@ -98,6 +110,7 @@ function run() {
   */
   // show the player how many underscores
   console.log(wordInUnderScores+ "\n");
+  // logic that keeps the game running
   while(startGame) {
       // print guessed letters
       console.log("Guessed letters: ", allPlayerInputs);
@@ -105,37 +118,48 @@ function run() {
       console.log(`You have ${nbrOfTries} remaining`);
       // read user input
       const userInput = readline.question("Please enter your guess: ").toLowerCase();
-      // check if user input is valid
+      // check if player's input is valid
       if (userInputCheck(userInput)){
-        // add input to allPlayerInputs
-        allPlayerInputs += " " + userInput;
+        // if the player have already tried the same letter, show a message saying so
+        if (repeatedLetter(allPlayerInputs, userInput)) {
+          console.log(repeatedLetter(allPlayerInputs, userInput));
+          // go back to the while loop
+          continue;
+        }
+        // otherwise add the new letter to the string
+        else allPlayerInputs += " " + userInput;
         // check if we have a string or boolean
         let checkIfBoolean = replaceUnderScores(word, wordInUnderScores, userInput);
         // check if false, decrement the number of tries
         if (!checkIfBoolean) {
           nbrOfTries--;
         }
-        // change the value of the understring
+        // otherwise, change the value of the understring
         else {
           wordInUnderScores = checkIfBoolean;
           console.log(wordInUnderScores);
         }
-      
       }
+      // if the player's input is invalid
       else {
+        // show the player this message
         console.log("Please enter a valid letter");
+        // go to back to the while loop
         continue;
       }
+      // check if the player won or if the number of tries is 0
       if (checkWinner(word, wordInUnderScores) || !nbrOfTries) {
+        // show the player corresponding message
         console.log(checkWinner(word, wordInUnderScores) ? `You won! It took you ${allPlayerInputs.split(" ").length-1} guesses.` : `You lost! The correct guess was: ${word}`);
+        // put startGame to false to stop the game
         startGame = false;
       }
-  // This line of code will print out whatever is inputted in by the user.
-  // console.log("THE USER INPUTTED:", userInput);
+  
   }
+  // logic to replay the game
   if (!startGame) {
-    let keepplaying = readline.question("Do you want to keep playing?(Y or n): ").toLowerCase();
-    if (keepplaying !== "n" && keepplaying !== "no") {
+    let keepPlaying = readline.question("Do you want to keep playing?(Y or n): ").toLowerCase();
+    if (keepPlaying !== "n" && keepPlaying !== "no") {
       run();
     }
   }

@@ -26,13 +26,26 @@ function getRandomWord() {
   return dictionary[index];
 }
 
+const intro = readline.question(`Do you want to build a snow man?\n\n 'Y', 'N': `)
+
+if (intro === 'y') {
+  console.log(`\nYou fool! Killer snowmen are on the lose. Every wrong letter is a step closer to death. Play at your own risk!\n`);
+  run()
+} else {
+  console.log(`\nGood choice! Killer snowmen are on the lose. Every wrong letter is a step closer to death. Good Luck!\n`);
+  run ()
+  }
+
 function run(snowman) {
+ 
 const underScore = []
 //array that accounts for underscores
 const guesses = []
 //array that accounts for guesses
 let validGuess = /^[a-z]+$/;
 // Ensures selects letters only
+
+
 
 for(let i= 0; i < word.length; i++){
   underScore[i] = '_' 
@@ -43,6 +56,7 @@ let remainingLetters = word.length;
 
 let lives = 10 ;
 while(remainingLetters > 0 && lives > 0){
+  
   console.log(underScore.join(' ')); 
   console.log(guesses.join(','))
   console.log(`Lives: ${lives}`);
@@ -97,6 +111,7 @@ if (underScore.join("") === word) { // If the player won
   let reTry = ""
   if (lives === 0) { // If the player lost
     console.log(lose)
+    console.log(`The word was: ${word}.`)
   
   }
   reTry = readline.question(`Try again? \n\n 'Y',  'N':`)

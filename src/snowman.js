@@ -33,14 +33,17 @@ const word = getRandomWord() // get random word
     
     correctGuesses: [], // correctGuesses = []; // --> we have updated the state from empty array [] to ['p']
     wrongGuesses: [], // wrongGuesses = [];
-    maxNumOfGuesses: 3, // stores how many guesses are left
+    maxNumOfGuesses: 5, // stores how many guesses are left
 
     guessedLetters: [], // keep track of the guessed letters
     wordArr: [], // keep track of unknown blank letters
     validLetters: ['z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
   }
-  // see what the random word is:
-  console.log(`HINT: This is NOT the secret word: ${word}`);
+
+  // Message at start of game:
+  console.log(`* * * SNOWMAN GAME * * *\n`)
+  // DO NOT PUT IN ACTUAL GAME: see what the random word is:
+  // console.log(`HINT: This is NOT the secret word: ${word}`);
   
   // HELPER FUNCTION #1: Fill word array with underscores
   function fillArrWithUnderscores() {

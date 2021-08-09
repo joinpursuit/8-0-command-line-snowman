@@ -57,7 +57,7 @@ while(remainingLetters > 0 && lives > 0){
   }
   
   if (!userInput.match(validGuess)){
-    console.log(invalid)
+    console.log(wrong)
     console.log("THE USER INPUTTED:", userInput);
     // This line of code will print out whatever is inputted in by the user.
     continue //if user uses letters only 
@@ -84,7 +84,7 @@ while(remainingLetters > 0 && lives > 0){
     //returns to the game 
   } 
 }
-if (remainingLetters.join("") === word) { // If the player won
+if (underScore.join("") === word) { // If the player won
     console.log(win) // Offer a chance to continue
     const newGame = readline.question(`Try again? \n\n 'Y',  'N':`) 
     if (newGame === 'y') { // If the player wishes to continue
@@ -94,17 +94,20 @@ if (remainingLetters.join("") === word) { // If the player won
       console.log(`\nThank you for playing!\n`)
     }
   }
+  let reTry = ""
   if (lives === 0) { // If the player lost
     console.log(lose)
-    const reTry = readline.question(`Try again? \n\n 'Y',  'N':`) 
+  
   }
+  reTry = readline.question(`Try again? \n\n 'Y',  'N':`)
   if (reTry === 'y') {
       console.log(`\nGood Luck Player!\n`)
       run()
   } else {
     console.log(`\nThank you for playing!\n`)
-  }
 }
+  }
+
 
 
 

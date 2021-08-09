@@ -59,7 +59,7 @@ let remainingLetters = word.length;
 let lives = 10 ;
 while(remainingLetters > 0 && lives > 0){
 // This is saying while letters and lives remain you can play 
-  console.log(underScore.join(' ') +word); 
+  console.log(underScore.join(' ')); 
   //shows letters
   console.log(guesses.join(' '))
   //shows guessed valid letters only

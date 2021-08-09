@@ -37,9 +37,8 @@ let state = {
   validLetters: ['z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
 }
 function run() {
-
-  // see what the random word is:
-  console.log(`HINT: This is NOT the secret word: ${word}`);
+  // FOR TESTING THE GAME WHILE WORKING ON IT: see what the random word is:
+  // console.log(`HINT: This is NOT the secret word: ${word}`);
   
   // HELPER FUNCTION #1: Fill word array with underscores
   function fillArrWithUnderscores() {
@@ -72,7 +71,6 @@ function run() {
   */
   // while (state.shouldKeepPlaying) {
   while (state.maxNumOfGuesses > 0) {
-    console.log(`beginning of while looop`);
     // Variable that stores the user input and is lowercased
     const userInput = readline.question("\nGuess a letter: ").toLowerCase();
     // if more than one character, do not push to array.

@@ -8,8 +8,7 @@ const readline = require("readline-sync");
 const dictionary = require("./dictionary");
 // get the function from the file
 const imageSnowMan = require("./image");
-// invoked the function to get the image string
-const imageStr=imageSnowMan();
+
 /*
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
@@ -23,30 +22,31 @@ function getRandomWord() {
  * -check if the letter is in the hidden word
  * used helper function to check if player won
  * used helper function to check player inputs validity
+ * used helper function to avoid repeated letter to count against the player.
  */
 /**
  * Helper function to replace the underscores by corresponding letters
  * @param {string} computerWord - string chosen by the computer
  * @param {*} underStr - underscores string
- * @param {*} letter - letter from user input
+ * @param {*} letter - letter from player's input
  * @returns either the modified underscores string or false if letter is not included in the hidden word.
  */
  function replaceUnderScores(computerWord,underStr,letter) {
   if (computerWord.includes(letter)) {
-    underStr = underStr.split(" ");
+    let underStrArr = underStr.split(" ");
     for (let i=0; i<computerWord.length; i++) {
       if (computerWord[i]===letter) {
-         underStr.splice(i, 1, letter);
+         underStrArr.splice(i, 1, letter);
       }
     }
-    return underStr.join(" ");
+    return underStrArr.join(" ");
   }
   else return false;
 
 }
 /**
  * Helper function to check if the player won.
- * @param {string} str1 - hidden word
+ * @param {string} str1 - hidden word, word chosen by the computer
  * @param {string} str2 - underscores string
  * @returns boolean- true if user wins or false
  */
@@ -68,7 +68,7 @@ function userInputCheck(userInput){
  * helper function to avoid repeated letter
  * @param {string} str - string that keep track of all inputs from the player
  * @param {string} letter - letter inputted by the player
- * @returns boolean
+ * @returns boolean false or a string
  */
 function repeatedLetter(str, letter) {
   if (str.includes(letter)) {
@@ -76,8 +76,6 @@ function repeatedLetter(str, letter) {
   }
   return false;
 }
-
-
 
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
@@ -88,15 +86,19 @@ function repeatedLetter(str, letter) {
 */
 function run() {
   
-  // variable boolean to start the game
-  let startGame = true;
-  // number of allowed tries
-  let nbrOfTries = 7;
-  // keep track of the user's inputs
-  let allPlayerInputs = "";
+  const game = {
+    // variable boolean to start the game
+    startGame : true,
+    // number of allowed tries
+    nbrOfTries : 7,
+    // keep track of the user's inputs
+    allPlayerInputs : "",
+
+  };
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
-  //console.log(word);
+  // invoked the function to get the image string
+  const imageStr=imageSnowMan();
   // print snow man image
   console.log(imageStr + "\n\n\n");
   // get correct number of underscores
@@ -111,28 +113,28 @@ function run() {
   // show the player how many underscores
   console.log(wordInUnderScores+ "\n");
   // logic that keeps the game running
-  while(startGame) {
+  while(game.startGame) {
       // print guessed letters
-      console.log("Guessed letters: ", allPlayerInputs);
+      console.log("Guessed letters: ", game.allPlayerInputs);
       // print remaining guesses 
-      console.log(`You have ${nbrOfTries} remaining`);
+      console.log(`You have ${game.nbrOfTries} remaining`);
       // read user input
       const userInput = readline.question("Please enter your guess: ").toLowerCase();
       // check if player's input is valid
       if (userInputCheck(userInput)){
         // if the player have already tried the same letter, show a message saying so
-        if (repeatedLetter(allPlayerInputs, userInput)) {
-          console.log(repeatedLetter(allPlayerInputs, userInput));
+        if (repeatedLetter(game.allPlayerInputs, userInput)) {
+          console.log(repeatedLetter(game.allPlayerInputs, userInput));
           // go back to the while loop
           continue;
         }
         // otherwise add the new letter to the string
-        else allPlayerInputs += " " + userInput;
+        else game.allPlayerInputs += " " + userInput;
         // check if we have a string or boolean
         let checkIfBoolean = replaceUnderScores(word, wordInUnderScores, userInput);
         // check if false, decrement the number of tries
         if (!checkIfBoolean) {
-          nbrOfTries--;
+          game.nbrOfTries--;
         }
         // otherwise, change the value of the understring
         else {
@@ -148,16 +150,16 @@ function run() {
         continue;
       }
       // check if the player won or if the number of tries is 0
-      if (checkWinner(word, wordInUnderScores) || !nbrOfTries) {
+      if (checkWinner(word, wordInUnderScores) || !game.nbrOfTries) {
         // show the player corresponding message
-        console.log(checkWinner(word, wordInUnderScores) ? `You won! It took you ${allPlayerInputs.split(" ").length-1} guesses.` : `You lost! The correct guess was: ${word}`);
-        // put startGame to false to stop the game
-        startGame = false;
+        console.log(checkWinner(word, wordInUnderScores) ? `You won! It took you ${game.allPlayerInputs.split(" ").length-1} guesses.` : `You lost! The correct guess was: ${word}`);
+        // put game.startGame to false to stop the game
+        game.startGame = false;
       }
   
   }
   // logic to replay the game
-  if (!startGame) {
+  if (!game.startGame) {
     let keepPlaying = readline.question("Do you want to keep playing?(Y or n): ").toLowerCase();
     if (keepPlaying !== "n" && keepPlaying !== "no") {
       run();

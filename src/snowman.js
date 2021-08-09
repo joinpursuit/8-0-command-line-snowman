@@ -40,22 +40,27 @@ function run() {
 
 
     if (typeof userInput !== "string" || userInput.length > 1) {
-      console.log("Please enter a valid letter.");
+      console.log("Invalid entry! Please enter a valid letter.");
     } else {
       console.log("THE USER INPUTTED:", userInput);
       state.hiddenWord = state.hiddenWord.split(" ");
 
+      
+
       for (let i = 0; i < word.length; i++) {
         if (word[i] === userInput.toLowerCase()) {
-          //  state.hiddenWord[i] = userInput.toLowerCase()
           state.hiddenWord.splice(i, 1, userInput.toLowerCase());
-          // console.log(state.hiddenWord);
+          console.log("Good job! that was a correct guess!");
         }
+      }
+      if(!state.hiddenWord.includes(userInput)) {
+        console.log("That was an incorrect guess! Maybe you'll get the next one!")
+        state.remainingGuesses--
       }
       state.hiddenWord = state.hiddenWord.join(" ");
       state.lettersGuessed.push(userInput.toLowerCase());
-      state.remainingGuesses--;
-      console.log(`You have ${state.remainingGuesses} left.`);
+      console.log(`You have ${state.remainingGuesses} guesses left.`);
+      // console.log(`This is what you've guessed so far: ${state.lettersGuessed}`)
     }
   }
 }

@@ -38,7 +38,6 @@ function run() {
 
   // split 'word' into an array of string of letters, get the lenght
   const newWordArr = word.split("");
-  console.log(newWordArr);
   const newWordLength = newWordArr.length;
 
   //lines variable will be used to hold the value of the word key inside the outputTextBlock object.
@@ -81,10 +80,10 @@ function run() {
     } else if (alphabet.includes(userInput)) {
       if (!guessed.includes(userInput)) {
         guessed += `${userInput}, `;
-      }
-      // deducts a guess when user guesses wrong.
-      if (!newWordArr.includes(userInput)) {
-        remainingGuesses = remainingGuesses - 1;
+        // deducts a guess when user guesses wrong.
+        if (!newWordArr.includes(userInput)) {
+          remainingGuesses = remainingGuesses - 1;
+        }
       }
       // logs the correct letters to word key value.
       for (const letter in newWordArr) {
@@ -94,7 +93,7 @@ function run() {
       }
     }
     console.log(`THE USER INPUTTED: ${userInput}`);
-
+    // logs win if user won. logs lost if user lost
     if (remainingGuesses === 0) {
       console.log(
         `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${word}\nYou Lost!`

@@ -43,6 +43,7 @@ let playAgain = true
 //Gets the word and its definition and starts the game 
 function startGame(){
     const word = getRandomWord();    
+    //const word = 'nope';    
     wd.getDef(word, "en", null, function(definition){
       //console.log(`HINT: ${definition.definition}`)
       if(run(definition.definition, word)){
@@ -53,12 +54,19 @@ function startGame(){
 }
 
 //Restarts the game 
-function isPlayingAgain(word){
-  console.clear()
-  console.log(`The word was ${word}`)
-  if(readline.keyInYN("\nWould you like to play again..")){
+function isPlayingAgain(word, isWin){
+  if(typeof isWin === 'string'){
+    console.log(`\n\n\n\t${isWin}`)
+    console.log(`\n\n\t\t    The word was ${word}`)
+  } else {
+    console.log("`\n\n\t\tSorry better luch next time....")
+    console.log(`The word was ${word}`)
+  }
+  if(readline.keyInYN("\n\n\nWould you like to play again..")){
+    console.clear()
     return true
   }
+  console.clear()
   return false
 }
 
@@ -118,8 +126,10 @@ function isStillPlaying(lives, underScore, word){
   underScore = underScore.split(' ').join('').trim()
   underScore = underScore.split('\033[32m').join('').split('\033[39m').join('').trim()
   let keepLooping = true
-  if(lives === 0 || underScore === word){
+  if(lives === 0){
     keepLooping = false
+  } else if (underScore === word){
+    keepLooping = "✅ Congratulations you guessed the word! ✅"
   }
   return keepLooping
 }
@@ -141,60 +151,82 @@ function livesColor(lives){
 function run(hint, word){
   //CC- Get `userInput`
   //CC- Send `userInput` to function `isValidChar()` to check for valid characters
+  
   guessesArray = []
+  
   //Declare variable `underScore` = `wordUnderScore(`word`)`
   let underScore = wordUnderScore(word)
+  
   //Declare variable `keepLooping` = true
   let keepLooping = true
+  
   //Declare variable `lives` = 7
   lives = 7
+  
   //While `keepLooping`
-  while (keepLooping){
+  while (keepLooping && typeof keepLooping !== 'string'){
     console.clear()
-    //console.log(word)
+    console.log(word)
     console.log(`❌`+"\033[31m"+` ${guessesArray.sort().join(', ')}`+"\033[39m"+`\n\n${livesColor(lives)}`)
+    
     //Console log `hint`
     console.log(`\n\tHINT: ${hint || 'No definition found'}`)
+    
     //Console log `underScore`
-    console.log(`\n\t\t${underScore}`)
+    console.log(`\n\t\t       ${underScore}`)
+    
     //Letters Guessed
     //console.log(`\tLETTERS GUESSED: ${guessesArray.sort().join(', ')}`)
+    
     //Declare const `userInput` equal to `readline.question("Guess a letter: ")`
-    const userInput = (readline.question("\n\t\tGuess a letter: ")).toLowerCase()
+    const userInput = (readline.question(`\n\t\t   Guess a letter: `)).toLowerCase()
+    
     //const userInput = 'zz'
+    
     //Declare variable `validChar` = isValidChar(`userInput`)
     const validChar = isValidChar(userInput, word)
+    
     //Compare `validChar` to/=== true
     if(validChar === true){
+      
       //if true ressign `underScore` = `revealLetter(`underScore`, `userInput`)`
       underScore = revealLetter(underScore, userInput, word)
     }
+    
     //Compare typeof `validChar` to === 'string'
     else if (typeof validChar === 'string'){
+      
       //if 'string' console log `validChar` ---> "You've already guessed that letter"
       console.log(`\n\t   "${validChar}"`)
+      
       //---> press enter to try again ---> continue
       readline.question(`\n\n\t   Press Enter to continue...`)
       continue;
     } else {
+      
       //if false console log "`userInput` is not a letter"
       console.log(`\n\t    "${userInput || 'Space'}" is not a letter`)
+      
       //---> press enter to try again ---> continue
       readline.question(`\n\t   Press Enter to continue...`)
       continue;
     }
+    
     //Set `removeLife` equal to/= `removeLives(`validChar`, `userInput`)`
     let removeLife = removeLives(validChar, userInput, word)
+    
     //Compare `removeLife` to/=== true
     if (removeLife){
       //if true `lives`--
       lives--
     }
+    
     //Set `keepLooping` equal to/= `isStillPlaying(`lives`, `underScore`)`
     keepLooping = isStillPlaying(lives, underScore, word)
   }
+  
   //Declare variable const `playAgain` = `isPlayingAgain()`
-  playAgain = isPlayingAgain(word)
+  playAgain = isPlayingAgain(word, keepLooping)
   //return `playAgain`
   return playAgain
 }

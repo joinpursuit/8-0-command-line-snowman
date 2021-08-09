@@ -6,12 +6,23 @@ const readline = require("readline-sync");
   The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
 */
 const dictionary = require("./dictionary");
-
-
-
 /*
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
+
+
+const { default: axios } = require("axios");
+  
+
+async function definition() {
+  let define = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${word}`)
+  define.data.map((word) => {
+    word.meanings.map((meaning) => {
+      console.log(`HINT: ${meaning.definitions[0].definition}`)
+    })
+  })
+}
+
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
@@ -19,7 +30,7 @@ function getRandomWord() {
 let word = getRandomWord();
 let guessLeft = 8;
 
-function run() {
+async function run() {
   let snowman = {
       letter: '',
       currentSolvedWord: [],
@@ -28,8 +39,10 @@ function run() {
   }
 //to start the game
 let choice = readline.keyInYN("\x1b[1;39m" + '👺 Hi! Would you like to play a game? 👺' + "\x1b[39m")
-    if(choice) {
+    if (choice) {
       console.log("\x1b[1;93m" + "\nWelcome! Let's start!" + "\x1b[39m")
+      //function to add definition for hint. 
+      await definition()
       //function here to show hiddenWord to user
       makeTheBlanks()
       //function here for user to play the game
@@ -44,6 +57,7 @@ function restartGame() {
   leaveChoice = readline.keyInYN("\x1b[1;95m" + 'Would you like to play again?' + "\x1b[39m")
     if (leaveChoice) {
       word = getRandomWord()
+      definition()
       console.log("\x1b[1;93m" + "\nWelcome back, Let's start!" + "\x1b[39m")
       guessLeft = 8;
       //recreate initial starting object
@@ -69,7 +83,7 @@ function restartGame() {
 function quitTest() {
         console.log("Goodbye! 👋")
         //stop program from running
-          process.exit()
+        process.exit()
       }
 //replace the hidden word with letters if guessed correctly
 function gamePlay() {
@@ -102,7 +116,7 @@ function gamePlay() {
       if (solvedWord === word) {
           console.log("\x1b[1;92m" + "🎉 🎊 🥳 Congratulations! 🎉 🎊 🥳" + "\x1b[39m")
           //print chosenWord for user to see
-          console.log('The word was ' + "\x1b[1;36m" + `"${word}"` + "\x1b[39m")
+          console.log('The word was: ' + "\x1b[1;36m" + `"${word}"` + "\x1b[39m")
           //function here to show ending message and stop if user wins
           restartGame() 
         }
@@ -114,7 +128,6 @@ function gamePlay() {
           //function here for user to know how many guesses left
           guessLeftCounter()
       }
-
 //show the letters the user already guessed
 function showGuessedWord() {
     if (snowman.arrayGuessedWords.length === 0) {
@@ -133,7 +146,7 @@ function guessLeftCounter() {
     if (guessLeft === 0) {
       console.log("\x1b[1;91m" + '\nGAME OVER, 😔 better luck next time!' + "\x1b[39m")
       //prints chosenWord for the losing user
-      console.log('The word was ' + "\x1b[1;36m" + `"${word}"` + "\x1b[39m")
+      console.log('The word was: ' + "\x1b[1;36m" + `"${word}"` + "\x1b[39m")
         //function here to show ending message and stop if user loses
         restartGame()
       }
@@ -150,7 +163,7 @@ function makeTheBlanks() {
     }
   }
   //prints the hiddenWord and the chosenWord(hint)
-  console.log("\x1b[1;94m" + 'WORD: ' + "\x1b[39m" + `${hiddenWord} (${word})`)
+  console.log("\x1b[1;94m" + 'WORD: ' + "\x1b[39m" + `${hiddenWord}`)
 } 
 //checks for a valid guess
 function getValidLetterGuess() {
@@ -160,29 +173,30 @@ function getValidLetterGuess() {
 function guessIsValid(userInput) {
   return (userInput.length === 1) && (userInput.toUpperCase() !== userInput.toLowerCase()) && (!(snowman.guessedWords.includes(userInput)))
 }
-//needs to stop taking in the same letter && invalid input.
+  //needs to stop taking in the same letter && invalid input.
   snowman.letter = ''
     while (!snowman.letter) {
   const userInput = readline.question("\nGuess a letter: ");
       if (guessIsValid(userInput) && userInput !== userInput.toUpperCase()) {
         snowman.letter = userInput
+      } else if (snowman.guessedWords.includes(userInput)) {
+        console.log("\x1b[1;91m" + "You've guessed that!" + "\x1b[39m")
       } else {
         console.log("\x1b[1;91m" + "Please enter a valid letter" + "\x1b[39m")
     }
   }
 }
+/*
+  The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+  The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
+  After a user hits the 'return' key, the rest of the code will run.
+*/
+const userInput = readline.question("Guess a letter: ");
   
-  // This line of code will print out whatever is inputted in by the user:
-  console.log("THE USER INPUTTED:", userInput);
+// This line of code will print out whatever is inputted in by the user:
+console.log("THE USER INPUTTED:", userInput);
   
 }
 

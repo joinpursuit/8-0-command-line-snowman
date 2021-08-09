@@ -27,12 +27,14 @@ function getRandomWord() {
 }
 
 const intro = readline.question(`Do you want to build a snow man?\n\n 'Y', 'N': `)
-
+//This is a intro to the game, Something to jazz it up a bit
 if (intro === 'y') {
-  console.log(`\nYou fool! Killer snowmen are on the lose. Every wrong letter is a step closer to death. Play at your own risk!\n`);
+  console.log(`\nYou fool! Killer snowmen are on the loose. Every wrong letter is a step closer to death. Play at your own risk!\n`);
   run()
+  //We added a run command because we noticed it would not continue
 } else {
-  console.log(`\nGood choice! Killer snowmen are on the lose. Every wrong letter is a step closer to death. Good Luck!\n`);
+  console.log(`\nGood choice! Killer snowmen are on the loose. Every wrong letter is a step closer to death. Good Luck!\n`);
+  //The response is different because we feel passionate about this answer. 
   run ()
   }
 
@@ -40,12 +42,12 @@ function run(snowman) {
  
 const underScore = []
 //array that accounts for underscores
+
 const guesses = []
 //array that accounts for guesses
+
 let validGuess = /^[a-z]+$/;
 // Ensures selects letters only
-
-
 
 for(let i= 0; i < word.length; i++){
   underScore[i] = '_' 
@@ -56,12 +58,15 @@ let remainingLetters = word.length;
 
 let lives = 10 ;
 while(remainingLetters > 0 && lives > 0){
-  
+// This is saying while letters and lives remain you can play 
   console.log(underScore.join(' ')); 
-  console.log(guesses.join(','))
+  //shows letters
+  console.log(guesses.join(' '))
+  //shows guessed valid letters only
   console.log(`Lives: ${lives}`);
+  //shows lives remaining
   const userInput = readline.question("Guess a letter: ");
-  // Intro: Tells them to guess a letter 
+  // Game play question Tells them to guess a letter 
   
   if (guesses.includes(userInput)){
     console.log(repeat)
@@ -87,12 +92,12 @@ while(remainingLetters > 0 && lives > 0){
   guesses.push(userInput);
   //This line of code pushes guesses into array
   if (!word.includes(userInput)){
-    lives--
-    console.log(wrong)
-    //if it is not in the array it is invalid and continue
-    continue
+  lives--
+  console.log(wrong)
+  //if it is not in the array it is invalid and continue
+  continue
   } else {
-    console.log(right)  
+  console.log(right)  
     //Shows correct response
     continue
     //returns to the game 
@@ -100,29 +105,34 @@ while(remainingLetters > 0 && lives > 0){
 }
 if (underScore.join("") === word) { // If the player won
     console.log(win) // Offer a chance to continue
+    console.log(`The winning word was: ${word}.`)
+
     const newGame = readline.question(`Try again? \n\n 'Y',  'N':`) 
-    if (newGame === 'y') { // If the player wishes to continue
-      console.log(`\nGood Luck Player!\n`)
-      run()
-    } else { // If No
-      console.log(`\nThank you for playing!\n`)
-    }
+
+  if (newGame === 'y') { // If the player wishes to continue
+    console.log(`\nGood Luck Player!\n`)
+    getRandomWord()
+    run()
+  } else { // If No
+    console.log(`\nThank you for playing!\n`)
   }
+}
   let reTry = ""
-  if (lives === 0) { // If the player lost
+
+if (lives === 0) { // If the player lost
     console.log(lose)
     console.log(`The word was: ${word}.`)
   
-  }
-  reTry = readline.question(`Try again? \n\n 'Y',  'N':`)
+  } reTry = readline.question(`Try again? \n\n 'Y',  'N':`)
   if (reTry === 'y') {
       console.log(`\nGood Luck Player!\n`)
+      getRandomWord()
       run()
   } else {
     console.log(`\nThank you for playing!\n`)
 }
-  }
-
+}
+run();
 
 
 
@@ -226,4 +236,3 @@ GAME STEPS:
    * At the end of the game it should restart file. 
 */
 
-run();

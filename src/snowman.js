@@ -37,16 +37,29 @@ function addWrongGuessToList (userGuess){
 // console.log(addWrongGuessToList('b'));
 // console.log(addWrongGuessToList('q'));
 
-
+function getBlankWord (){
+  let blankWord = '';
+  for (let i=0; i<gameState.word.length; i++){
+    blankWord += '_ ';
+  }
+  console.log(blankWord, '\n');
+}
 
 function run() {
-  let userGuess = readline.question('Do you want to play Snowman? (Y or n) ').toLowerCase();
-  if(userGuess === 'n' || userGuess === 'no'){
-    console.log('Okay, bye...');
-    gameState.playSnowman = false;
-  } else {
-    userGuess = readline.question("Guess a letter: ");
-    console.log("THE USER INPUTTED:", userGuess);
+  while (gameState.playSnowman){
+    let userGuess = readline.question('Do you want to play Snowman? (Y or n) \n').toLowerCase();
+    if(userGuess === 'n' || userGuess === 'no'){
+      console.log('Okay, bye...');
+      gameState.playSnowman = false;
+    } else {
+      getBlankWord();
+      
+      userGuess = readline.question("Please guess a letter: ");
+      if (gameState.word.includes(userGuess)){
+        console.log('TRUE');
+      }
+      console.log("Guessed Letters: ", );
+    }
   }
   
   // if (wrongGuesses.length === 6){}
@@ -58,6 +71,12 @@ run();
 
 
 /*
-Planning:
-
+Understanding:
+We get a random word
+Display underscores that equals the same amount of letters in the random word.
+Ask the user to guess a letter
+If the guessed letter is included in the random word, replace the underscore(s) with the correct guessed letter
+If not included in the word, none of the underscores change and the total amount of guesses is reduced by 1. 
+A list of guessed letters should be displayed and keep track of letters guessed for the user
+User guess should only receive 1 letter, any more than 1 letter should output an error, and ask for a valid guess
 */

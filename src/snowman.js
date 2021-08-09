@@ -146,7 +146,6 @@ function run() {
 }
 run();
 
-  // WHAT SCOPE DOES THIS NEED TO BE IN???
   // Play again function - outside run() function
   function playAgain(){
     let userInput = readline.question("Would you like to play again? (Y or n) ").toLowerCase();

@@ -15,10 +15,6 @@ function getRandomWord() {
   return dictionary[index];
 }
 
-//function playGame(){ attempt to make helper function.  
-  
-//}
-
 function run() {
   const word = getRandomWord();
 

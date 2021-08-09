@@ -31,7 +31,7 @@ const underScore = []
 //array that accounts for underscores
 const guesses = []
 //array that accounts for guesses
-let validGuess = /^[A-Za-z]+$/;
+let validGuess = /^[a-z]+$/;
 // Ensures selects letters only
 
 for(let i= 0; i < word.length; i++){
@@ -57,7 +57,7 @@ while(remainingLetters > 0 && lives > 0){
   }
   
   if (!userInput.match(validGuess)){
-    console.log(wrong)
+    console.log(invalid)
     console.log("THE USER INPUTTED:", userInput);
     // This line of code will print out whatever is inputted in by the user.
     continue //if user uses letters only 
@@ -74,7 +74,7 @@ while(remainingLetters > 0 && lives > 0){
   //This line of code pushes guesses into array
   if (!word.includes(userInput)){
     lives--
-    console.log(invalid)
+    console.log(wrong)
     //if it is not in the array it is invalid and continue
     continue
   } else {

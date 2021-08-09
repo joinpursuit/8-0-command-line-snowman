@@ -35,7 +35,6 @@ const word = getRandomWord() // get random word
     wrongGuesses: [], // wrongGuesses = [];
     maxNumOfGuesses: 3, // stores how many guesses are left
 
-
     guessedLetters: [], // keep track of the guessed letters
     wordArr: [], // keep track of unknown blank letters
     validLetters: ['z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
@@ -48,6 +47,8 @@ const word = getRandomWord() // get random word
     for (let char of word) {
       state.wordArr.push("_");
     }
+    // print dashes to console - array to string
+    console.log(state.wordArr.join(' '));
   }
   // Call helper function #1 inside of `run()`
   fillArrWithUnderscores()
@@ -62,12 +63,6 @@ const word = getRandomWord() // get random word
       }
     }
   }
-
-  // HELPER FUNCTION #3 - reveal secret word function
-  // function revealSecretWord() {
-  //   // reveal secret word from current game
-  //   setTimeout(() => {  console.log(`It was: ${word}`) }, 2000); // 2 sec delay
-  // }
 
   /*
   While Loop that keeps the game running. `readline.question( `Write input question here` )` stops the execution of the program to ask for user input. The user enters whatever they want! The value the user inputs will be assigned to the variable `userInput`. After user hits the 'return' key, the rest of the code will run.
@@ -139,8 +134,6 @@ const word = getRandomWord() // get random word
     if (state.wordArr.join('') === state.secretWord) {
       state.shouldKeepPlaying = false; // while loop for stops
       console.log(`\nYou guessed the word! It was ${word}.`);
-      //  reveal secret word from current game
-      //  revealSecretWord();
       // play again?
       playAgain();
     }
@@ -155,8 +148,8 @@ const word = getRandomWord() // get random word
       // If the user doesn't enter "n" or "no"
       console.log(`game over. The word was ${word}.`);
       state.shouldKeepPlaying = false; // while loop for stops
-    } 
-    else {
+      process.exit();
+    } else {
         // Starts the game again - reset from beginning.
         run();
     }

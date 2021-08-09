@@ -46,7 +46,6 @@ function run() {
 
   let incorrectGuesses = 0;
   const word = getRandomWord();
-  console.log(`${space}${word}`);
 
   //THIS CODE IS MAX AMOUNT OF ATTEMPTS
   let attempts = word.length + 1;

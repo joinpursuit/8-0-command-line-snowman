@@ -35,6 +35,7 @@ function run() {
   };
 
   while (state.remainingGuesses > 0) {
+    console.log(word)
     console.log(`${state.hiddenWord}\n`);
     const userInput = readline.question("Guess a letter: ");
 
@@ -53,16 +54,34 @@ function run() {
           console.log("Good job! that was a correct guess!");
         }
       }
-      if(!state.hiddenWord.includes(userInput)) {
-        console.log("That was an incorrect guess! Maybe you'll get the next one!")
-        state.remainingGuesses--
+      if (!state.hiddenWord.includes("_")) {
+        console.log(`You've won! You guessed all the letters! The word was: ${word}`);
+        console.log(`These are the letters you've guessed: ${state.lettersGuessed}`);
+        console.log(`You saved the snowman from melting! He thanks you!\n    
+          _==_ _
+        _,(",)|_|
+         \/. \-|
+       __( :  )|_`)
+        process.exit();
+        } 
+        if (state.remainingGuesses === 0) {
+          console.log(`Sorry you've ran out of guesses! The word was: ${word}`);
+          console.log(`These are the letters you've guessed: ${state.lettersGuessed}`);
+          console.log(`Oh no the snowman melted!\n  
+           
+         __( :  )|_ `)
+        }
+        if (!state.hiddenWord.includes(userInput)) {
+        console.log("That was an incorrect guess! Maybe you'll get the next one!");
+        console.log(`This is what you've guessed so far: ${state.lettersGuessed}`);
+        state.remainingGuesses--;
       }
       state.hiddenWord = state.hiddenWord.join(" ");
       state.lettersGuessed.push(userInput.toLowerCase());
       console.log(`You have ${state.remainingGuesses} guesses left.`);
-      // console.log(`This is what you've guessed so far: ${state.lettersGuessed}`)
-    }
-  }
-}
+    };
+  };
+};
+
 
 run();

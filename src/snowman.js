@@ -35,10 +35,10 @@ function run() {
         console.log(`You have ${remainingGuess} guesses remaining`); 
         const userInput = readline.question("Please enter your guess: "); 
 
-          if (userInput.length > 1){ // if more than one letter is entered , request for a valid entry is returned 
+          if (!isNaN(userInput) || userInput.length > 1){ // if more than one letter is entered , request for a valid entry is returned 
               console.log(`\nPlease enter a valid letter`);
 
-          } if (userInput.length === 1 && !wordCharacterArr.includes(userInput)){ // This is the conditional for an incorrect guess that is one character length
+          } else if (userInput.length === 1 && !wordCharacterArr.includes(userInput)){ // This is the conditional for an incorrect guess that is one character length
               guessedLetters.push(userInput); // this enters the guessed letter into guessed letters array to be returned later.
               remainingGuess--; // for each wrong guess, a guess is subtracted from remaining guesses    
             }  if (remainingGuess === 0 && wordCharacterArr.toString() !== letterSpaceArr.toString()){

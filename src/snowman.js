@@ -125,7 +125,7 @@ if (underScore.join("") === word) { // If the player won
 if (lives === 0) { // If the player lost
     console.log(lose)
     console.log(`The word was: ${word}.`)
-  
+   //allows to see the the word if lost
   } reTry = readline.question(`Try again? \n\n 'Y',  'N':`)
   if (reTry === 'y') {
     word = getRandomWord();
@@ -137,10 +137,54 @@ if (lives === 0) { // If the player lost
 run();
 
 
+/**
 
+PSEUDO CODE IDEAS
+
+  Alternate Question before game: 
+  
+  Do You want to build a snow man?
+
+  if yes = "Warning, man eating snow man ahead. If you build a snow man you will die"
+
+  else No = "Smart choice. Warning, man eating snowman ahead. If you build a snow man you will die. Good Luck!"
+
+  If else statements
+
+   *  - 'If Guess !== Incorrect keep going
+   *     else return number of chances until zero' (This keeps score)
+   *  - If 10 guesses stays the same
+   *     else count -1 
+   *    If guesses 0 returns "You lose"
+   *    If guesses correct shows correct
+   *    If guesses all correct "Congrats you won"
+  
+   * it should account for multiple letters
+  
+   * Should account for capitals and lower cases.
+   
+   *  ReGex SnowMan.ValidGuess = /[a-zA-Z]; 
+  
+   * Return Error message if number/not letter entered.
+  
+   * Add in underscore for blank spaces that match length.
+   
+   * Something that tells them what they already guessed. 
+  
+   * If guessing same letter return error.
+  
+   * If same letter is guessed count stays the same. 
+  
+   * If guess wrong letter twice doesn't take away returns error.
  
+   * need .toUpperCase
+   
+   * .split([,]) - to break up letters
+  
+   * Loop to start and end the game keep doing it until it ends number
+   
+   * At the end of the game it should restart file. 
 
-/*
 GAME STEPS: 
 
 1. Intro message
@@ -191,50 +235,18 @@ GAME STEPS:
 
   STEP NINE: SELECTED LETTERS SHOULD BE CAPPED
 
-  PSEUDO CODE IDEAS
+Snowman Game Plan (As per Collin's request)
+1. Introduction to game
+2. Underscores will be displayed
+3. Number of lives will be displayed
+4. User can guess a letter.
 
-  Alternate Question before game: 
-  
-  Do You want to build a snow man?
+CONDITIONALS:
 
-  if yes = "Warning, man eating snow man ahead. If you build a snow man you will die"
+1. While the user guesses correctly, score is not impacted. If the user guesses incorrectly, the score is deducted by 1 and lets the user continue playing as long as the user the score is above 0, the user can continue playing. If the user guesses the word, return winning message. If the score is 0, return losing message . Displays the word, and starts the game from the beginning with a new word and score starts again at 10.
 
-  else No = "Smart choice. Warning, man eating snowman ahead. If you build a snow man you will die. Good Luck!"
-
-  If else statements
-
-   *  - 'If Guess !== Incorrect keep going
-   *     else return number of chances until zero' (This keeps score)
-   *  - If 10 guesses stays the same
-   *     else count -1 
-   *    If guesses 0 returns "You lose"
-   *    If guesses correct shows correct
-   *    If guesses all correct "Congrats you won"
-  
-   * it should account for multiple letters
-  
-   * Should account for capitals and lower cases.
-   
-   *  ReGex SnowMan.ValidGuess = /[a-zA-Z]; 
-  
-   * Return Error message if number/not letter entered.
-  
-   * Add in underscore for blank spaces that match length.
-   
-   * Something that tells them what they already guessed. 
-  
-   * If guessing same letter return error.
-  
-   * If same letter is guessed count stays the same. 
-  
-   * If guess wrong letter twice doesn't take away returns error.
- 
-   * need .toUpperCase
-   
-   * .split([,]) - to break up letters
-  
-   * Loop to start and end the game keep doing it until it ends number
-   
-   * At the end of the game it should restart file. 
+ERROR MESSAGES:
+If the user enters an invalid character. (I.e. numbers, special characters, etc.) Or if user enters more than one character, returns invalid entry (for both cases). Still returns to the game. Score is not impacted by error messages.
+If the user enters a letter that was already guessed, they will receive an error message and can continue playing. Score will not be impacted by this.  
 */
 

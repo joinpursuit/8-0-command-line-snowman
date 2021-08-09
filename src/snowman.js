@@ -42,7 +42,7 @@ let playAgain = true
 
 //Gets the word and its definition and starts the game 
 function startGame(){
-    const word = getRandomWord();
+    const word = getRandomWord();    
     wd.getDef(word, "en", null, function(definition){
       //console.log(`HINT: ${definition.definition}`)
       if(run(definition.definition, word)){
@@ -63,7 +63,7 @@ function isPlayingAgain(word){
 }
 
 
-//Builds blank spaces for letters in hinden word
+//Builds blank spaces for letters in hidden word
 function wordUnderScore(word){
   let underScore = ''
   for(const i in word){
@@ -72,7 +72,7 @@ function wordUnderScore(word){
   return underScore
 }
 
-//Check if user input is a letter
+//Check if user input is a valid letter
 function isValidChar(input, word){
   if(input === word){return true}
   let valid = true
@@ -154,7 +154,7 @@ function run(hint, word){
     //console.log(word)
     console.log(`❌`+"\033[31m"+` ${guessesArray.sort().join(', ')}`+"\033[39m"+`\n\n${livesColor(lives)}`)
     //Console log `hint`
-    console.log(`\n\tHINT: ${hint}`)
+    console.log(`\n\tHINT: ${hint || 'No definition found'}`)
     //Console log `underScore`
     console.log(`\n\t\t${underScore}`)
     //Letters Guessed
@@ -172,13 +172,13 @@ function run(hint, word){
     //Compare typeof `validChar` to === 'string'
     else if (typeof validChar === 'string'){
       //if 'string' console log `validChar` ---> "You've already guessed that letter"
-      console.log(`\n\t   ${validChar}`)
+      console.log(`\n\t   "${validChar}"`)
       //---> press enter to try again ---> continue
       readline.question(`\n\n\t   Press Enter to continue...`)
       continue;
     } else {
       //if false console log "`userInput` is not a letter"
-      console.log(`\n\t\t${userInput} is not a letter`)
+      console.log(`\n\t    "${userInput || 'Space'}" is not a letter`)
       //---> press enter to try again ---> continue
       readline.question(`\n\t   Press Enter to continue...`)
       continue;

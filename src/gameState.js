@@ -1,12 +1,12 @@
 const getNonRepeatingLetter = require("./getNonRepeatingLetter");
 
+
 function gameState(word) {
   const currentWordState = new Array(word.length).fill("_"); //[_,_,_,_,_]
 
   const lettersGuessed = [];
-  let remainingGuesses = 5;
-
-
+  let remainingGuesses = 25;
+  let userIsWinner = false
 
   console.log(
     "☃️  Welcome To Snowman! ☃️\n\nRemaining Guesses: ",
@@ -25,6 +25,7 @@ function gameState(word) {
     //push non repeating letter to lettersGuessed Array
     lettersGuessed.push(userInput);
 
+
     //It checks if the user letter input is included in word
     if (word.includes(userInput)) {
       //use split method on word string no-space delimited to convert word to an array and then iterate through it
@@ -40,12 +41,15 @@ function gameState(word) {
       console.log(`\nThat's incorrect, The word '${userInput}' is not in the word`);
       remainingGuesses--;
     }
+
+   
+
     //post iteration log to the console Remaining Guesses, LettersGuessed comma space seperated, and currentWordState using join method space seperated
     console.log("\nRemaining Guesses: ", remainingGuesses);
     console.log("Letters Guessed: ", lettersGuessed.join(", "));
     console.log("Word: ", currentWordState.join(" "));
   }
-  return false;
+  return userIsWinner;
 }
 
 module.exports = gameState;

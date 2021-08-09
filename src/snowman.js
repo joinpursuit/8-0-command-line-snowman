@@ -15,6 +15,10 @@ function getRandomWord() {
   return dictionary[index];
 }
 
+//function playGame(){ attempt to make helper function.  
+  
+//}
+
 function run() {
   const word = getRandomWord();
 
@@ -30,10 +34,10 @@ function run() {
       letterSpaceArr.push("_");
     } 
       while (remainingGuess > 0){ // conditional set for the game. As long as remainingGuess is > 0 , the game will continue. 
-        console.log(letterSpaceArr.join(" ") + "\n");  // this line generates the number of dashes equal to word being guessed
+        console.log("\n" + letterSpaceArr.join(" ") + "\n");  // this line generates the number of dashes equal to word being guessed
         console.log("Guessed letters: " +  guessedLetters + "\n"); // prints guessed letters
         console.log(`You have ${remainingGuess} guesses remaining`); 
-        const userInput = readline.question("Please enter your guess: \n"); 
+        const userInput = readline.question("Please enter your guess: "); 
 
           if (userInput.length > 1){ // if more than one letter is entered , request for a valid entry is returned 
               console.log(`\nPlease enter a valid letter`);
@@ -43,7 +47,7 @@ function run() {
               remainingGuess--; // for each wrong guess, a guess is subtracted from remaining guesses    
             }  if (remainingGuess === 0 && wordCharacterArr.toString() !== letterSpaceArr.toString()){
                 console.log("\nThe secret word was: " + word + "\n");
-                console.log(`You have ${remainingGuess} guesses remaining. Try again.`);
+                console.log(`You have ${remainingGuess} guesses remaining. Try again.\n`);
                 break;
             }  if (wordCharacterArr.includes(userInput)){ // conditional statement for each correct letter that is guessed.
                 guessedLetters.push(userInput); // guessed letter will be pushed into guessedLetters array

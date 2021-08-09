@@ -72,17 +72,16 @@ function run(name) {
     }
     //loop through our secretWord
     for (let i = 0; i < secretWord.length; i++) {
-      //Declare variables for clarity
+      //Declare variable for clarity
       let currentLetter = secretWord[i];
-      let displayedLetter = displayedWord[i];
       //in loop, check if input === currentLetter
-      if (userInput === currentLetter) {
+      if (userInput.toLowerCase() === currentLetter) {
         //if it is, change the value of displayedLetter, to currentLetter
         displayedWord[i] = currentLetter;
       }
     }
     //after loop, check if displayWord includes input
-    if (displayedWord.includes(userInput)) {
+    if (displayedWord.includes(userInput.toLowerCase())) {
       //if it does, change message
       message = `\n\nWell done ${userName}! You guessed correctly!\n-------------------------------------\n`;
     } else {
@@ -91,7 +90,7 @@ function run(name) {
       message = `\n\nSorry ${userName}, you guessed wrong :c\n-------------------------------------\n`;
     }
     //Add input to letters guessed
-    alreadyGuessed.push(userInput);
+    alreadyGuessed.push(userInput.toLowerCase());
     //Send them back to guess phase
     continue;
   }

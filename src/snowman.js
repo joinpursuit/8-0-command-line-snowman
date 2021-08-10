@@ -18,7 +18,7 @@ async function definition() {
   let define = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en_US/${word}`)
   define.data.map((word) => {
     word.meanings.map((meaning) => {
-      console.log(`HINT: ${meaning.definitions[0].definition}`)
+      console.log("\x1b[1;92m" + `HINT: ${meaning.definitions[0].definition}` + "\x1b[39m")
     })
   })
 }
@@ -53,11 +53,10 @@ let choice = readline.keyInYN("\x1b[1;39m" + '👺 Hi! Would you like to play a 
             quitTest()
       }
 //restart function when user wins or loses
-function restartGame() {
+async function restartGame() {
   leaveChoice = readline.keyInYN("\x1b[1;95m" + 'Would you like to play again?' + "\x1b[39m")
     if (leaveChoice) {
       word = getRandomWord()
-      definition()
       console.log("\x1b[1;93m" + "\nWelcome back, Let's start!" + "\x1b[39m")
       guessLeft = 8;
       //recreate initial starting object
@@ -67,6 +66,9 @@ function restartGame() {
         guessedWords: '',
         arrayGuessedWords: [],
     }
+        //function to add definition for hint.
+        definition()
+        // readline.question('Enter to continue')
         //function here to show hiddenWord to user
         makeTheBlanks()
         //function for gamePlay
@@ -171,7 +173,7 @@ function getValidLetterGuess() {
   guessLeftCounter()
 //same inputted letters and numbers are invalid 
 function guessIsValid(userInput) {
-  return (userInput.length === 1) && (userInput.toUpperCase() !== userInput.toLowerCase()) && (!(snowman.guessedWords.includes(userInput)))
+  return (userInput.length === 1) && (userInput.toUpperCase() !== userInput.toLowerCase()) && (!(snowman.guessedWords.includes(userInput)) && userInput !== ' ')
 }
   //needs to stop taking in the same letter && invalid input.
   snowman.letter = ''
@@ -196,8 +198,8 @@ function guessIsValid(userInput) {
 const userInput = readline.question("Guess a letter: ");
   
 // This line of code will print out whatever is inputted in by the user:
-console.log("THE USER INPUTTED:", userInput);
+// console.log("THE USER INPUTTED:", userInput);
   
 }
-
+console.log(word)
 run();

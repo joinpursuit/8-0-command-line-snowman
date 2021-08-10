@@ -87,4 +87,22 @@ if (intro === 'y') {
           // if its in the code it adds it to the array. Will go through entire word and account for double letters. 
             remainingLetters--
         }
-      }
+      }   guesses.push(userInput);
+          //This line of code pushes guesses into array
+          if (!word.includes(userInput)){
+          lives--
+          console.log(wrong)
+          //if it is not in the array it is invalid and continue
+          continue
+      }   else {
+          console.log(right)  
+          //Shows correct response
+          continue
+          //returns to the game 
+      } 
+    }
+    if (underScore.join("") === word) { // If the player won
+      console.log(win) // Offer a chance to continue
+      console.log(`The winning word was: ${word}.`)
+  
+      const newGame = readline.question(`Try again? \n\n 'Y',  'N':`)

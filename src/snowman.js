@@ -32,7 +32,25 @@ if user's input, guessedLetter is equal to ''/null/undefined, display message
 if user's input, guessedLetter.length is not equal to 1, or a number, ask the user to type a single 
 letter and that a number or symbol is not allowed
 
-*/
+//Helper functions 
+/**
+ * populate()
+ * alreadyGuessed()
+ * playGame()
+ * gameWonLost(guessedWord, word)
+ * 
+ * ****** Helper functions relation with run() ****
+ * run(){
+ * while(){
+ *    populate()
+ *    playGame() {
+ *      alreadyGuessed()
+ *    }
+ *   }
+ *    gameWonLost(guessedWord, word)
+ * }
+ */
+
 
 
 /*

@@ -74,6 +74,12 @@ function getRandomWord() {
   const word = getRandomWord();
 
 
+  function populate(){
+    for (let i = 0; i < word.length; i++) {
+        guessedWord[i] = "_";
+      }
+    }
+
 //As long as guessedWord has an underscore you'll have a change to play the game
 function playGame(){
   //the while loop executes lines of codes in it's code block until the game ends

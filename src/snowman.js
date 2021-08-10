@@ -19,10 +19,10 @@ function run() {
   const word = getRandomWord();
 
   let wordCharacterArr =[]; // An empty array that will contain letters of the word generated from getRandomWord(). Using an array allows me iterate through & compare userInput to each letter.
-  let letterSpaceArr =[];  // Creating an array that will hold dashes that will equal word.length. Each correct guess will be 
+  let letterSpaceArr =[];  // Creating an array that will hold dashes equal to word.length. Each correct guess will be spliced in at index position.
   let remainingGuess = 6; // a variable for remaining guesses, starting with the number 6.
-  let guessedLetters = []; // Will push guessed letters that are  = 1 character into this array 
-  let count = 0; // count for number of correct guesses
+  let guessedLetters = []; // Will push guessed letters that are = 1 character into this array. 
+  let count = 0; // count for number of correct guesses.
   
 
   for (let i =0;i < word.length; i++){  // this loop pushes all charcters of secret word into an array , and creates a second array with " _ " equal to word.length

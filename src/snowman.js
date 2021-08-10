@@ -15,7 +15,7 @@ let invalid = 'Invalid Entry!';
 // an error message for when an invalid character entered
   
 let repeat = 'Sorry, you already guessed that.';
-// an error message letter repetition
+// an error message letter repetition//
 
 let wrong = 'Sorry, Wrong answer.';
 //an error message that appears when the player inputs an incorrect answer//

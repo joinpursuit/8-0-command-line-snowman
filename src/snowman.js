@@ -18,8 +18,8 @@ function getRandomWord() {
 function run() {
   const word = getRandomWord();
 
-  let wordCharacterArr =[]; // making an empty array that will contain letters of the word generated from getRandomWord(). Using an array so I can loop through & compare userInput
-  let letterSpaceArr =[];  // creating an array that will hold dashes that will equal word.length
+  let wordCharacterArr =[]; // An empty array that will contain letters of the word generated from getRandomWord(). Using an array allows me iterate through & compare userInput to each letter.
+  let letterSpaceArr =[];  // Creating an array that will hold dashes that will equal word.length. Each correct guess will be 
   let remainingGuess = 6; // a variable for remaining guesses, starting with the number 6.
   let guessedLetters = []; // Will push guessed letters that are  = 1 character into this array 
   let count = 0; // count for number of correct guesses
@@ -33,26 +33,26 @@ function run() {
         console.log("\n" + letterSpaceArr.join(" ") + "\n");  // this line generates the number of dashes equal to word being guessed
         console.log("Guessed letters: " +  guessedLetters + "\n"); // prints guessed letters
         console.log(`You have ${remainingGuess} guesses remaining`); 
-        const userInput = readline.question("Please enter your guess: "); 
+        const userInput = readline.question("Please enter your guess: ").toLowerCase(); 
 
           if (!isNaN(userInput) || userInput.length > 1){ // if more than one letter is entered , request for a valid entry is returned 
               console.log(`\nPlease enter a valid letter`);
 
           } else if (userInput.length === 1 && !wordCharacterArr.includes(userInput)){ // This is the conditional for an incorrect guess that is one character length
-              guessedLetters.push(userInput); // this enters the guessed letter into guessed letters array to be returned later.
-              remainingGuess--; // for each wrong guess, a guess is subtracted from remaining guesses    
-            }  if (remainingGuess === 0 && wordCharacterArr.toString() !== letterSpaceArr.toString()){
+              guessedLetters.push(userInput); // this enters the incorrect guessed letter into the array to be returned later.
+              remainingGuess--; // for each wrong guess, a guess is subtracted from remaining guesses, when it reaches 0 game will end.    
+            }  if (remainingGuess === 0 && wordCharacterArr.toString() !== letterSpaceArr.toString()){ // the conditional for 0 remaining guesses and unsolved word.
                 console.log("\nThe secret word was: " + word + "\n");
                 console.log(`You have ${remainingGuess} guesses remaining. Try again.\n`);
                 break;
             }  if (wordCharacterArr.includes(userInput)){ // conditional statement for each correct letter that is guessed.
                 guessedLetters.push(userInput); // guessed letter will be pushed into guessedLetters array
-                count++; // for each guessed letter, count is increased by 1 
+                count++; // for each guessed letter, count is increased by 1 , to be returned later if all correct letters are guessed.
 
                   for (let j =0; j < wordCharacterArr.length; j++){ 
-                  // loop to iterate through wordcharacterArr & find matching input to specific index postions
+                  // loop to iterate through wordcharacterArr & find matching userInput to specific index postions, based on the above conditional being met.
                     if (userInput === wordCharacterArr[j]){  
-                      letterSpaceArr.splice(j,1,userInput); // each matching userImput will be spliced into letterSpaceArray
+                      letterSpaceArr.splice(j,1,userInput); // each matching userInput will be spliced into letterSpaceArray
                     }  
                       if (wordCharacterArr.toString() === letterSpaceArr.toString()){ // if all letters match , the following code executes to end game 
                         remainingGuess = 0;

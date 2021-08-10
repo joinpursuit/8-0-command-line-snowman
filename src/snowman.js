@@ -16,6 +16,16 @@ function getRandomWord() {
   return dictionary[index]; // returns a string
 }
 
+// snowman
+let snow8 =
+`              _
+            _[_]_
+             (")
+          --( : )--
+           (  :  )
+            -___-
+`;
+
 /*
   This function runs your game. Everything you want to happen in your game should happen inside of here.
   Define other functions outside `run()` that have a single specific purpose, such as: getting user input; checking if a guess is correct.
@@ -41,7 +51,7 @@ const word = getRandomWord() // get random word
   }
 
   // Message at start of game:
-  console.log(`* * * SNOWMAN GAME * * *\n`)
+  console.log(` *  *  *  *  *  *  *  *  *\n*  *  * SNOWMAN GAME *  *  *\n${snow8}`)
   console.log(`How to play: There is a secret word. Guess the letters before you run out of incorrect guesses remaining.`)
   // DO NOT PUT IN ACTUAL GAME: see what the random word is:
   // console.log(`HINT: This is NOT the secret word: ${word}`);
@@ -126,7 +136,7 @@ const word = getRandomWord() // get random word
     console.log(`You have ${guessesLeft} guesses remaining.`); // number of wrong guesses made
     // nested 'if' - for having zero guesses left, you lose. ends game.
     if (guessesLeft === 0) {
-      console.log(`Sorry, You lost! ${guessesLeft} guesses are left. The word was: ${word}.`);
+      console.log(`Defeat! Sorry, you lost! ${guessesLeft} guesses are left. The word was: ${word}.`);
       // play again?
       playAgain();
     }
@@ -140,7 +150,7 @@ const word = getRandomWord() // get random word
     // Conditions for ending the game:
     if (state.wordArr.join('') === state.secretWord) {
       state.shouldKeepPlaying = false; // while loop for stops
-      console.log(`\nYou guessed the word! It was ${word}.`);
+      console.log(`\nCongratulations! You guessed the word! It was ${word}.`);
       // play again?
       playAgain();
     }
@@ -153,17 +163,17 @@ const word = getRandomWord() // get random word
     // Conditional logic that handles where to stop the game
     if (userInput === "n" || userInput === "no") {
       // If the user doesn't enter "n" or "no"
-      console.log(`game over. The word was ${word}.`);
+      console.log(`Game Over.`);
       state.shouldKeepPlaying = false; // while loop for stops
       process.exit();
-    } else {
-        // Starts the game again - reset from beginning.
-        run();
+    } else if (userInput === "y" || userInput === "yes") {
+      // Starts the game again - reset from beginning.
+      run()
+    } else if (userInput !== "y" || userInput !== "yes") {
+      // invalid character - repeat question repeatedly until user says `yes` or `no`; `y` or `n`
+      console.log('Invalid (Y or n) character.');
+      playAgain();
     }
   }
 }
 run();
-
-
-
-// console.log(`     (${state.wordArr.length} letters)`)

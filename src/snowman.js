@@ -7,7 +7,7 @@ function getRandomWord(dictionary) {
 }
 
 function run() {
-  const word = getRandomWord(dictionary);
+  const word = "apple";
   let answerArr = [];
   for (let i = 0; i < word.length; i++){
     answerArr[i] = "_";
@@ -54,17 +54,16 @@ function run() {
       }
     }
     if (lives == 0){
-      // console.log(answerArr.join(" "))
+      console.log(answerArr.join(" "))
       console.log("Damn I thought you could spell the word was" + " " + word + "!")
-      
       break;
     }
-
+    
   } 
-    // if (guessArr === word.length){
-      console.log(answerArr.join(" "))
-      console.log("Look at you knowing how to spell the answer was" + " " + word + "!")
-    // }
+  if (answerArr.join("") === word){
+    console.log(answerArr.join(" "))
+    console.log("Look at you knowing how to spell the answer was" + " " + word + "!")
+    }
  
 }
 

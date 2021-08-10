@@ -72,7 +72,12 @@ function getRandomWord() {
 
  // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
-
+  
+//determines a winner or a looser
+function gameWonLost(guessedWord, word){
+  guessedWord.join('') === word ? console.log(`Good job! You won!!! The secret word is  ${word}`) : console.log(`Hard luck! You lost!!! The secret word is  ${word}`)  
+  
+   }
 
   function populate(){
     for (let i = 0; i < word.length; i++) {

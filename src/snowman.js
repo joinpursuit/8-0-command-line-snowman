@@ -27,7 +27,7 @@ function run() {
 
     const word = getRandomWord()
 
-    let welcome = readline.question("Welcome to the word guessing game. In this game you will be guessing varius words. \n Are you ready to play? \n (Y or N) ").toLowerCase();
+    let welcome = readline.question("Welcome to the word guessing game. In this game you will be guessing various words. \n Are you ready to play? \n (Y or N) ").toLowerCase();
 
     let remainingGuesses = 20
 
@@ -62,8 +62,9 @@ function run() {
         console.log("Please type one letter")
       } else {
         if (!word.includes(userGuess)) {
-          console.log("Sorry that letter is invalid. One guess has be reduced from your total.")
+          console.log("Sorry that guess is invalid. One guess has be reduced from your total.")
           remainingGuesses--;
+          console.log("Remaining Guesses : " + remainingGuesses)
         }
         for (i = 0; i < word.length; i++) {
           if (word[i] === userGuess) {
@@ -71,6 +72,7 @@ function run() {
             currentWordArr[i] = userGuess;
             remainingGuesses--;
             remainingLetters--;
+            console.log("Remaining Guesses : " + remainingGuesses)
           }
         }
       }

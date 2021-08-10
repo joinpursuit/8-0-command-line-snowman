@@ -17,9 +17,7 @@ function getRandomWord() {
 
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
-
   You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
   Once you understand the code below, you may remove the comments if you like.
 */
 function run() {
@@ -27,9 +25,7 @@ function run() {
   const word = getRandomWord();
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-
     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
     After a user hits the 'return' key, the rest of the code will run.
   */
   const userInput = readline.question("Guess a letter: ");

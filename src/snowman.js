@@ -118,3 +118,19 @@ if (intro === 'y') {
         //exits the game
       }
     }
+    let reTry = ""
+  
+    if (lives === 0) { // If the player lost
+        console.log(lose)
+        console.log(`The word was: ${word}.`)
+      
+      } reTry = readline.question(`Try again? \n\n 'Y',  'N':`)
+      if (reTry === 'y') {
+        word = getRandomWord();
+          console.log(`\nGood Luck Player!\n`)
+      } else {
+        console.log(`\nThank you for playing!\n`)
+    }
+    }
+    run();
+    

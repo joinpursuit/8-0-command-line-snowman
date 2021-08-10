@@ -1,7 +1,6 @@
 const readline = require("readline-sync");
 const dictionary = require("./dictionary");
 
-
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
@@ -10,66 +9,77 @@ function getRandomWord() {
 gameState = {
   playSnowman: true,
   word: 'apple', // getRandomWord(),
-  correctGuesses: [],
-  wrongGuesses: [],
+  guesses: [],
   maxWrongGuesses: 6
 }
 
-function isLetterGuessCorrect(userGuess){
-  return gameState.word.includes(userGuess) //getRandomWord().includes(userGuess)
-}
-
-// console.log(isLetterGuessCorrect('a'));
-
-function addCorrectGuessToList(userGuess){
-  gameState.correctGuesses.push(userGuess);
-  return gameState.correctGuesses;
-}
-
-// console.log(addCorrectGuessToList('p'));
-// console.log(addCorrectGuessToList('l'));
-
-function addWrongGuessToList (userGuess){
-  gameState.wrongGuesses.push(userGuess);
-  return gameState.wrongGuesses;
-}
-
-// console.log(addWrongGuessToList('b'));
-// console.log(addWrongGuessToList('q'));
-
-function getBlankWord (){
-  let blankWord = '';
+function displayBlankWord(){
+  let blankWord = 'Word: ';
   for (let i=0; i<gameState.word.length; i++){
-    blankWord += '_ ';
+    blankWord += '_';
+    if (i !== gameState.word.length-1){
+      blankWord += ' ';
+    } 
   }
   console.log(blankWord, '\n');
 }
 
+function addGuessToList(userGuess){
+  gameState.guesses.push(userGuess);
+  return gameState.guesses;
+}
+
+
 function run() {
-  while (gameState.playSnowman){
-    let userGuess = readline.question('Do you want to play Snowman? (Y or n) \n').toLowerCase();
-    if(userGuess === 'n' || userGuess === 'no'){
-      console.log('Okay, bye...');
-      gameState.playSnowman = false;
-    } else {
-      getBlankWord();
-      while (gameState.maxWrongGuesses > 0){
-        console.log('Number of guesses left: ' + gameState.maxWrongGuesses);
-        userGuess = readline.question("Please guess a letter: ");
-        if (gameState.word.includes(userGuess)){
-          console.log('TRUE');
-        } else {
-          gameState.maxWrongGuesses--;
-        }
+  console.log('SNOWMAN GAME\n') // Title of Game
+  
+  //const word = getRandomWord(); // Picks out a random word for game
+  
+  displayBlankWord(); // Displays word in blank/underscore form
+
+  while (gameState.maxWrongGuesses > 0){
+    console.log('Number of guesses remaining: ' + gameState.maxWrongGuesses); // Prints out the number of guesses
+    
+    let userGuess = readline.question("Please guess a letter: "); // Lets user type a letter
+    
+    if (isNaN(Number(userGuess)) && userGuess.length === 1){ // Checks to see if userGuess is a letter and only 1 letter
+      addGuessToList(userGuess); // Uses helper function to
+    }
+    
+    let isGivenLetterInWord = false;
+    
+    if (!isNaN(Number(userGuess)) || userGuess.length > 1){
+      console.log('ERROR: Please enter a valid letter');
+      gameState.maxWrongGuesses++;
+    } 
+
+    let word = '\nWord: ';
+    for (let i=0; i<gameState.word.length; i++){
+      if (gameState.word[i] === userGuess) {
+        word += userGuess;
+        isGivenLetterInWord = true;
+      } else {
+        word += '_';
+      }
       
-      console.log("Guessed Letters: ", );
+      if (i !== gameState.word.length-1){
+        word += ' ';
       }
     }
-  }
-  
-  // if (wrongGuesses.length === 6){}
 
-  
+    console.log(word);
+    
+    if (isGivenLetterInWord === false){
+      gameState.maxWrongGuesses--;
+    }
+    
+    console.log("Guessed Letters: " + gameState.guesses);
+    
+  }
+
+  if (gameState.maxWrongGuesses === 0){
+    console.log('\nGAME OVER');
+  }
 }
 
 run();

@@ -65,4 +65,18 @@ if (intro === 'y') {
       console.log(`Lives left: ${lives}`);
       //shows lives remaining
       const userInput = readline.question("Guess a letter: ");
-      // Game play question Tells them to guess a letter 
+      // Game play question Tells them to guess a letter
+
+      if (guesses.includes(userInput)){
+        console.log(repeat)
+        console.log("THE USER INPUTTED:", userInput);
+        // This line of code will print out if user repeats guess
+        continue //if user uses letters only 
+      }
+      
+      if (!userInput.match(validGuess)){
+        console.log(invalid)
+        console.log("THE USER INPUTTED:", userInput);
+        // This line of code will print out whatever is inputted in by the user.
+        continue //if user uses letters only 
+      }

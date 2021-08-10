@@ -67,6 +67,7 @@ String.prototype.replaceAt = function (index, replacement) {
 
   Once you understand the code below, you may remove the comments if you like.
 */
+
 const guesses = [];
 const word = getRandomWord();
 let incorrectGuesses = 8;
@@ -102,12 +103,16 @@ let validLetters = [
 function run() {
   const space = "\n";
   console.log(
-    "S N O W M A N  G A M E" +
+    "⛄ 🧟 S N O W M A N  G A M E 🧟 ⛄ " +
       space +
       space +
       "The game begins when you enter a letter you believe is in the mystery word" +
       space +
-      "You have 8 chances to guess the complete word.. but be careful you may awaken the Snowman monster!"
+      "You have 8 chances to guess the complete word.. but be careful you may awaken the Snowman monster!" +
+      space +
+      "The game ends when you have correctly guessed the mystery word or you have run out of incorrect guesses" +
+      space +
+      "GOOD LUCK!!🌟🌟🌟"
   );
   let repeatedString = "";
   let i = 0;
@@ -116,7 +121,7 @@ function run() {
     i++;
   }
   console.log(repeatedString);
-  console.log(`${space}This is a ${word.length} Letter Word${space}`);
+  console.log(`${space}A ${word.length} Letter Word${space}`);
 
   while (repeatedString.includes("_") && incorrectGuesses > 0) {
     console.log(
@@ -127,7 +132,9 @@ function run() {
 
     const guess = readline.question("Guess a letter: ");
     if (!validLetters.includes(guess)) {
-      console.log(`${space}Opps! Please enter a lower-case letter...${space}`);
+      console.log(
+        `${space}Opps! Please enter one lower-case letter...${space}`
+      );
       continue; // sends the user back to the game start (breaking out of the loop) after they enter a (number, multiple letters, etc.)
     }
     if (guesses.includes(guess)) {
@@ -164,12 +171,12 @@ function run() {
   */
       // This line of code will print out whatever is inputted in by the user.
       console.log(
-        `${space}Oh no, It's alive! You are out of guesses! \n
+        `${space}Oh no, It's alive!! ⛄ 🧟  ${space}${space}You are out of guesses \n
       The correct word was ${word}${space}`
       );
     }
     if (!repeatedString.includes("_")) {
-      console.log(`${space}Winner!  Snow-tastic!${space}`);
+      console.log(`${space}Snow-tastic!! You're A Winner! 🎊  ${space}`);
     }
   }
 }

@@ -70,22 +70,63 @@ function getRandomWord() {
   return dictionary[index];
 }
 
+ // This line of code gets a random word. The `word` variable will be a string.
+  const word = getRandomWord();
 
 
+//As long as guessedWord has an underscore you'll have a change to play the game
+function playGame(){
+  //the while loop executes lines of codes in it's code block until the game ends
+  //while (WordLength > 0){
+      //guessedWord.join(' ')
+      while(guessedWord.includes('_') && WordLength > 0){
+        guessedLetter = readline.question("Guess a letter: ");
+        guessedLetter = guessedLetter.toLowerCase()
+        alreadyGuessed() //executes when user input a letter already inputted
+       
+        //checks if guessed letter is an empty string
+        if (guessedLetter === "") {
+          //if no input is given the user is asked for an input
+          console.log('Please enter a single letter');
+          // checks if the input is something other than a letter
+        } else if (
+          guessedLetter.length !== 1 ||
+          
+          guessedLetter.match(/[0-9]/g)
+        ) {
+          console.log(
+            "Please type a single letter character [numbers or symbols not allowed]"
+          );
+        } 
+        else {
+          //searches for the user's guessed input by iterating through the letters of the 
+          // random word given, if a match is found, it assigns(replaces the underscore '_') it to the corresponding index of 
+          //the guessedWord array 
+        for (let j = 0; j < word.length; j++) {
+            if(word.charAt(j) === guessedLetter) {
+              guessedWord[j] = guessedLetter;
 
+          } 
+          }
+        } 
+        //if user's guess is incorrect, the chance of play is decremented by 1 after each input
+        if(guessedLetter.length > 1 || guessedLetter.match(/[0-9]/g)){
 
+        }
+        else if(!word.includes(guessedLetter)){
+            WordLength--
+            } 
+        console.log(`The user typed: ${guessedLetter} \nRemaining Incorrect Guesses:   ${WordLength}\nLetters Guessed: ${alreadyGuessedLetters.sort()} \nWord: ${guessedWord}`
+        );
+      }
+     
+    }
 
 
 
 
 function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-    After a user hits the 'return' key, the rest of the code will run.
-  */
+
   const userInput = readline.question("Guess a letter: ");
   // This line of code will print out whatever is inputted in by the user.
   console.log("THE USER INPUTTED:", userInput);

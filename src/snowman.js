@@ -46,9 +46,14 @@ const word = getRandomWord() // get random word
 
   // Message at start of game:
   console.log(`* * * SNOWMAN GAME * * *\n`)
-  console.log(`How to play: There is a secret word. Guess the letters before you run out of guesses remaining.`)
+  // Instructions on how to play
+  console.log(`How to play: 
+To play "Snowman", a random word is picked and kept hidden.\nYou are shown a number of blank spaces equal to the length of the word.
+
+You may then guess a letter.\nIf the letter appears in the hidden word, that letter will be shown in place of the space.\nIf the letter is incorrect, your remaining guesses will decrease by 1, until you either win or lose the game!`)
+console.log(`\n* * * START GAME * * *\nThe random word has been picked!`)
   // tells user immediately how many guesses they have
-  console.log(`\nYou have ${guessesLeft} guesses remaining.`);
+  console.log(`\nRemaining Incorrect Guesses: ${guessesLeft}`);
   // DO NOT PUT IN ACTUAL GAME: see what the random word is:
   // console.log(`HINT: This is NOT the secret word: ${word}`);
   
@@ -98,7 +103,7 @@ const word = getRandomWord() // get random word
            // push wrong letter to `correctGuesses` array
            state.correctGuesses.push(userInput);
         } else {
-          console.log(`That letter was wrong.`)
+          console.log(`That letter was incorrect.`)
           // push wrong letter to `wrongGuesses` array
           state.wrongGuesses.push(userInput);
         }
@@ -124,9 +129,9 @@ const word = getRandomWord() // get random word
     // log wrong guesses array:
     console.log("Wrong guesses made:", state.wrongGuesses.sort().join(', '));
 
-  // How many guesses are left?
+  // How many incorrect guesses are left?
   if (guessesLeft >= 0) {
-    console.log(`You have ${guessesLeft} guesses remaining.`); // number of wrong guesses made
+    console.log(`Remaining Incorrect Guesses: ${guessesLeft}`); // number of wrong guesses made
     // nested 'if' - for having zero guesses left, you lose. ends game.
     if (guessesLeft === 0) {
       console.log(`Sorry, You lost! ${guessesLeft} guesses are left. The word was: ${word}.`);

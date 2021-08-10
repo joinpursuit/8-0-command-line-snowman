@@ -102,7 +102,19 @@ if (intro === 'y') {
       } 
     }
     if (underScore.join("") === word) { // If the player won
-      console.log(win) // Offer a chance to continue
-      console.log(`The winning word was: ${word}.`)
+      console.log(win); // Offer a chance to continue
+      console.log(`The winning word was: ${word}.`);
   
-      const newGame = readline.question(`Try again? \n\n 'Y',  'N':`)
+      const newGame = readline.question(`Try again? \n\n 'Y',  'N':`);
+      
+      if (newGame === 'y') { // If the player wishes to continue
+        word = getRandomWord();
+        //it needed a fuction within the scope for get random to restart the game with a new word
+        console.log(`\nGood Luck Player!\n`);
+        run()
+      } else { // If No
+        console.log(`\nThank you for playing!\n`);
+        process.exit()
+        //exits the game
+      }
+    }

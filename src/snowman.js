@@ -22,23 +22,55 @@ function getRandomWord() {
   Once you understand the code below, you may remove the comments if you like.
 */
 
+//Using function from GitHub to add colors to my game!!
+
+var colors = {
+	0: "\033[0;30m", /* 00 BLACK    0x30 */
+	1: "\033[0;34m", /* 01 BLUE     0x31 */
+	2: "\033[0;32m", /* 02 GREEN    0x32 */
+	3: "\033[0;36m", /* 03 CYAN     0x33 */
+	4: "\033[0;31m", /* 04 RED      0x34 */
+	5: "\033[0;35m", /* 05 PURPLE   0x35 */
+	6: "\033[0;33m", /* 06 GOLD     0x36 */
+	7: "\033[0;37m", /* 07 GREY     0x37 */
+	8: "\033[1;30m", /* 08 DGREY    0x38 */
+	9: "\033[1;34m", /* 09 LBLUE    0x39 */
+	a: "\033[1;32m", /* 10 LGREEN   0x61 */
+	b: "\033[1;36m", /* 11 LCYAN    0x62 */
+	c: "\033[1;31m", /* 12 LRED     0x63 */
+	d: "\033[1;35m", /* 13 LPURPLE  0x64 */
+	e: "\033[1;33m", /* 14 YELLOW   0x65 */
+	f: "\033[1;37m", /* 15 WHITE    0x66 */
+};
+function c(r, msg) {
+	return '§' + r + msg + '§r'; // I do have questions about this line of code
+}
+
+function mccolor(str) {
+	return str.replace(/§([0-9a-fr])/g, function(m, contents) { //Also have questions about this line of code
+		return colors[contents] || "\033[0m";
+	});
+}
+
 
 //FUNCTIONS WE WILL USE TO HELP OUR MAIN FUNCTION() {}
-
+let errorMessage = "";
 //Function that helps Identify if input is other than a letter
 function checkInput(input) {
   //Statement that identifies input
     if ((input >= 'a' && input <= 'z') && input.length - 1 === 0 || (input >= 'A' && input <= 'Z') && input.length - 1 === 0) {
   //Statement that checks if our array contains any giving letters given by input
       if (checkArray.includes(input)) {
+        errorMessage = colors[4] + "Error! You already guessed that. Input a different letter"
   //If guessed letter was previously inputted should return an error
-        console.log("\n Error! You already guessed that. Input a different letter") 
-        return true;
+        console.log(errorMessage) 
+        // return true;
       }
   //If given an input other than a letter
     } else {
-      console.log("\n Error your input is Invalid! Input a letter") 
-      return true;
+      errorMessage = colors[4] + "Error your input is Invalid! Input a letter"
+      console.log(errorMessage) 
+      // return true;
     }
     checkArray.push(input);
   } 
@@ -111,15 +143,15 @@ function run() {
     //Check the word to test
     //console.log(word)
   //Welcome to the Snowman Game!
-    console.log("----------Welcome to the Snowman Game!----------\n\n Remaining Incorrect Guesses: "  + guesses + "\n Word: " + hiddenLetters(word) + "\n\n"); 
+    console.log(`${colors[3]} ----------Welcome to the Snowman Game!----------\n\n Remaining Incorrect Guesses: ${guesses} \n Word: ${hiddenLetters(word)} \n\n`); 
   
     //While loop until word is complete or there are no more guesses 
     while (word !== hiddenWord && guesses > 0) {
-      let userInput = readline.question(" Guess a letter: ");
+      let userInput = readline.question(`${colors[3]} Guess a letter: `);
   
       //This While loop checks for Errors
       while (checkInput(userInput)) {
-        userInput = readline.question(" Guess a letter: ");
+        userInput = readline.question(`${colors[3]} Guess a letter: `);
       }
   
       //Count number of guesses taken
@@ -136,8 +168,8 @@ function run() {
       //Update hidden word(gets information from our helper function)
       hiddenWord = hiddenLetters(word, userInput);
   
-      console.log("----------------------------------------------");
-      console.log("\nRemaining Incorrect Guesses: " + guesses + "\nLetters Guessed: " + lettersGuessed + "\n Word: " + hiddenWord + "\n\n");
+      console.log(`${colors[3]}----------------------------------------------`);
+      console.log(`${colors[3]}\nRemaining Incorrect Guesses: ${guesses}\nLetters Guessed: ${lettersGuessed}\n Word: ${hiddenWord}\n\n`);
   
       //Set up to compare hidden word with dictionary word
       hiddenArray = hiddenWord.split(" ");
@@ -146,10 +178,10 @@ function run() {
   
     //let's user know if they win or lose
     if (word === hiddenWord) {
-      console.log("You win! :) You took " + guessCount + " guesses\n");
+      console.log(`${colors[6]}You win! :) You took ${guessCount} guesses\n`);
 
     } else {
-      console.log(`You lost! :( \n\nThe correct word is => "${word.toUpperCase()}"\n`);
+      console.log(`${colors[4]} You lost! :( \n\n ${colors[2]} The correct word is => "${word.toUpperCase()}"\n Thank You for playing "The Snowman Game"`);
     }
   
   }

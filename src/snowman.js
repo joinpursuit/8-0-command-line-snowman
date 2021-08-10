@@ -81,7 +81,9 @@ const playerName = readline.question(chalk.bold('Whose playing today?'))//Just a
 
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
-  let lives = 7
+  const word = getRandomWord();
+  let lives = 10 - Math.floor(word.length/2) //some variance on lives if no lives are stated in the file call
+
   let livesColor = 'green'
   if (livesSetting){
     lives = Number(livesSetting)
@@ -103,7 +105,8 @@ function run() {
           but for each wrong guess you make I will take a life. However,
           I will give you access to a continue for 2 more lives whenever 
           you run out, try your best to not need them, but you may push 
-          through as you wish.
+          through as you wish.  If you'd like a specific number of lives
+          run the file again with "node snowman.js {number}".
   `
   )
   let snowman = [
@@ -155,7 +158,6 @@ function run() {
     (  *  )  |
     `
     ]
-  const word = getRandomWord();
   let wordDisplay = []
   let guessedLetters = []
   let snowmanStage = 7

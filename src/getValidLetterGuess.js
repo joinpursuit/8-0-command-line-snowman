@@ -22,6 +22,7 @@ function getValidLetterGuess() {
   while (!letter) {
     //program will stop to get user input
     let input = readline.question("\nGuess a letter: ");
+
     if (guessIsValid(input)) {
       letter = input;
     } else {

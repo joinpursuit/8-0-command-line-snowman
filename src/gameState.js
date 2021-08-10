@@ -1,11 +1,11 @@
 const getNonRepeatingLetter = require("./getNonRepeatingLetter");
 
-
 function gameState(word) {
+
   const currentWordState = new Array(word.length).fill("_"); //[_,_,_,_,_]
 
   const lettersGuessed = [];
-  let remainingGuesses = 25;
+  let remainingGuesses = 5;
   let userIsWinner = false
 
   console.log(
@@ -28,13 +28,13 @@ function gameState(word) {
 
     //It checks if the user letter input is included in word
     if (word.includes(userInput)) {
+      console.log(`\nThat's correct!`);
       //use split method on word string no-space delimited to convert word to an array and then iterate through it
       word.split("").forEach((letterInWord, index) => {
         //if the current letter matches with userInput
         if (letterInWord === userInput) {
           //assign currentWordState at index to userInput
           currentWordState[index] = userInput;
-          console.log(`\nThat's correct!`);
         }
       });
     } else {
@@ -53,3 +53,4 @@ function gameState(word) {
 }
 
 module.exports = gameState;
+

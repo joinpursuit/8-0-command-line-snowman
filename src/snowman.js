@@ -80,3 +80,11 @@ if (intro === 'y') {
         // This line of code will print out whatever is inputted in by the user.
         continue //if user uses letters only 
       }
+          for(let i = 0; i < word.length; i++){
+        //checking if the letter is within the word.
+            if(userInput === word[i]){
+            underScore[i] = userInput
+          // if its in the code it adds it to the array. Will go through entire word and account for double letters. 
+            remainingLetters--
+        }
+      }

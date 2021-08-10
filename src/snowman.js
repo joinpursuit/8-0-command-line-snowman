@@ -89,14 +89,31 @@ let message = `\n\nHello ${userName}! Enjoy your game!`;
     }
   }  
   // Aftr loop, check if displayedWord includes input.
-      // If it does, incorrect Guess -= 0
-      // If it isn't, incorrectGuess -= 1
+  if (displayedWord.includes(userInput.toLowerCase())) {
+    // If it does, change message
+    message = `\n\nWell done ${userName}! You guessed correctly!\n_____________________________________________________\n`;
+  } else {
+    // If it isn't, incorrectGuess -= 1
+    incorrectGuess -= 1;
+    message = `\n\nSorry ${userName}, you guessed wrong :c\n-------------------------------------\n`;
+    }
     // Add input to letters guessed
-
+    alreadyGuessed.push(userInput.toLowerCase());
+    // Send them back to guess phase.
+    continue;
+    }
+    // Check if they won
+  if (!displayedWord.includes('_')) {
+    // If they did, print winning message
+    console.log(`\nGOOD JOB ${userName}!!! YOU'RE A WINNER!!\nYour word was: ${secretWord}\n\n-------------------------------------\n`
+    );
+  } else {
+    // If they didn't, print losing message
+    console.log(
+      `\nSorry ${userName}, better luck next time! Your word was: ${secretWord}\n\n-------------------------------------\n`
+    );
   }
-  // Check if they won
-  // If they did, give winning phrase
-  // If they didn't, give the lossing phrase
+  
 
 
   console.log("THE USER INPUTTED:", userInput);

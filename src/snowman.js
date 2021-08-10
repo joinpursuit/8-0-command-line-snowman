@@ -27,16 +27,16 @@ function run() {
 
     const word = getRandomWord()
 
-    let welcome = readline.question("Welcome to the word guessing game. In this game you will be guessing various words. \n Are you ready to play? \n (Y or N) ").toLowerCase();
+    let isPlayerisReady = readline.question("Welcome to the word guessing game. In this game you will be guessing various words. \n Are you ready to play? \n (Y or N) ").toLowerCase();
 
-    let remainingGuesses = 20
+    let playersRemainingGuesses = 20
 
 
-    if (welcome === "n" || welcome === "no") {
+    if (isPlayerisReady === "n" || isPlayerisReady === "no") {
       console.log("Okay, please come back when you are ready. Exiting game loop......")
       gameState.gameActive = false;
     }
-    else if (welcome === "y" || welcome === "yes") {
+    else if (isPlayerisReady === "y" || isPlayerisReady === "yes") {
       console.log("Great! Let's begin!")
       getRandomWord()
       console.log(word)
@@ -45,16 +45,16 @@ function run() {
       console.log("Please enter a valid selection")
     }
 
-    let currentWordArr = [];
+    let generatedWordArr = [];
     for (let i = 0; i < word.length; i++) {
-      currentWordArr[i] = "_";
+      generatedWordArr[i] = "_";
     }
 
     let remainingLetters = word.length;
 
     while (remainingLetters > 0) {
 
-      console.log(currentWordArr.join(" "));
+      console.log(generatedWordArr.join(" "));
 
       let userGuess = readline.question("A random word has been generated. Enter your guess. Only letters are allowed. ");
 
@@ -78,7 +78,7 @@ function run() {
       }
 
       if (remainingLetters === 0) {
-        let congraulationsMessage = readline.question("congratulations! You've guessed the secret word! Do you want to play again? \n (Y or N ").toLocaleLowerCase();
+        let congraulationsMessage = readline.question("congratulations! You've guessed the secret word! Do you want to play again? \n (Y or N ").toLowerCase();
         if (congraulationsMessage === 'y' || congraulationsMessage === "yes") {
           console.log("Generating word");
           run()

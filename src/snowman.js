@@ -31,6 +31,8 @@ function run() {
 
     let playersRemainingGuesses = 20
 
+    let lettersGuessed = [];
+
 
     if (isPlayerisReady === "n" || isPlayerisReady === "no") {
       console.log("Okay, please come back when you are ready. Exiting game loop......")
@@ -63,8 +65,10 @@ function run() {
       } else {
         if (!word.includes(userGuess)) {
           console.log("Sorry that guess is invalid. One guess has be reduced from your total.")
+          lettersGuessed.push(userGuess)
           playersRemainingGuesses--;
           console.log("Remaining Guesses : " + playersRemainingGuesses)
+          console.log("Letters you've guessed so far: " + lettersGuessed)
         }
         for (i = 0; i < word.length; i++) {
           if (word[i] === userGuess) {
@@ -72,7 +76,9 @@ function run() {
             generatedWordArr[i] = userGuess;
             playersRemainingGuesses--;
             remainingLetters--;
+            lettersGuessed.push(userGuess)
             console.log("Remaining Guesses : " + playersRemainingGuesses)
+            console.log("Letters you've guessed so far: " + lettersGuessed)
           }
         }
       }
@@ -90,7 +96,7 @@ function run() {
 
 
       if (playersRemainingGuesses === 0) {
-        let losingMessage = readline.question("Sorry! You gave it a good go but you've used up all your guesses. Would you like to play again? \n (Y or N ").toLowerCase();
+        let losingMessage = readline.question("Sorry! You gave it a good go, but you've used up all your guesses. Would you like to play again? \n (Y or N ").toLowerCase();
         if (losingMessage === "y" || losingMessage === "yes") {
           console.log("Okay! You've warmed up. Let's see what you can do! \n Generating word......")
         } else if (losingMessage === "n" || losingMessage === "no") {

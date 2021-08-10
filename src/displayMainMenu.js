@@ -6,6 +6,10 @@ const readline = require("readline-sync");
   The `logSnowMan` variable is a function that when invoked will log a snowman to the console
 */
 const logSnowMan = require("./logSnowMan.js");
+/*
+  The `displayHighScores` variable is a function that when invoked will log the highScores to the console
+*/
+const displayHighScores = require("./displayHighScores.js");
 
 function displayMainMenu(name) {
   //This line of code will be used to give the player the option to play the game or read rules
@@ -26,8 +30,8 @@ function displayMainMenu(name) {
       index = readline.keyInSelect(options, "What would you like to do now?");
     } else if (options[index] === "View High Scores") {
       console.clear();
-      console.log("High Scores");
-      readline.question("Hit Enter key to continue.", { hideEchoBack: true, mask: "" });
+      displayHighScores();
+      readline.question("\nHit Enter key to continue.", { hideEchoBack: true, mask: "" });
       console.clear();
       index = readline.keyInSelect(options, "What would you like to do now?");
     } else {

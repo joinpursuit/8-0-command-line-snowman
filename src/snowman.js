@@ -22,3 +22,8 @@ let wrong = 'Sorry, Wrong answer.';
 
 let right = 'Great Job!';
 //a message that appears when the player inputs a correct answer//
+
+function getRandomWord() {
+  const index = Math.floor(Math.random() * dictionary.length);
+  return dictionary[index];
+}

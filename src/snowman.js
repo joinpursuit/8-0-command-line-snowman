@@ -65,11 +65,11 @@ const readline = require("readline-sync");
 */
 const dictionary = require("./dictionary");
 
-const chalk =  require('chalk');
+//const chalk =  require('chalk');
 
-const log = console.log;
+//const log = console.log;
 
-const center = require('center-align');
+//const center = require('center-align');
 
 
 /*

@@ -1,11 +1,11 @@
 /*
   `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
 */
-const readline = require("readline-sync");
+// const readline = require("readline-sync");
 /*
   The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
 */
-const dictionary = require("./dictionary");
+// const dictionary = require("./dictionary");
 
 // /*
 //   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
@@ -39,15 +39,32 @@ const dictionary = require("./dictionary");
 
 // run();
 
+//------------------------------------------- LET'S START FROM HERE -------------------------------------------
+
+const readline = require("readline-sync"); // Declare a variable 'readline' which enable you get the userInput from the command line. 
+const dictionary = require("./dictionary"); // Declare a variable 'dictionary' which is used for generate the random words.
+
+// Create a function to return the random words which should be called in the main function.
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
 
-const word = getRandomWord();
-  // let guessChances = word.length + 1;
-  // let underscore = "";
+// // Declare a variable 'word' equals to the value, which is calling the getRandomWord function.
+// const word = getRandomWord();
 
+// First helper function:
+// To check if the userInput matches the requirements or not, each time should enter one lowercase letter.
+function checkCorrectInput(letter) {
+  if (letter.length === 1 && letter.match(/[a-z]/)){
+    return true;
+  }
+  return false;
+}
+
+// Second helper function:
+// Loop the random word to check if the userInput matches the current letter
+// Compare with every letter in the word with the userInput, if they are the same return true, otherwise false.
 function checkInput (word,userInput){
   let result = false;
   for(let letter of word) {
@@ -58,51 +75,59 @@ function checkInput (word,userInput){
   return result;
 }
 
-function checkCorrectInput(str) {
-  if (str.length === 1 && str.match(/[a-z]/)){
-    return true;
+// Third helper function:
+// The format exchanger between before and after guessing 
+  // The parameter 'storage' should be relative with the argument (the orginal format) 
+  // -->'underscore' without space which set up in the main function.
+function replacedLetters(word, storage ,userInput) {
+  // The emptyStrArr is the basic format exchanger
+  let inputExchanger = storage.split("");
+  for(let i=0; i < word.length; i++) {
+    // Loop through every letter in the word to check if it equals to the userInput 
+    if(word[i] === userInput) {
+      // If uerInput is correct, update the format exchanger, 
+        // which would replace the underscore'_' with userInput according to the letter's index 
+      inputExchanger.splice(i,1,userInput);
+    }
   }
-  return false;
+  // If userInput is not correct, remain the orginal format but with space.
+  return inputExchanger.join(" ");
 }
 
+// Fourth helper function:
+// Keep tracking the guessChances, if userInput is correct, remain the guessChances
+  // Otherwise, decrease the guessChances.
 function chancesLeft(word,userInput,guessChances) {
   if(word.includes(userInput)) {
     return guessChances
   }
+  // According to the condition to return different result
   guessChances--;
   return guessChances;
 }
 
-function replacedLetters(word, emptyStr ,userInput) {
-  let emptyStrArr = emptyStr.split("");
-  for(let i=0; i < word.length; i++) {
-    if(word[i] === userInput) {
-      emptyStrArr.splice(i,1,userInput);
-    }
-  }
-  return emptyStrArr.join(" ");
-}
-
-
+// Main function:
 function run() {
+  // Declare a variable 'word' equals to the value, which is calling the getRandomWord function.
+  const word = getRandomWord();
   let underscore = "_".repeat(word.length);
-  console.log(underscore);
+  console.log(underscore.split("").join(" ") + "\n");
   let guessChances = word.length + 1;
   while (guessChances > 0) {
-    console.log("Reminder: This secrect word should have " + word.length + " lowercase letters.");
+    console.log("Reminder: This secrect word should have " + word.length + " lowercase letters." + "\n");
     const userInput = readline.question("Guess a letter: ");
-    console.log("THE USER INPUTTED:", userInput);
+    console.log("\n" + "THE USER INPUTTED:", userInput + "\n");
     if (checkCorrectInput(userInput)){
       underscore = replacedLetters(word, underscore, userInput);
       if (checkInput (word,userInput)){ 
-        console.log(underscore);
-        console.log("Good job! Keep going!")
+        console.log(underscore + "\n" );
+        console.log("Good job! Keep going!" + "\n")
 
       } else {
         guessChances = chancesLeft(word,userInput,guessChances)
-        console.log(underscore);
-        console.log("Incorrect! Please try again!")
-        console.log("Chances less than " + guessChances);
+        console.log(underscore + "\n");
+        console.log("Incorrect! Please try again!" + "\n")
+        console.log("Chances less than " + guessChances + "\n");
       } 
       underscore = underscore.split(" ").join("");
       if (underscore ===  word) {
@@ -112,7 +137,7 @@ function run() {
       }
     } 
     else {
-        console.log("Please enter a valid letter!");
+        console.log("Please enter a valid letter!" + "\n");
         continue;
     }
     if(!guessChances){

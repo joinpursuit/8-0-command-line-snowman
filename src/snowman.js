@@ -79,8 +79,16 @@ let message = `\n\nHello ${userName}! Enjoy your game!`;
   }
   
   // Loop through our secretWord 
-    // In loop, check if input a currentLetter 
-      // If it is, change the value of our displayedWord[i], to currentLetter aftr loop, check if displayedWord includes input.
+  for (let i = 0; i < secretWord.length; i++) {
+    // Declare a variable for currentLetter
+    let currentLetter = secretWord[i];
+    // In loop, check if input === currentLetter 
+    if (userInput.toLowerCase() === currentLetter) {
+      // If it is, change the value of our displayedLetter, to currentLetter 
+      displayedWord[i] = currentLetter;    
+    }
+  }  
+  // Aftr loop, check if displayedWord includes input.
       // If it does, incorrect Guess -= 0
       // If it isn't, incorrectGuess -= 1
     // Add input to letters guessed

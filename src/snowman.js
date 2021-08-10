@@ -50,8 +50,8 @@ const word = getRandomWord() // get random word
     for (let char of word) {
       state.wordArr.push("_");
     }
-    // print dashes to console - array to string
-    console.log(state.wordArr.join(' '));
+    // print dashes to console - array to string; log how many letters
+    console.log(state.wordArr.join(' '),`      (${state.wordArr.length} letters)`);
   }
   // Call helper function #1 inside of `run()`
   fillArrWithUnderscores()
@@ -109,6 +109,15 @@ const word = getRandomWord() // get random word
     console.log(`Input invalid - type in only one letter.\n\n`);
   }
 
+  // These 2 console.logs say correct guesses made & wrong guesses made.
+  // ALL guesses the user has typed in so far, stored in array `guessedLetters`. Use .sort() to make it in alphabetical order
+    // console.log("All guesses made:", state.guessedLetters.sort().join(', '));
+    // log correct guesses array:
+    console.log("Correct guesses made:", state.correctGuesses.sort().join(', '));
+    // log wrong guesses array:
+    console.log("Wrong guesses made:", state.wrongGuesses.sort().join(', '));
+
+
   // declare variable to say how many guesses are left.
   // subtract number of `state.wrongGuesses.length` from the `maxNumGuesses` to see how many `guessesLeft`.
   let guessesLeft = state.maxNumOfGuesses - state.wrongGuesses.length;
@@ -121,16 +130,10 @@ const word = getRandomWord() // get random word
       playAgain();
     }
   }
-    // ALL guesses the user has typed in so far, stored in array `guessedLetters`. Use .sort() to make it in alphabetical order
-    // console.log("All guesses made:", state.guessedLetters.sort().join(', '));
-    // log correct guesses array:
-    console.log("Correct guesses made:", state.correctGuesses.sort().join(', '));
-    // log wrong guesses array:
-    console.log("Wrong guesses made:", state.wrongGuesses.sort().join(', '));
     
     // Call Helper Function #2 inside `run()` providing `userInput` as argument
     spliceUserInput(userInput);
-    console.log(state.wordArr.join(' ')); // Output: a p p _ _
+    console.log(state.wordArr.join(' '),`      (${state.wordArr.length} letters)`); // Output: a p p _ _ ; logs how many letters word is
 
     // Once word has been guessed, stop the game.
     // Conditions for ending the game:
@@ -159,3 +162,7 @@ const word = getRandomWord() // get random word
   }
 }
 run();
+
+
+
+// console.log(`     (${state.wordArr.length} letters)`)

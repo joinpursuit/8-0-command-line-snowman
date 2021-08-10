@@ -22,41 +22,32 @@ function getRandomWord() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
-//follow
-//012345
-//_ _ _ _ _ _
-//0123456789t
-//0 1 2 3 4 5
-
 
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = "too"
   //getRandomWord();
+  //let wrongEntryType = "Not a letter, please enter a letter!"
   let endMessage = `Sorry, better luck next time! The correct word is "${word}".`
   let winningMessage = `Yay! The word "${word}" saved your snowman!`
-  let incorrectGuesses = word.length + 1 //4
+  let incorrectGuesses = word.length + 1 
   let lettersGuessed = ""
   let theBlanks = ""
   for (let i = 0; i < word.length; i++){
     theBlanks += "_ "
   }
-
   console.log("Remaining Incorrect Guesses: " + incorrectGuesses)
   console.log("Letters Guessed: " + lettersGuessed)
   console.log("Word: " + theBlanks)
-//game ends when user wins(guesses the right word)
-//once they guess the correct word = win
-// _ _ _ _
-// g o o d
-//if there are no blanks remaining the game ends
-//if (theBlanks.includes("_") )
-
+   
 //neverending loop //start screen //start the game prompt
   for (let i = 0; i < word.length; i++){
-//ask for userinput
+//The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
     let userInput = readline.question("Pick a letter: ")
-  //the loop that matches the guesses  //lets the game actually work 
+    lettersGuessed += userInput + " "
+  //lets the game actually work 
+  //the loop that matches the guesses  
+  //replaces the "_" with the userInput
   for (let i = 0; i < word.length; i++){
     if(userInput === word[i]){
       theBlanks = theBlanks.split("")
@@ -69,59 +60,64 @@ function run() {
     incorrectGuesses = incorrectGuesses - 1
   }
   console.log("Remaining Incorrect Guesses: " + incorrectGuesses)
-
+  //once the incorrectGuesses = 0 the game ends with an alert saying you lost
   if(incorrectGuesses === 0){
     return console.log(endMessage);
   }
-  
-  //once the incorrectGuesses = 0 the game ends with an alert saying you lost
-
   console.log("Letters Guessed: " + lettersGuessed)
   console.log("Word: " + theBlanks)
-  
-    console.log("Letter guessed:", userInput);
-      if(!theBlanks.includes("_")) {
-        
-       return console.log (winningMessage);
-  
-
-
-     
-      } else {
-        
-      i--
-    }
+  console.log("Letter guessed:", userInput);
+    if(!theBlanks.includes("_")) {
+      return console.log (winningMessage);
+    } else {
+           i--
+      }
   }
-//if the user guesses a wrong character (number, multiple letters, or symbol)
-//remaining incorrect guess count doesn't change but an alert pops up saying ... please enter a letter
-
-  
-
-
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-
-
-  // console.log("Remaining Incorrect Guesses: " + incorrectGuesses)
-  // console.log("Letters Guessed: " + lettersGuessed)
-  // console.log("Word: " + theBlanks)
-  // // console.log (typeof theBlanks)
-
-
-
-
-  // // This line of code will print out whatever is inputted in by the user.
-  // console.log("Letter guessed:", userInput);
-  
 }
- 
- run();
+     
+run();
+  
+  //how can i start / play the game
+  //ask for userinput
+  //if the userInput = word 
+  //replace the "_" with the matching userInput
+  //once they guess the correct word = win
+  //game ends when user wins(guesses the right word)
+  //if there are no ("_") remaining the game ends = win
+  //game ends when the user wins with an alert that congratulates the user "you win, the word is correct"
+  //if the userInput is a wrong letter / doesn't match any letter in the word
+  //incorrectGuess count decrements by 1
+  //if incorrectGuess count is 0 the user has no chances left game ends
+  //the game ends when the game is lost with an alert "you lost"
+  //if the user guesses a wrong character (number, multiple letters, or symbol)
+  //if(userInput typeOf = number || symbol)
+  //remaining incorrect guess count doesn't change but an alert pops up saying ... please enter a letter
+
+       
+     
+
+  
+  
+
+  
+
+         
+  
+        
   
 
 
-//how do I get the code to keep running
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+   
+  
+  
+
+
+

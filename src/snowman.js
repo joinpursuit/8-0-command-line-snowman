@@ -74,7 +74,6 @@ function run() {
           if (word[i] === userGuess) {
             console.log("SUCCESS!!!You've guessed a letter! See if you can guess the rest.")
             generatedWordArr[i] = userGuess;
-            playersRemainingGuesses--;
             remainingLetters--;
             lettersGuessed.push(userGuess)
             console.log("Remaining Guesses : " + playersRemainingGuesses)
@@ -96,7 +95,7 @@ function run() {
 
 
       if (playersRemainingGuesses === 0) {
-        let losingMessage = readline.question("Sorry! You gave it a good go, but you've used up all your guesses. Would you like to play again? \n (Y or N ").toLowerCase();
+        let losingMessage = readline.question("Sorry! You gave it a good go, but you've used up all your guesses. The word was....... " + word + " . Would you like to play again? \n (Y or N ").toLowerCase();
         if (losingMessage === "y" || losingMessage === "yes") {
           console.log("Okay! You've warmed up. Let's see what you can do! \n Generating word......")
         } else if (losingMessage === "n" || losingMessage === "no") {

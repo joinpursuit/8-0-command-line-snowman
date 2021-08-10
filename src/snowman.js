@@ -38,3 +38,18 @@ if (intro === 'y') {
   //The response is different because we feel passionate about this answer. 
   run ()
   }
+  function run(snowman) {
+ 
+    const underScore = []
+    //array that accounts for underscores
+    
+    const guesses = []
+    //array that accounts for guesses
+    
+    let validGuess = /^[a-z]+$/;
+    // Ensures selects lowercase letters only
+    
+    for(let i= 0; i < word.length; i++){
+      underScore[i] = '_' 
+      // underscore will represent hidden letters in their entirety. 
+    } 

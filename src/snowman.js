@@ -23,7 +23,18 @@ let wrong = 'Sorry, Wrong answer.';
 let right = 'Great Job!';
 //a message that appears when the player inputs a correct answer//
 
-function getRandomWord() {
+  function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
+const intro = readline.question(`Do you want to build a snow man?\n\n 'Y', 'N': `)
+//This is a intro to the game, Something to jazz it up a bit
+if (intro === 'y') {
+  console.log(`\nYou fool! Killer snowmen are on the loose. Every wrong letter is a step closer to death. Play at your own risk!\n`);
+  run()
+  //We added a run command because we noticed it would not continue
+} else {
+  console.log(`\nGood choice! Killer snowmen are on the loose. Every wrong letter is a step closer to death. Good Luck!\n`);
+  //The response is different because we feel passionate about this answer. 
+  run ()
+  }

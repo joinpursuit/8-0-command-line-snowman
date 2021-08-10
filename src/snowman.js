@@ -148,10 +148,15 @@ function playGame(){
 
 
 function run() {
-
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+ //populates the guessedWord array with underscores, with the same length as the random word 
+ populate()
+ //As long as the chance to play is greater than zero, game is played  
+ while (WordLength > 0 && word !== guessedWord.join('')) {
+     //Invoking playGame function starts the game
+     playGame() 
+     
+     }
+     gameWonLost(guessedWord, word)
 }
 
 run();

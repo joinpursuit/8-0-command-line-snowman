@@ -1,3 +1,5 @@
+
+
 /** 
 ||The Snowman Game
 
@@ -56,11 +58,19 @@ letter and that a number or symbol is not allowed
 /*
   `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
 */
+
 const readline = require("readline-sync");
 /*
   The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
 */
 const dictionary = require("./dictionary");
+
+const chalk =  require('chalk');
+
+const log = console.log;
+
+const center = require('center-align');
+
 
 /*
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
@@ -73,9 +83,16 @@ function getRandomWord() {
  // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
 
+  //global variables
+let guessedWord = [] // stores the guessed letters forming the secret word
+let guessedLetter = '' //letter guessed to form the word 
+let WordLength = word.length + 3; // maximum number of chances to play the game
+let alreadyGuessedLetters =[]; //stores letters already guessed
+
+
 //determines a winner or a looser
 function gameWonLost(guessedWord, word){
-  guessedWord.join('') === word ? console.log(`Good job! You won!!! The secret word is  ${word}`) : console.log(`Hard luck! You lost!!! The secret word is  ${word}`)  
+  guessedWord.join('') === word ? log(chalk.green(`Good job! You won!!! The secret word is  ${word}`)) : log(chalk.redBright(`Hard luck! You lost!!! The secret word is ${word}`))  
   
    }
 
@@ -89,7 +106,7 @@ function gameWonLost(guessedWord, word){
   function alreadyGuessed(){ 
     if(alreadyGuessedLetters.includes(guessedLetter)){
       //if letter is already guessed, error msg is logged
-        console.log('Already guessed: '+ guessedLetter); 
+        log('Already guessed: '+ guessedLetter); 
     } else { 
       //otherwise the guessed letter is listed in alreadyGuessedLetters array
       alreadyGuessedLetters.push(guessedLetter)
@@ -98,25 +115,27 @@ function gameWonLost(guessedWord, word){
 
 //As long as guessedWord has an underscore you'll have a change to play the game
 function playGame(){
+
   //the while loop executes lines of codes in it's code block until the game ends
   //while (WordLength > 0){
       //guessedWord.join(' ')
       while(guessedWord.includes('_') && WordLength > 0){
-        guessedLetter = readline.question("Guess a letter: ");
+        
+        guessedLetter = readline.question(chalk.green("Guess a letter: "));
         guessedLetter = guessedLetter.toLowerCase()
         alreadyGuessed() //executes when user input a letter already inputted
        
         //checks if guessed letter is an empty string
         if (guessedLetter === "") {
           //if no input is given the user is asked for an input
-          console.log('Please enter a single letter');
+          log('Please enter a single letter');
           // checks if the input is something other than a letter
         } else if (
           guessedLetter.length !== 1 ||
           
           guessedLetter.match(/[0-9]/g)
         ) {
-          console.log(
+         log(
             "Please type a single letter character [numbers or symbols not allowed]"
           );
         } 
@@ -138,8 +157,17 @@ function playGame(){
         else if(!word.includes(guessedLetter)){
             WordLength--
             } 
-        console.log(`The user typed: ${guessedLetter} \nRemaining Incorrect Guesses:   ${WordLength}\nLetters Guessed: ${alreadyGuessedLetters.sort()} \nWord: ${guessedWord}`
-        );
+        log(
+          center(chalk.grey('*****************************************************'+
+        `\n\tThe user typed: ${guessedLetter} \n
+          
+        Remaining Incorrect Guesses:   ${WordLength}\n
+          
+        Letters Guessed: ${alreadyGuessedLetters.sort()} \n
+          
+        Word: ${guessedWord}\n`
+        + '\n*****************************************************'
+        )));
       }
      
     }
@@ -150,6 +178,7 @@ function playGame(){
 function run() {
  //populates the guessedWord array with underscores, with the same length as the random word 
  populate()
+ guessedWord.join('')
  //As long as the chance to play is greater than zero, game is played  
  while (WordLength > 0 && word !== guessedWord.join('')) {
      //Invoking playGame function starts the game

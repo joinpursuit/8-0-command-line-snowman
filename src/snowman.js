@@ -31,10 +31,11 @@ function getRandomWord() {
 
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
-  const word = "good"
+  const word = "too"
   //getRandomWord();
-  let winMessage = "Yay!"
-  let incorrectGuesses = word.length + 1
+  let endMessage = `Sorry, better luck next time! The correct word is "${word}".`
+  let winningMessage = `Yay! The word "${word}" saved your snowman!`
+  let incorrectGuesses = word.length + 1 //4
   let lettersGuessed = ""
   let theBlanks = ""
   for (let i = 0; i < word.length; i++){
@@ -44,42 +45,55 @@ function run() {
   console.log("Remaining Incorrect Guesses: " + incorrectGuesses)
   console.log("Letters Guessed: " + lettersGuessed)
   console.log("Word: " + theBlanks)
-//game ends when someone wins
+//game ends when user wins(guesses the right word)
 //once they guess the correct word = win
 // _ _ _ _
 // g o o d
 //if there are no blanks remaining the game ends
 //if (theBlanks.includes("_") )
 
-//neverending loop
+//neverending loop //start screen //start the game prompt
   for (let i = 0; i < word.length; i++){
 //ask for userinput
     let userInput = readline.question("Pick a letter: ")
-  //the loop that matches the guesses   
+  //the loop that matches the guesses  //lets the game actually work 
   for (let i = 0; i < word.length; i++){
     if(userInput === word[i]){
       theBlanks = theBlanks.split("")
       theBlanks.splice(i*2, 1, userInput)
       theBlanks = theBlanks.join('')
-    }
-  } 
+    } 
+  }
+  //decrement remaining incorrect guess count each time user enters a wrong guess(letter only)
+  if(!userInput.includes(word)){
+    incorrectGuesses = incorrectGuesses - 1
+  }
   console.log("Remaining Incorrect Guesses: " + incorrectGuesses)
+
+  if(incorrectGuesses === 0){
+    return console.log(endMessage);
+  }
+  
+  //once the incorrectGuesses = 0 the game ends with an alert saying you lost
+
   console.log("Letters Guessed: " + lettersGuessed)
   console.log("Word: " + theBlanks)
   
     console.log("Letter guessed:", userInput);
       if(!theBlanks.includes("_")) {
         
-       return console.log (winMessage);
+       return console.log (winningMessage);
   
-//decrement remainingg incorrect guesses each time user enters a wrong guess
+
 
      
       } else {
+        
       i--
     }
   }
-
+//if the user guesses a wrong character (number, multiple letters, or symbol)
+//remaining incorrect guess count doesn't change but an alert pops up saying ... please enter a letter
 
   
 

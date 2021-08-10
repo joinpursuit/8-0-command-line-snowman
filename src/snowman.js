@@ -38,6 +38,7 @@ function run() {
     console.log(word)
     console.log(`${state.hiddenWord}\n`);
     const userInput = readline.question("Guess a letter: ");
+    let userInput2;
 
 
     if (typeof userInput !== "string" || userInput.length > 1) {
@@ -62,14 +63,29 @@ function run() {
         _,(",)|_|
          \/. \-|
        __( :  )|_`)
-        process.exit();
-        } 
+       userInput2 = readline.question("Would you like to play again? (Y or n)").toLowerCase();
+        if(userInput2 === "n" || userInput2 === "no") {
+            console.log("Maybe we can play again another day! Bye now!")
+            process.exit()
+          } else {
+            console.log("Let's go again then!\n")
+            run()
+          }
+        }
         if (state.remainingGuesses === 0) {
           console.log(`Sorry you've ran out of guesses! The word was: ${word}`);
           console.log(`These are the letters you've guessed: ${state.lettersGuessed}`);
           console.log(`Oh no the snowman melted!\n  
            
          __( :  )|_ `)
+         userInput2 = readline.question("Would you like to try again? (Y or n)").toLowerCase();
+         if(userInput2 === "n" || userInput2 === "no") {
+          console.log("Maybe we can play again another day! Bye now!")
+          process.exit()
+        } else {
+          console.log("Let's go again then!\n")
+          run()
+          }
         }
         if (!state.hiddenWord.includes(userInput)) {
         console.log("That was an incorrect guess! Maybe you'll get the next one!");

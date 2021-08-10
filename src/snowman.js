@@ -72,7 +72,7 @@ function getRandomWord() {
 
  // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
-  
+
 //determines a winner or a looser
 function gameWonLost(guessedWord, word){
   guessedWord.join('') === word ? console.log(`Good job! You won!!! The secret word is  ${word}`) : console.log(`Hard luck! You lost!!! The secret word is  ${word}`)  
@@ -84,6 +84,17 @@ function gameWonLost(guessedWord, word){
         guessedWord[i] = "_";
       }
     }
+
+     //determins if letter guessed is listed in alreadyGuessedLetters array
+  function alreadyGuessed(){ 
+    if(alreadyGuessedLetters.includes(guessedLetter)){
+      //if letter is already guessed, error msg is logged
+        console.log('Already guessed: '+ guessedLetter); 
+    } else { 
+      //otherwise the guessed letter is listed in alreadyGuessedLetters array
+      alreadyGuessedLetters.push(guessedLetter)
+    }
+ }
 
 //As long as guessedWord has an underscore you'll have a change to play the game
 function playGame(){

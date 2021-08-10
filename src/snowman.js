@@ -40,20 +40,9 @@ const word = getRandomWord() // get random word
     validLetters: ['z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
   }
 
-  // declare variable to say how many guesses are left.
-  // Subtract number of `state.wrongGuesses.length` from the `maxNumGuesses` to see how many `guessesLeft`.
-  let guessesLeft = state.maxNumOfGuesses - state.wrongGuesses.length;
-
   // Message at start of game:
   console.log(`* * * SNOWMAN GAME * * *\n`)
-  // Instructions on how to play
-  console.log(`How to play: 
-To play "Snowman", a random word is picked and kept hidden.\nYou are shown a number of blank spaces equal to the length of the word.
-
-You may then guess a letter.\nIf the letter appears in the hidden word, that letter will be shown in place of the space.\nIf the letter is incorrect, your remaining guesses will decrease by 1, until you either win or lose the game!`)
-console.log(`\n* * * START GAME * * *\nThe random word has been picked!`)
-  // tells user immediately how many guesses they have
-  console.log(`\nRemaining Incorrect Guesses: ${guessesLeft}`);
+  console.log(`How to play: There is a secret word. Guess the letters before you run out of incorrect guesses remaining.`)
   // DO NOT PUT IN ACTUAL GAME: see what the random word is:
   // console.log(`HINT: This is NOT the secret word: ${word}`);
   
@@ -112,13 +101,13 @@ console.log(`\n* * * START GAME * * *\nThe random word has been picked!`)
       // nested 'if' - does `userInput` match any letter in `validLetters` array?
       else if (state.validLetters.includes(userInput) === false) {
         // error message for symbols, numbers, etc.
-        console.log(`This is not a valid letter of the alphabet. Try a letter.\n\n`);
+        console.log(`This is not a valid letter of the alphabet. Try a letter.`);
         // make sure the first character isn't marked as incorrect
       }
     } 
     else {
     // error message
-    console.log(`Input invalid - type in only one letter.\n\n`);
+    console.log(`Input invalid - type in only one letter.`);
   }
 
   // These 2 console.logs say correct guesses made & wrong guesses made.
@@ -129,9 +118,12 @@ console.log(`\n* * * START GAME * * *\nThe random word has been picked!`)
     // log wrong guesses array:
     console.log("Wrong guesses made:", state.wrongGuesses.sort().join(', '));
 
-  // How many incorrect guesses are left?
+
+  // declare variable to say how many guesses are left.
+  // subtract number of `state.wrongGuesses.length` from the `maxNumGuesses` to see how many `guessesLeft`.
+  let guessesLeft = state.maxNumOfGuesses - state.wrongGuesses.length;
   if (guessesLeft >= 0) {
-    console.log(`Remaining Incorrect Guesses: ${guessesLeft}`); // number of wrong guesses made
+    console.log(`You have ${guessesLeft} guesses remaining.`); // number of wrong guesses made
     // nested 'if' - for having zero guesses left, you lose. ends game.
     if (guessesLeft === 0) {
       console.log(`Sorry, You lost! ${guessesLeft} guesses are left. The word was: ${word}.`);

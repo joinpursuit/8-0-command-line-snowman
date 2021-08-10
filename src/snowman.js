@@ -113,10 +113,27 @@ let message = `\n\nHello ${userName}! Enjoy your game!`;
       `\nSorry ${userName}, better luck next time! Your word was: ${secretWord}\n\n-------------------------------------\n`
     );
   }
-  
-
-
-  console.log("THE USER INPUTTED:", userInput);
+  // Declare a variable to replayMsg as empty string
+  let replayMsg = '';
+  // Declare variable for correct answers
+  const answers = ['y', 'n'];
+  // Declare playAgain as an empty string '';
+  let playAgain = '';
+  // Create a REPLAY loop
+  while (!answers.includes(playAgain)) {
+    // Print our message
+    console.log(replayMsg);
+    // Ask if they would like to play again
+    playAgain = readline.question(`${userName}, would like to play again? (y, n)`
+    );
+    // Check for their answer
+    if (playAgain.toLowerCase() === 'y') {
+      // If yes, run the function, again.
+      run(userName);
+    } else if (playAgain.toLowerCase() !== 'n') {
+      replayMsg = `Hey there ${userName}, input of ${playAgain} is invalid.`;
+    }
+  }
 }
-
 run();
+console.log("THE USER INPUTTED:", userInput);

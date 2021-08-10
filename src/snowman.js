@@ -34,10 +34,10 @@ let listOfGuessedLetters = "";
 
 function run(){
 
-const word = getRandomWord(); 
+  const word = getRandomWord(); 
   //generates a random word
   //console.log(word)
-  let remainingChances = word.length + 1 
+    let remainingChances = word.length + 1 
   
   const letterDisplay = [];
 
@@ -61,7 +61,7 @@ const word = getRandomWord();
     //if user guesses invalid character no change in remaining chances count 
     //prompt accordingly
     //if userinput guesses are letters (only) add it to listofguessedletters
-  if (userInput.length > 1 || typeof userInput !== "string") { 
+  if (userInput.length > 1 || !isNaN(userInput)) { 
     console.log(`Not a valid entry, please enter a letter! You have '${remainingChances}' chance(s) left!`)
   } else if (checkGuess(word, userInput) === true) {
     console.log(`Yay!! That is correct! You have '${remainingChances}' chance(s)!`)  
@@ -70,12 +70,19 @@ const word = getRandomWord();
     }
     else {
       remainingChances --;
-      console.log(`\nOoops! That is incorrect!\nYou have '${remainingChances}' chance(s)!`)
+      console.log(`\nOh, no! That is incorrect!\nYou have '${remainingChances}' chance(s)!`)
       listOfGuessedLetters += userInput + ", "
     } 
   } 
-}
+  console.log(`\nYou guessed: ${listOfGuessedLetters}.\nThe correct word is '${word}'.`)
 
+  //prompt message for a win or loss 
+  if (letterDisplay.join("") === word) {
+  console.log(`\nYay! You got it!!\nCongratulations!`)
+  
+  } 
+}
+  
 run();
 
 

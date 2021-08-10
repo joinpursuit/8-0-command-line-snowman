@@ -15,6 +15,14 @@ function getRandomWord() {
   return dictionary[index];
 }
 
+function alphabet(n) {
+  let alphabetta = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (alphabetta.includes(n) && n.length === 1) {
+    return true;
+  }
+  return false;
+}
+
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
 
@@ -71,33 +79,50 @@ function run() {
   //while the guess counts (which is always 9) is more than 0
   while (guessCounts > 0) {
     //log the dashes
-    console.log(`${dashes.join(" ")}` /*, word*/);
+    console.log(`${dashes.join(" ")}`, word /*, word*/);
     //log the guess counts
     console.log("How many guesses you have left: " + guessCounts);
     //log the letters guessed
     console.log("Guessed:" + guessed);
     //this is the actaul code taking what the user is inputting (given)
-    const userInput = readline.question("Guess a letter: ");
+    const userInput = readline.question("Guess a letter: ").toLowerCase();
     //log what the user input last
     console.log("THE USER INPUTTED:", userInput);
     //then we push the user input into the guessed array
     guessed.push(userInput);
 
+    //if its anything outside of the alphabet or more then one character then "invalid input"
+    if (!alphabet(userInput)) {
+      console.log("Invalid input. Only letters. One by one pls.");
+    }
     //if the word includes the user input
     if (word.includes(userInput)) {
       //then we'll for loop through word
       for (let i = 0; i < word.length; i++) {
         //if the word at any index is equal to the user input
         if (word[i] === userInput) {
+          //then the word reveals the letter in place on the correct space
           dashes[i] = userInput;
         }
       }
+      //else we subtract the guess count by 1 (becasue the guess is incorrect)
     } else {
       guessCounts--;
     }
+    //if they win meaning they get the whole word
+    if (word.toLowerCase() === dashes.join("").toLowerCase()) {
+      //then congrats
+      console.log(`The word was ${word}! Wonderful job honey (: `);
+      return;
+    }
+  }
+  //if while loop ends due to incorrect guesses
+  if (guessCounts === 0) {
+    //then we have a "better luck next time"
+    console.log("Better luck next time! Try again.");
   }
 
-  //
+  //if the user input is not included in the r
 
   //while the number of errors is less than the guesscounts
 

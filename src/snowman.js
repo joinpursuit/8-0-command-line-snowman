@@ -63,16 +63,16 @@ function run() {
       } else {
         if (!word.includes(userGuess)) {
           console.log("Sorry that guess is invalid. One guess has be reduced from your total.")
-          remainingGuesses--;
-          console.log("Remaining Guesses : " + remainingGuesses)
+          playersRemainingGuesses--;
+          console.log("Remaining Guesses : " + playersRemainingGuesses)
         }
         for (i = 0; i < word.length; i++) {
           if (word[i] === userGuess) {
             console.log("SUCCESS!!!You've guessed a letter! See if you can guess the rest.")
-            currentWordArr[i] = userGuess;
-            remainingGuesses--;
+            generatedWordArr[i] = userGuess;
+            playersRemainingGuesses--;
             remainingLetters--;
-            console.log("Remaining Guesses : " + remainingGuesses)
+            console.log("Remaining Guesses : " + playersRemainingGuesses)
           }
         }
       }
@@ -82,7 +82,7 @@ function run() {
         if (congraulationsMessage === "y" || congraulationsMessage === "yes") {
           console.log("Generating word");
           run()
-        } else if (remainingGuesses === 0) {
+        } else if (playersRemainingGuesses === 0) {
           let losingMessage = readline.question("Sorry! You gave it a good go but you've used up all your guesses. Would you like to play again? \n (Y or N ").toLowerCase();
           if (losingMessage === "n" || losingMessage === "no") {
             console.log("Okay! Until next time!!")

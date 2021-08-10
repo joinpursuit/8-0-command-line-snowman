@@ -18,6 +18,10 @@ const getIncrementedOrPreResetScore = require("./getIncrementedOrPreResetScore.j
   `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
 */
 const readline = require("readline-sync");
+/*
+  The `updateAllTimeHighScores` variable is a function that will determine if a new highScore has been reached and update the highScores.
+*/
+const updateAllTimeHighScores = require("./updateAllTimeHighScores.js");
 
 //used IIFE to run snowMan on the fly
 (function runSnowman() {
@@ -33,6 +37,8 @@ const readline = require("readline-sync");
     const word = getRandomWord();
     // Declare a variable called userIsWinner and assign it the evaluated result of invoking getWinOrLoss passing in the word as the argument
     const userIsWinner = getWinOrLoss(word);
+    //declare a variable named tempHighScore to hold the current score to use to check and see if highScores need to update
+    let currentSessionScore = null;
 
     if (userIsWinner) {
       console.log("\n🏆 You Won! 🏆\nThe word was: " + word + "!\n🌟 You're a star! 🌟");
@@ -41,12 +47,17 @@ const readline = require("readline-sync");
       //if user wins but doesn't want to continue, break out of while loop but before that log highest score this session
       //logs highest score this session if user wins and chooses to not continue before exiting function
       if (!userWantsToContinue) {
-        console.log("Highest Score this session was:", getIncrementedOrPreResetScore(true));
+        updateAllTimeHighScores();
+        currentSessionScore = getIncrementedOrPreResetScore(true);
+        console.log("Highest Score this session was:", currentSessionScore);
+        updateAllTimeHighScores(userName, currentSessionScore);
         break;
       }
     } else {
       console.log("\nYou Lost! The word was: " + word + "!\nKeep failing forward, you'll get em next time!");
-      console.log("Highest Score this session was:", getIncrementedOrPreResetScore(true));
+      currentSessionScore = getIncrementedOrPreResetScore(true);
+      console.log("Highest Score this session was:", currentSessionScore);
+      updateAllTimeHighScores(userName, currentSessionScore);
       userWantsToContinue = readline.keyInYNStrict("Do you want to continue?");
     }
   }

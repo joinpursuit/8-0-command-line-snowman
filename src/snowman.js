@@ -27,6 +27,11 @@ let snowIntro =
 `;
 
 // melting snowman (8 --> 1) If the guess is wrong, the snowman melts.
+let snow0 =
+`
+   *  *  *  (snowman has melted)
+`;
+
 let snow1 =
 `
    -___-
@@ -229,6 +234,9 @@ const word = getRandomWord() // get random word
 
     // nested 'if' - for having zero guesses left, you lose. ends game.
     if (guessesLeft === 0) {
+      // no more snowman
+      console.log(snow0);
+      // defeat message
       console.log(`Defeat! Sorry, you lost! ${guessesLeft} guesses are left. The word was: ${word}.`);
       // play again?
       playAgain();

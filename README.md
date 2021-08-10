@@ -90,14 +90,14 @@ Because the comments take up a lot of space, you should feel free to delete them
 
 To complete this project your game will need to do the following.
 
-- [ ] The user should see a number of `_` characters equal to the number of letters in the word. For example, if the word is `apple`, the user should see `_ _ _ _ _`.
-- [ ] If the user enters an invalid guess (e.g. `3` or `apple`), a message should display telling the user to enter a letter. Invalid guesses should not count against the guess count.
+- [x] The user should see a number of `_` characters equal to the number of letters in the word. For example, if the word is `apple`, the user should see `_ _ _ _ _`.
+- [x] If the user enters an invalid guess (e.g. `3` or `apple`), a message should display telling the user to enter a letter. Invalid guesses should not count against the guess count.
 - After each guess:
-  - [ ] The user should see the new updated word, replacing all `_` with letters they have guessed. For example, if the user guesses `p` for the word `apple`, the user would see `_ p p _ _`.
-  - [ ] The user should see the letters they have guessed already.
-  - [ ] If the guess is incorrect, the number of remaining guesses should decrease.
-  - [ ] If the guess is correct, the number of remaining guesses should stay the same.
-  - [ ] Regardless of whether or not the guess is correct, the number of remaining guesses should be shown to the user.
-- [ ] The game should continue until the user has won or lost.
-- [ ] If the user wins, a message congratulating them should appear.
-- [ ] If the user loses, the full word should be revealed and a message declaring defeat should appear.
+  - [x] The user should see the new updated word, replacing all `_` with letters they have guessed. For example, if the user guesses `p` for the word `apple`, the user would see `_ p p _ _`.
+  - [x] The user should see the letters they have guessed already.
+  - [x] If the guess is incorrect, the number of remaining guesses should decrease.
+  - [x] If the guess is correct, the number of remaining guesses should stay the same.
+  - [x] Regardless of whether or not the guess is correct, the number of remaining guesses should be shown to the user.
+- [x] The game should continue until the user has won or lost.
+- [x] If the user wins, a message congratulating them should appear.
+- [x] If the user loses, the full word should be revealed and a message declaring defeat should appear.

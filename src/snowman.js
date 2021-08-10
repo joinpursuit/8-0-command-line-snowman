@@ -100,6 +100,7 @@ function gameWonLost(guessedWord, word){
     for (let i = 0; i < word.length; i++) {
         guessedWord[i] = "_";
       }
+      //guessedWord.join(' ')
     }
 
      //determins if letter guessed is listed in alreadyGuessedLetters array
@@ -165,7 +166,7 @@ function playGame(){
           
         Letters Guessed: ${alreadyGuessedLetters.sort()} \n
           
-        Word: ${guessedWord}\n`
+        Word: ${guessedWord.join(' ')}\n`
         + '\n*****************************************************'
         )));
       }
@@ -178,7 +179,7 @@ function playGame(){
 function run() {
  //populates the guessedWord array with underscores, with the same length as the random word 
  populate()
- guessedWord.join('')
+ 
  //As long as the chance to play is greater than zero, game is played  
  while (WordLength > 0 && word !== guessedWord.join('')) {
      //Invoking playGame function starts the game

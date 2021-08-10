@@ -33,15 +33,22 @@ const word = getRandomWord() // get random word
     
     correctGuesses: [], // correctGuesses = []; // --> we have updated the state from empty array [] to ['p']
     wrongGuesses: [], // wrongGuesses = [];
-    maxNumOfGuesses: 5, // stores how many guesses are left
+    maxNumOfGuesses: word.length, // stores how many guesses are left, based on length of random secret word's length
 
     guessedLetters: [], // keep track of the guessed letters
     wordArr: [], // keep track of unknown blank letters
     validLetters: ['z', 'y', 'x', 'w', 'v', 'u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a']
   }
 
+  // declare variable to say how many guesses are left.
+  // Subtract number of `state.wrongGuesses.length` from the `maxNumGuesses` to see how many `guessesLeft`.
+  let guessesLeft = state.maxNumOfGuesses - state.wrongGuesses.length;
+
   // Message at start of game:
   console.log(`* * * SNOWMAN GAME * * *\n`)
+  console.log(`How to play: There is a secret word. Guess the letters before you run out of guesses remaining.`)
+  // tells user immediately how many guesses they have
+  console.log(`\nYou have ${guessesLeft} guesses remaining.`);
   // DO NOT PUT IN ACTUAL GAME: see what the random word is:
   // console.log(`HINT: This is NOT the secret word: ${word}`);
   
@@ -91,7 +98,7 @@ const word = getRandomWord() // get random word
            // push wrong letter to `correctGuesses` array
            state.correctGuesses.push(userInput);
         } else {
-          console.log(`that letter was wrong.`)
+          console.log(`That letter was wrong.`)
           // push wrong letter to `wrongGuesses` array
           state.wrongGuesses.push(userInput);
         }
@@ -113,14 +120,11 @@ const word = getRandomWord() // get random word
   // ALL guesses the user has typed in so far, stored in array `guessedLetters`. Use .sort() to make it in alphabetical order
     // console.log("All guesses made:", state.guessedLetters.sort().join(', '));
     // log correct guesses array:
-    console.log("Correct guesses made:", state.correctGuesses.sort().join(', '));
+    console.log("\nCorrect guesses made:", state.correctGuesses.sort().join(', '));
     // log wrong guesses array:
     console.log("Wrong guesses made:", state.wrongGuesses.sort().join(', '));
 
-
-  // declare variable to say how many guesses are left.
-  // subtract number of `state.wrongGuesses.length` from the `maxNumGuesses` to see how many `guessesLeft`.
-  let guessesLeft = state.maxNumOfGuesses - state.wrongGuesses.length;
+  // How many guesses are left?
   if (guessesLeft >= 0) {
     console.log(`You have ${guessesLeft} guesses remaining.`); // number of wrong guesses made
     // nested 'if' - for having zero guesses left, you lose. ends game.

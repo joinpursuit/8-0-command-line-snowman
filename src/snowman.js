@@ -16,15 +16,82 @@ function getRandomWord() {
   return dictionary[index]; // returns a string
 }
 
-// snowman
-let snow8 =
+// snowman parts
+let snowIntro =
 `              _
-            _[_]_
-             (")
-          --( : )--
-           (  :  )
-            -___-
+            _[_]_  W
+             (")   V
+          --( : )--|
+           (  :  ) |
+            -___-  |
 `;
+
+// melting snowman (8 --> 1) If the guess is wrong, the snowman melts.
+let snow1 =
+`
+   -___-
+`;
+
+let snow2 =
+`
+  (  :  )
+   -___-
+`;
+
+let snow3 =
+`
+   ( : )
+  (  :  )
+   -___-
+`;
+
+let snow4 =
+`
+    (")
+   ( : )
+  (  :  )
+   -___-
+`;
+
+let snow5 =
+`
+    (")
+ --( : )
+  (  :  )
+   -___-
+`;
+
+
+let snow6 =
+`
+    (")
+ --( : )--
+  (  :  )
+   -___-
+`;
+
+    
+let snow7 =
+`
+     _
+   _[_]_
+    (")
+ --( : )--
+  (  :  )
+   -___-
+`;
+
+let snow8 =
+`
+     _
+   _[_]_  W
+    (")   V
+ --( : )--|
+  (  :  ) |
+   -___-  |
+`;
+
+
 
 /*
   This function runs your game. Everything you want to happen in your game should happen inside of here.
@@ -43,7 +110,7 @@ const word = getRandomWord() // get random word
     
     correctGuesses: [], // correctGuesses = []; // --> we have updated the state from empty array [] to ['p']
     wrongGuesses: [], // wrongGuesses = [];
-    maxNumOfGuesses: word.length, // stores how many guesses are left, based on length of random secret word's length
+    maxNumOfGuesses: 9, // stores how many guesses are left - to get full snowman
 
     guessedLetters: [], // keep track of the guessed letters
     wordArr: [], // keep track of unknown blank letters
@@ -51,7 +118,7 @@ const word = getRandomWord() // get random word
   }
 
   // Message at start of game:
-  console.log(` *  *  *  *  *  *  *  *  *\n*  *  * SNOWMAN GAME *  *  *\n${snow8}`)
+  console.log(` *  *  *  *  *  *  *  *  *\n*  *  * SNOWMAN GAME *  *  *\n${snowIntro}`)
   console.log(`How to play: There is a secret word. Guess the letters before you run out of incorrect guesses remaining.`)
   // DO NOT PUT IN ACTUAL GAME: see what the random word is:
   // console.log(`HINT: This is NOT the secret word: ${word}`);
@@ -134,6 +201,32 @@ const word = getRandomWord() // get random word
   let guessesLeft = state.maxNumOfGuesses - state.wrongGuesses.length;
   if (guessesLeft >= 0) {
     console.log(`You have ${guessesLeft} guesses remaining.`); // number of wrong guesses made
+    // For melting the snowman:
+    if (guessesLeft === 8) {
+      console.log(snow8);
+    }
+    if (guessesLeft === 7) {
+      console.log(snow7);
+    }
+    if (guessesLeft === 6) {
+      console.log(snow6);
+    }
+    if (guessesLeft === 5) {
+      console.log(snow5);
+    }
+    if (guessesLeft === 4) {
+      console.log(snow4);
+    }
+    if (guessesLeft === 3) {
+      console.log(snow3);
+    }
+    if (guessesLeft === 2) {
+      console.log(snow2);
+    }
+    if (guessesLeft === 1) {
+      console.log(snow1);
+    }
+
     // nested 'if' - for having zero guesses left, you lose. ends game.
     if (guessesLeft === 0) {
       console.log(`Defeat! Sorry, you lost! ${guessesLeft} guesses are left. The word was: ${word}.`);

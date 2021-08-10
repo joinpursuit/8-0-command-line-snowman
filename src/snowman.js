@@ -28,40 +28,14 @@ function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
   // declared variables
+  // prints a number that states how many guesses you have left containing the length of the word plus 3 additional guesses
   let incorrectGuesses = word.length + 3
   let lettersGuessed = ["None"];
   let theBlanks = "";
   let winningMsg = "Congrats! You Win!";
   let losingMsg = "Sorry, Game Over. :(";
   // var `validEntry` with array of strings that displays the alphabet `a-z`
-  let validEntry = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-  ];
+  let validEntry = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",  "r", "s", "t", "u", "v", "w", "x", "y", "z",];
   let invalidGuess = "Invalid input. Please enter a lowercase letter.";
   //reassigns underscores to the variable called `theBlanks`.
   for (let i = 0; i < word.length; i++){
@@ -69,13 +43,13 @@ function run() {
   }
   // for i loop that logs start of game and continues to loop it through over again until conditions are met.
   for (let i = word.length - 1; i < word.length; i++){
-    //'prints' concatenated strings into terminal 
+    //'prints' concatenated strings into terminal that describes the state of the game
     console.log("Remaining Incorrect Guesses: " + incorrectGuesses);
     console.log("Letters Guessed: " + lettersGuessed);
     console.log("Word: " + theBlanks);
     // variable that instructs user to choose a letter
     let userInput = readline.question("Pick a letter: ");
-    //creates space in after entering character and its result
+    //creates a line space after entering character and its result that has no charcters
     console.log("\n");
     // allows letter that user inputted to match with the variable `validEntry` and print in terminal else it will print `invalidGuess`.  This makes sure only lowercase alphabet characters are able to be printed in the terminal.
     if (userInput) {

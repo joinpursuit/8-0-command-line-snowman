@@ -34,7 +34,7 @@ function run() {
 
     if (isPlayerisReady === "n" || isPlayerisReady === "no") {
       console.log("Okay, please come back when you are ready. Exiting game loop......")
-      gameState.gameActive = false;
+      break;
     }
     else if (isPlayerisReady === "y" || isPlayerisReady === "yes") {
       console.log("Great! Let's begin!")
@@ -79,14 +79,16 @@ function run() {
 
       if (remainingLetters === 0) {
         let congraulationsMessage = readline.question("congratulations! You've guessed the secret word! Do you want to play again? \n (Y or N ").toLowerCase();
-        if (congraulationsMessage === 'y' || congraulationsMessage === "yes") {
+        if (congraulationsMessage === "y" || congraulationsMessage === "yes") {
           console.log("Generating word");
           run()
         } else if (remainingGuesses === 0) {
-          console.log("Sorry you've lost!")
-          break;
+          let losingMessage = readline.question("Sorry! You gave it a good go but you've used up all your guesses. Would you like to play again? \n (Y or N ").toLowerCase();
+          if (losingMessage === "n" || losingMessage === "no") {
+            console.log("Okay! Until next time!!")
+            break;
+          }
         }
-
 
       }
 

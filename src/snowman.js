@@ -7,7 +7,7 @@ function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
-//---------------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------//
 
 //checks if userinput is correct 
 function checkGuess (randomWord, guess) { 
@@ -31,14 +31,16 @@ function charReplacer (guess, word, letterDisplay) {
 }
 
 let listOfGuessedLetters = "";
+const userName = readline.question(`Enter your name:  `)
+
 
 function run(){
+  const greeting = readline.question(`\nWelcome to Ki Sub & Fatema's Snowman Game World!\n\nPress the 'return' button to play the game!`);
 
   const word = getRandomWord(); 
   //generates a random word
-  console.log(word)
-    let remainingChances = word.length + 1 
-  
+  //console.log(word)
+  let remainingChances = word.length + 1 
   const letterDisplay = [];
 
   //converts each letter of the word to "_" / empty blanks 
@@ -50,13 +52,14 @@ function run(){
   }
   convertToUnderScore (word)
     //the loop that allows the game to continue
-  while (remainingChances && letterDisplay.includes("_")) {
-    console.log(String(`-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}`))
-    console.log(`\nList of your guessed characters: ${listOfGuessedLetters}`)
-    const userInput = readline.question(`\n***************\nGuess a letter: `);
-    console.log("You Guessed:", userInput);
+  while (remainingChances > 0 && letterDisplay.includes("_")) {
+    console.log(String(`\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}`))
+    console.log(`\n\nYou guessed: ${listOfGuessedLetters}`)
+    const userInput = readline.question(`\n\nGuess a letter: `);
+    
+    // console.log(`You Guessed: ${listOfGuessedLetters}`);
     //check if userinput is correct or wrong
-    //check if userInput is a valid character (userinput !== number, symbol, multiple letters)
+    //check if userInput is a valid character (userinput === number, multiple letters)
     //if user guesses wrong letter remaning chances decrement by 1
     //if user guesses invalid character no change in remaining chances count 
     //prompt accordingly
@@ -64,27 +67,38 @@ function run(){
   if (userInput.length > 1 || !isNaN(userInput)) { 
     console.log(`Not a valid entry, please enter a letter! You have '${remainingChances}' chance(s) left!`)
   } else if (checkGuess(word, userInput) === true) {
-    console.log(`Yay!! That is correct! You have '${remainingChances}' chance(s)!`)  
-    listOfGuessedLetters += userInput + ", "
+    console.log(`Yay, that is correct! You have '${remainingChances}' chance(s)!`)  
+    listOfGuessedLetters += userInput + " "
     charReplacer (userInput, word, letterDisplay) 
     }
     else {
       remainingChances --;
       console.log(`\nOh, no! That is incorrect!\nYou have '${remainingChances}' chance(s)!`)
-      listOfGuessedLetters += userInput + ", "
+      listOfGuessedLetters += userInput + " "
     } 
   } 
-  console.log(`\nYou guessed: ${listOfGuessedLetters}.\nThe correct word is '${word}'.`)
-
   //prompt message for a win or loss 
   if (letterDisplay.join("") === word) {
-    console.log(`\nYay! You got it!!\nCongratulations!`)
-  } 
+    console.log(`\nYay! You got it, the correct word is "${word}"!!\nCongratulations ${userName}!`)
+    const startNewGame = readline.question(`Do you want to test your luck again?\nIf yes, press 'y'\nIf not, press 'n'`) 
+    if (startNewGame === 'y') {
+      console.log(`\nFeeling lucky ${userName}?! Let the game begin ...`)
+      run()
+    } else {
+      console.log(`\nYou are a great sport ${userName}! Have a good day!`)
+      }
+    }
   if (remainingChances === 0) {
-    console.log(`\nAlways a next time ${userName}! The correct word is ${word}.`)
+      console.log(`\nAlways a next time ${userName}!\nThe correct word is '${word}'.`)
+      const startNewGameWhenLost = readline.question(`Wanna try again?\nIf yes, press 'y'\nIf not, press 'n'`) 
+    if (startNewGameWhenLost === 'y') {
+      console.log(`\nGood Luck ${userName}!`)
+      run()
+    } else {
+      console.log(`\nHave a great day ${userName}!`)
+    }
   }
 }
-  
 run();
 
 
@@ -100,7 +114,7 @@ run();
 //incorrectGuess count decrements by 1
 //if incorrectGuess count is 0 the user has no chances left game ends
 //the game ends when the game is lost with an alert "you lost"
-//if the user guesses a wrong character (number, multiple letters, or symbol)
+//if the user guesses a wrong character (number or multiple letters)
 //if(userInput typeOf = number || symbol)
 //remaining incorrect guess count doesn't change but an alert pops up saying ... please enter a letter
 

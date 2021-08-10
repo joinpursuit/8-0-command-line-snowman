@@ -36,7 +36,7 @@ function run(){
 
   const word = getRandomWord(); 
   //generates a random word
-  //console.log(word)
+  console.log(word)
     let remainingChances = word.length + 1 
   
   const letterDisplay = [];
@@ -78,9 +78,11 @@ function run(){
 
   //prompt message for a win or loss 
   if (letterDisplay.join("") === word) {
-  console.log(`\nYay! You got it!!\nCongratulations!`)
-  
+    console.log(`\nYay! You got it!!\nCongratulations!`)
   } 
+  if (remainingChances === 0) {
+    console.log(`\nAlways a next time ${userName}! The correct word is ${word}.`)
+  }
 }
   
 run();

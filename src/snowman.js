@@ -15,26 +15,75 @@ function getRandomWord() {
   return dictionary[index];
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
-
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
-function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+function getDashedWord(word){
+  let wordArr = [];
+  for(let char of word){
+    wordArr.push("_");
+  }
+  return wordArr;
 }
 
+function replaceUnderscoresWithLetters(wordArr,word,userInput) {
+  for (let i = 0; i < word.length;i++){
+    if(word[i]=== userInput){
+    wordArr.splice(i,1,userInput)
+  }
+}
+  return wordArr.join(' ');
+}
+
+
+// function checkGuessedWord (word, guess) { 
+//   if (word.includes(guess)) {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
+
+
+
+// function userInputControl(userInput){
+//   return userInput.match(/[a-z]/) && userInput.length === 1;
+// }
+
+// /*
+
+//   You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
+// */
+function run() {
+let numOfTries = 7;
+let keepPlaying = true;
+const word = getRandomWord();
+let guessedLetters = " ";
+let dashedVersion = getDashedWord(word).join(" ");
+while(keepPlaying){
+  console.log(`Remaining Incorrect Guesses: ${numOfTries}`);
+  console.log(`Word: ${dashedVersion}`);
+  const userInput = readline.question("Guess a letter: ").toLowerCase();
+  guessedLetters += " " + userInput;// keep track of all player's inputs
+  if(userInput.length ===1 && typeof userInput === "string" && userInput.match(/[a-z]/)){
+    if(word.includes(userInput)){
+      let wordArr = dashedVersion.split(" ");
+      dashedVersion = replaceUnderscoresWithLetters(wordArr,word,userInput);
+      console.log(dashedVersion);
+    } else {
+      numOfTries--;
+    }
+  } else {
+    console.log("Please enter a valid letter.");
+    continue;
+  }
+  let wordArr = dashedVersion.split(" ");
+  let underscoreString = replaceUnderscoresWithLetters(wordArr,word,userInput);
+  underscoreString = underscoreString.split(" ").join("");
+  if(underscoreString === word){
+      console.log("You won!");
+      keepPlaying = false;
+  } else if(!numOfTries){
+    keepPlaying = false;
+    console.log(`You lost! The correct word is ${word}`);
+  }
+}
+}
 run();

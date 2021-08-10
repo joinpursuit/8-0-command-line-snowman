@@ -52,4 +52,17 @@ if (intro === 'y') {
     for(let i= 0; i < word.length; i++){
       underScore[i] = '_' 
       // underscore will represent hidden letters in their entirety. 
-    } 
+    }
+      let remainingLetters = word.length;
+
+    let lives = 10 ; //score we're counting down from//
+    while(remainingLetters > 0 && lives > 0){
+    // This is saying while letters and lives remain you can play 
+      console.log(underScore.join(' ') +word); 
+      //shows letters
+      console.log(guesses.join(' '))
+      //shows guessed valid letters only
+      console.log(`Lives left: ${lives}`);
+      //shows lives remaining
+      const userInput = readline.question("Guess a letter: ");
+      // Game play question Tells them to guess a letter 

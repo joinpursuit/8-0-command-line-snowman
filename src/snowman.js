@@ -20,7 +20,7 @@ const validInput = require('./validinput');
 // New Helper function
 function validInputCheck(letter) {
   // Check if letter is valid and return it
-  return validInput.includes(letter.toLowerCase())
+  return validInput.includes(letter.toLowerCase());
 };
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
@@ -38,10 +38,10 @@ The text that will show up to the user will be "Guess a letter: ". Whatever valu
 After a user hits the 'return' key, the rest of the code will run.
 */
 // This line of code will print out whatever is inputted in by the user.
-function run(name) {
+function run(name, replay) {
   // PLAN: The game is a loop . Loop ends when incorrect guesses is 0, or displayWord doesn't include "_". Set guesses to length of word. Set alreadyGuessed is empty array, set displayWord  to array of "_"'s that = length of word, after user guesses, check input validity, check if input was already guessed, check if input is in our word, if it is, replace the "_" at the index found with out input. If input isn't in our word, decrease incorrectGuesses by 1. Either way, add input to alreadyGuessed array. This line of code will print out whatever is inputted in by the user. After game is finished, if the user won, display victory, if lose, display fail. 
   // Declare a variable that will ask for their name:
-  let userName = name || readline.question('Enter your username: ') || 'User';
+  let userName = name || readline.question('Enter username: ') || 'User';
   // Declare variable for our secretWord.
   const secretWord = getRandomWord();
   // Declare variable for our incorrectGuess, set to length of secretWord
@@ -51,51 +51,50 @@ function run(name) {
   // Declare variable for displayedWord, set to empty array
   let displayedWord = [];
   // Use a loop to fill our displayedWord with '_'s, make it as long as our secretWord. 
-while (displayedWord.length < secretWord.length) {
+  while (displayedWord.length < secretWord.length) {
   displayedWord.push('_');
-}
+  }
 // Declare variable for message
-let message = `\n\nHello ${userName}! Enjoy your game!`;
+let message = replay ? `\n${userName}, welcome back. Let's play, again.` : `\n\nHello, ${userName}! Welcome to Snowman, let's play..` 
   // Create loop for our game: this loop determines whether you ran out of lives or you lost the game because you still haven't completed the word. 
   while (incorrectGuess !== 0 && displayedWord.includes('_')) {
-  // Print our game 
-  console.log(`\n_____________________________________________________\nRemaining Incorrect Guessed: ${incorrectGuess}\nLetters Guessed: ${alreadyGuessed.join(', ') || 'None'}\nWord: ${displayedWord.join(' ')}${message}`
-  ); 
-  // Ask for an input 
-  const userInput = readline.question('Guess a letter: ');
-  // REMINDER: .includes method returns a boolean
-  // Check if input.toLowerCase() isn't valid(!) with helper function 
-  if (!validInputCheck(userInput)) {
-    // If it isn't, print the incorrect letter & ask user to input valid input.
-    message = `\n\n${userName}, you submitted an invalid input of ${userInput}. Please enter a single letter.\n_____________________________________________________\n`;
+      // Print our game 
+      console.log(`\n_____________________________________________________\n\nRemaining Incorrect Guesses: ${incorrectGuess}\nLetters Guessed: ${alreadyGuessed.join(', ') ||   'None'}\nWord: ${displayedWord.join(' ')}${message}`
+      ); 
+      // Ask for an input 
+      const userInput = readline.question('Guess a single letter: ');
+      // REMINDER: .includes method returns a boolean
+      // Check if input.toLowerCase() isn't valid(!) with helper function 
+      if (!validInputCheck(userInput)) {
+    // If it isn't, print the incorrect letter, ask user for valid input.
+    message = `\n\n${userName}, you submitted an invalid input of (${userInput}). Please, try again.\n\n_____________________________________________________\n`;
     // Send the user back to the guess phase.
     continue;
-  }
-  // Check if input has already been guessed
-  if (alreadyGuessed.includes(userInput)) {
-    // It it was, tell the user, and don't penalize them.
-  message = `\n\n${userName}, your input of ${userInput}has already been guessed.\n_____________________________________________________\n`
-  continue;
-  }
-  
-  // Loop through our secretWord 
-  for (let i = 0; i < secretWord.length; i++) {
-    // Declare a variable for currentLetter
-    let currentLetter = secretWord[i];
-    // In loop, check if input === currentLetter 
-    if (userInput.toLowerCase() === currentLetter) {
-      // If it is, change the value of our displayedLetter, to currentLetter 
-      displayedWord[i] = currentLetter;    
-    }
-  }  
+      }
+      // Check if input has already been guessed
+      if (alreadyGuessed.includes(userInput)) {
+      // It it was, tell the user, and don't penalize them.
+      message = `\n\n${userName}, your input of (${userInput}) has already been guessed. Please, try again.\n_____________________________________________________\n\n`
+      continue;
+      }
+        // Loop through our secretWord 
+      for (let i = 0; i < secretWord.length; i++) {
+        // Declare a variable for currentLetter
+        let currentLetter = secretWord[i];
+        // In loop, check if input === currentLetter 
+       if (userInput.toLowerCase() === currentLetter) {
+        // If it is, change the value of our displayedLetter, to currentLetter 
+        displayedWord[i] = currentLetter;    
+        }
+      }  
   // Aftr loop, check if displayedWord includes input.
   if (displayedWord.includes(userInput.toLowerCase())) {
     // If it does, change message
-    message = `\n\nWell done ${userName}! You guessed correctly!\n_____________________________________________________\n`;
+    message = `\n\nWell done, ${userName}! You guessed correctly.\n\n_____________________________________________________\n`;
   } else {
     // If it isn't, incorrectGuess -= 1
     incorrectGuess -= 1;
-    message = `\n\nSorry ${userName}, you guessed wrong :c\n-------------------------------------\n`;
+    message = `\n\nSorry ${userName}, try again.\n\n_____________________________________________________\n\n`;
     }
     // Add input to letters guessed
     alreadyGuessed.push(userInput.toLowerCase());
@@ -105,12 +104,12 @@ let message = `\n\nHello ${userName}! Enjoy your game!`;
     // Check if they won
   if (!displayedWord.includes('_')) {
     // If they did, print winning message
-    console.log(`\nGOOD JOB ${userName}!!! YOU'RE A WINNER!!\nYour word was: ${secretWord}\n\n-------------------------------------\n`
+    console.log(`\nGOOD JOB, ${userName}!! YOU'VE WON!!\nOur secret word was: ${secretWord}\n\n_____________________________________________________\n`
     );
   } else {
     // If they didn't, print losing message
     console.log(
-      `\nSorry ${userName}, better luck next time! Your word was: ${secretWord}\n\n-------------------------------------\n`
+      `\nSorry, ${userName}, better luck next time! \n_____________________________________________________\nYour word was: ${secretWord}\n\n_____________________________________________________\n\n`
     );
   }
   // Declare a variable to replayMsg as empty string
@@ -119,21 +118,22 @@ let message = `\n\nHello ${userName}! Enjoy your game!`;
   const answers = ['y', 'n'];
   // Declare playAgain as an empty string '';
   let playAgain = '';
+
   // Create a REPLAY loop
   while (!answers.includes(playAgain)) {
     // Print our message
     console.log(replayMsg);
     // Ask if they would like to play again
-    playAgain = readline.question(`${userName}, would like to play again? (y, n)`
+    playAgain = readline.question(`${userName}, would you like to play again? (Y, N)`
     );
     // Check for their answer
     if (playAgain.toLowerCase() === 'y') {
       // If yes, run the function, again.
-      run(userName);
+      run(userName, 'replay');
     } else if (playAgain.toLowerCase() !== 'n') {
-      replayMsg = `Hey there ${userName}, input of ${playAgain} is invalid.`;
+      replayMsg = `Hey there ${userName}, input of (${playAgain}) is invalid.`;
     }
   }
 }
 run();
-console.log("THE USER INPUTTED:", userInput);
+// console.log("THE USER INPUTTED:", userInput);

@@ -2,38 +2,48 @@ const readline = require("readline-sync");
 
 const dictionary = require("./dictionary");
 
+const chalk = require("chalk");
+
+//adds a hint of color to the file
+
 let word = getRandomWord();
 // This line of code gets a random word. The `word` variable will be a string.
 
-let win = "You lived! Victory is yours! 👑 ";
+let win = "🎊🥳You lived! Victory is yours!🥳🎊";
 //winning message
   
-let lose = "Game Over. You're DEAD! 💀";
+let lose = "Game Over. You're DEAD!☠️";
 //losing message
   
-let invalid = 'Invalid Entry!';
+let invalid = '⛔Invalid Entry!⛔';
 // invalid character entered
   
-let repeat = 'Sorry, you already guessed that.';
+let repeat = '🚫 Sorry, you already guessed that.';
 // letter repetition
 
-let wrong = 'Sorry, Wrong answer.'
+let wrong = '❌ Sorry, Wrong answer.'
 
-let right = 'Great Job!'
+let right = '✅Great Job!'
+
+let fool = `\nYou fool!🤡 Killer snowmen are on the loose.Every wrong letter is a step closer to death.\n\n Play at your own risk!😨\n\n`
+
+let youSmart = `\nGood choice!💡 Killer snowmen are on the loose.Every wrong letter is a step closer to death.\n\n Good Luck!😨\n\n`
 
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
 
-const intro = readline.question(`Do you want to build a snow man?\n\n 'Y', 'N': `)
+const intro = readline.question(chalk.bgBlackBright(`☃️\nDo you want to build a snow man?☃️\n\n [y | n]: `));
 //This is a intro to the game, Something to jazz it up a bit
-if (intro === 'y') {
-  console.log(`\nYou fool! Killer snowmen are on the loose. Every wrong letter is a step closer to death. Play at your own risk!\n`);
+if (intro === 'y'){
+  //Ignore this. I just liked having the option to use both capital and lowercase.
+  console.log(chalk.red(fool));
   run()
+
   //We added a run command because we noticed it would not continue
 } else {
-  console.log(`\nGood choice! Killer snowmen are on the loose. Every wrong letter is a step closer to death. Good Luck!\n`);
+  console.log(chalk.green(youSmart));
   //The response is different because we feel passionate about this answer. 
   run ()
   }
@@ -59,9 +69,9 @@ let remainingLetters = word.length;
 let lives = 10 ;
 while(remainingLetters > 0 && lives > 0){
 // This is saying while letters and lives remain you can play 
-  console.log(underScore.join(' ')); 
+  console.log(chalk.magenta(underScore.join(' '))); 
   //shows letters
-  console.log(guesses.join(' '))
+  console.log(chalk.yellow(guesses.join(' ')));
   //shows guessed valid letters only
   console.log(`Lives: ${lives}`);
   //shows lives remaining
@@ -69,14 +79,14 @@ while(remainingLetters > 0 && lives > 0){
   // Game play question Tells them to guess a letter 
   
   if (guesses.includes(userInput)){
-    console.log(repeat)
+    console.log(chalk.magentaBright(repeat));
     console.log("THE USER INPUTTED:", userInput);
     // This line of code will print out if user repeats guess
     continue //if user uses letters only 
   }
   
   if (!userInput.match(validGuess)){
-    console.log(invalid)
+    console.log(chalk.red(invalid))
     console.log("THE USER INPUTTED:", userInput);
     // This line of code will print out whatever is inputted in by the user.
     continue //if user uses letters only 
@@ -93,21 +103,21 @@ while(remainingLetters > 0 && lives > 0){
   //This line of code pushes guesses into array
   if (!word.includes(userInput)){
   lives--
-  console.log(wrong)
+  console.log(chalk.red(wrong))
   //if it is not in the array it is invalid and continue
   continue
   } else {
-  console.log(right)  
+  console.log(chalk.green(right)) 
     //Shows correct response
     continue
     //returns to the game 
   } 
 }
 if (underScore.join("") === word) { // If the player won
-    console.log(win) // Offer a chance to continue
-    console.log(`The winning word was: ${word}.`)
+    console.log(chalk.yellowBright(win)) // Offer a chance to continue
+    console.log(chalk.blue(`The winning word was: ${word}.`))
 
-    const newGame = readline.question(`Try again? \n\n 'Y',  'N':`) 
+    const newGame = readline.question(chalk.bgGreenBright(`Try again? \n\n [y|n]:`))
 
   if (newGame === 'y') { // If the player wishes to continue
     word = getRandomWord();
@@ -123,15 +133,17 @@ if (underScore.join("") === word) { // If the player won
   let reTry = ""
   
 if (lives === 0) { // If the player lost
-    console.log(lose)
-    console.log(`The word was: ${word}.`)
+    console.log(chalk.red(lose))
+    console.log(chalk.blue(`The word was: ${word}.`))
    //allows to see the the word if lost
-  } reTry = readline.question(`Try again? \n\n 'Y',  'N':`)
+  } reTry = readline.question(chalk.bgGreenBright(`Try again? \n\n [y|n]:`))
   if (reTry === 'y') {
     word = getRandomWord();
       console.log(`\nGood Luck Player!\n`)
   } else {
     console.log(`\nThank you for playing!\n`)
+    process.exit()
+         
 }
 }
 run();

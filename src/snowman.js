@@ -62,6 +62,7 @@ function run() {
        
        } else if(!word.includes(userInput)){
         remainingGuess--;
+        console.log(`You have ${remainingGuess} guesses left `)
        console.log(`the user inputted wrong letter`)
        } if(remainingGuess === 0){
          console.log(`You lost correct word is ${word}`)

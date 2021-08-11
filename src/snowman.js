@@ -8,7 +8,7 @@ function getRandomWord() {
   return dictionary[index];
 }
 //----------------------------------------------------------------//
-const userName = readline.question(`Enter your name:  `)
+const userName = readline.question(`\nEnter your name:  `)
 
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.

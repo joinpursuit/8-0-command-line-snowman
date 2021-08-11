@@ -25,16 +25,87 @@ function getRandomWord() {
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+  // declare 'alphabet' and assign an array of string letters, for the user input
+  const alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  // split 'word' into an array of string of letters, get the length
+  const newWordArr = word.split("");
+  console.log(newWordArr);
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+  let lines = "";
+
+  // replaces word with underscores to show the user the length of the word they're guessing
+  for (const eachLetter of newWordArr) {
+    lines += "_";
+  }
+
+  // first user text block OBJECT
+  const outputTextBlock = {
+    remainingIncorrectGuesses: 7,
+    lettersGuessed: "",
+    word: lines.split(""),
+  };
+
+  // some variables that point object values, easier to use the variables
+  let remainingGuesses = outputTextBlock.remainingIncorrectGuesses;
+  let guessed = outputTextBlock.lettersGuessed;
+  let hiddenLetters = outputTextBlock.word;
+
+  while (remainingGuesses > 0 && word !== hiddenLetters.join("")) {
+    // dynamic 3 block message user sees
+    console.log(`\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters.join("")}\n`);
+    
+    // This line of code will print out whatever is inputted in by the user.
+    let userInput = readline.question("Guess a letter: ");
+    // lower cases any upper cased letters
+    userInput = userInput.toLowerCase();
+    console.log(`You typed: ${userInput}`);
+    
+    // edge cases or for user errors
+    if (!alphabet.includes(userInput)) {
+      console.log(`Invalid input: ${userInput}, please type a valid letter`);
+      // logs the guessed letters.
+    } else if (alphabet.includes(userInput)) {
+      if (!guessed.includes(userInput)) {
+        guessed += `${userInput}, `;
+      } else if (guessed.includes(userInput)) {
+        // user gets a message when they've guessed the same letter twice
+        console.log(`You've already guessed ${userInput}, try again!`);
+      }
+      // deducts a guess when user guesses wrong.
+      if (!newWordArr.includes(userInput)) {
+        remainingGuesses = remainingGuesses - 1;
+      }
+      // logs the correct letters to word key value.
+      for (const letter in newWordArr) {
+        if (userInput === newWordArr[letter]) {
+          hiddenLetters.splice(letter, 1, userInput);
+        }
+      }
+    }
+
+   // logs win if user won. logs lost if user lost
+    if (remainingGuesses === 0) {
+      console.log(`\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${word}\nYou Lost!`);
+      // takes user input 'y' for yes and 'n' for no, for the question 'Do you want to keep playing?'
+      let userInput2 = readline.keyInYN(["\nDo you want to keep playing?",["Press 'y' for yes, 'n' for no"]])
+      // if input is truthy: restart the game
+      if (userInput2) {
+        run();
+      } else {
+        // else: exit out out of the loop(defualt) and display the message below
+        console.log('Alright, see ya next time!');
+      }
+    // checks if user has guessed all the letters
+    } else if (word === hiddenLetters.join("")) {
+      // when true: logs the message 'You Won!'
+      console.log(
+        `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters.join(
+          ""
+        )}\nYay You Won🎉!`
+      );
+    }
+  }
 }
-
+// function invokation 
 run();

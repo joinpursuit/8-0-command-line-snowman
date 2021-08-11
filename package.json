@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "readline-sync": "^1.4.10"
+    "ascii-art": "^2.8.5",
+    "owlbot-js": "^2.0.2",
+    "readline-sync": "^1.4.10",
+    "terminal-image": "^2.0.0"
   }
 }

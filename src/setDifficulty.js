@@ -9,9 +9,9 @@ function setDifficulty() {
   // Declare a variable called currentDifficulty and assign it evaluated result of invoking keyInSelect method passing in difficulty options as an argument.
   let difficultyIndex = readline.keyInSelect(difficultyOptions, "Please select difficulty: ", { cancel: "easy" });
   if (difficultyIndex === -1) {
-    return "easy";
+    return "e".toUpperCase() + "asy";
   } else {
-    return difficultyOptions[difficultyIndex];
+    return difficultyOptions[difficultyIndex][0].toUpperCase() + difficultyOptions[difficultyIndex].slice(1);
   }
 }
 

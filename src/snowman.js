@@ -27,6 +27,11 @@ function getRandomWord() {
   return dictionary[index];
 }
 const word = getRandomWord();
+//global variables
+let guessedWord = []; // stored the guessed letters forming the secret word
+let guessedLetter = ""; // user inputted letters guessed
+let WordLength = word.length + 3; // counter for chances to guess letters correctly
+let alreadyGuessedLetters = []; //stores letters already guessed
 //determines a winner or a loser
 
 //determines if letter guessed is listed in alreadyGuessedLetters array
@@ -49,5 +54,5 @@ const word = getRandomWord();
     //As long as the chance to play is greater than zero, game is played
     //Invoking playGame function starts the game
     playGame();
-    
+
 run();

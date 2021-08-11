@@ -119,7 +119,7 @@ function run() {
   // While Loop if guessChances is greater than 0
   while (guessChances > 0) {
     // Print: the reminder of the length of word and the userInput 
-    console.log("Reminder: This secrect word should have " + word.length + " lowercase letters." + "\n");
+    console.log("Reminder: This secret word should have " + word.length + " lowercase letters." + "\n");
     const userInput = readline.question("Guess a letter: ");
     console.log("\n" + "THE USER INPUTTED:", userInput + "\n");
     // If the userInput is a lowercase letter, then continue to check, otherwise 
@@ -132,7 +132,7 @@ function run() {
       if (checkInput (word,userInput)){ 
         // If true, prints the updated format
         console.log(underscore + "\n" );
-        console.log("Good job! Keep going!" + "\n")
+        console.log("Good job! You got it \u{1F44D} !" + "\n")
 
       } else {
         // If false, calling the function
@@ -141,16 +141,16 @@ function run() {
         // Prints the updated underscore above which without any changing
         console.log(underscore + "\n");
         // Prints "Incorrect! Please try again!"
-        console.log("Incorrect! Please try again!" + "\n")
+        console.log("Incorrect! Please try again! \u{1F639}" + "\n")
         // Prints the updated guessChances which would decrease by one after each incorrect userInput
-        console.log("Chances less than " + guessChances + "\n");
+        console.log("Chances less than " + guessChances + " \u{1F4AA} "+ "\n");
       } 
       // Re-assign the value (the final format) to the variable 'underscore' 
       underscore = underscore.split(" ").join("");
       // If the final format underscore equals to the random word
         // Prints the congrat sentence.
       if (underscore ===  word) {
-        console.log("Congratulations! You Win!")
+        console.log("Congratulations! You Win \u{1F31F} ! \n" + "\u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389}")
         // Stop the game and go back to the beginning of the while loop
         guessChances = 0;
         continue;
@@ -159,12 +159,12 @@ function run() {
     else {
       // If the userInput is not a lowercase letter 
       // --> Prints "Please enter a valid letter!" and go back to the beginning of the while loop
-        console.log("Please enter a valid letter!" + "\n");
+        console.log("Please enter a valid letter!" + " \u{1F521}" + "\n");
         continue;
     }
     // If no more guessChances, prints "Sorry, you lost! Take a break and try again!"
     if(!guessChances){
-      console.log("Sorry, you lost! Take a break and try again!")
+      console.log("Sorry, you lost! Take a break and try again! \u{1F60B}")
     }
   } 
 }

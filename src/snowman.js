@@ -116,10 +116,11 @@ function run() {
   let array = [0]
   //number of chances left to guess
   let remainingGuesses = word.length + 1
-
+  // this will hold the blank spaces representing the  word
   let guessBox = ""
+  // this will accumulate all the letters that the user has guessed so far
   let guessLetters = ''
-   // console.log(word)
+  // creates the correct amount of blank spaces based on the word that is selected
   for (let letter of word){
     guessBox +=  "_ "
   }
@@ -131,7 +132,7 @@ function run() {
   for (let i = 0; i < array.length; i++){ 
     // This line of code will print out whatever is inputted in by the user.
     const userInput = readline.question("Choose Wisely: ");
-
+    // replaces blank spaces with a letter if it is in the word
     for (let i = 0; i < word.length; i++){
       let letter = word[i]
       if (userInput.toLowerCase() === letter){
@@ -141,9 +142,31 @@ function run() {
         guessBox = guessBox.join('')
       }
       }
+      //Subtracts 1 guess each time the user guesses incorrectly with a valid letter that has not been guessed before
+      if (!word.includes(lowCase(userInput)) && 
+      !guessLetters.includes(lowCase(userInput)) &&
+      letterChecker(userInput)){
+      
+      remainingGuesses -= 1
+      
+      }
+      //Stops the game if the user no longer has any guesses available
+      if (!remainingGuesses){
+        for (let i = 0; i < word.length; i++){
+          let letter = word[i]
   
+          guessBox = guessBox.split("")
+          guessBox.splice((i * 2),1, letter)
+          guessBox = guessBox.join('')
+        
+        }
+
+        gameStatus(divider, remainingGuesses, guessLetters, guessBox)
+        return console.log ("Brrrr🥶 it's a cold world out there, ain't it❄️")
+      }
+      //Logs the current game status to the terminal
     gameStatus(divider, remainingGuesses, guessLetters, guessBox)   
- 
+    //This is the condition that causes the infinite loop if the full word has not been guessed yet  
     if(removeSpaces(guessBox) !== word){
       i = -1
     }

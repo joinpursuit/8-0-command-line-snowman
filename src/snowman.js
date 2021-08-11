@@ -1,40 +1,96 @@
 /*
-  `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
+  `readline-sync` is a library allowing you to access user input from the command line and
+   is assigned to the variable `readline`. It is used in the `run()` function below.
 */
 const readline = require("readline-sync");
-/*
-  The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
-*/
+
 const dictionary = require("./dictionary");
 
-/*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
-*/
+// HELPER FUNCTIONS
+
+//Replaces underscores with letters
+function replaceUnderscoreWithLtr(underScore, letter, gameWord) {
+  let underScoreArr = underScore.split(" ");
+  for (let i = 0; i < gameWord.length; i++) {
+    if (letter === gameWord[i]) {
+      underScoreArr.splice(i, 1, letter);
+    }
+  }
+  return underScoreArr.join(" ");
+}
+//Checks if guessed letter is correct
+function isGuessCorrect(guess, word) {
+  return word.includes(guess);
+}
+//Gets random word from dictionary.js
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
+//Checks if input is valid
+function isInputValid(letter) {
+  if (
+    typeof letter === "string" &&
+    letter.length === 1 &&
+    letter <= "z" &&
+    letter >= "a"
+  ) {
+    return true;
+  }
+  return false;
+}
+//Checks if player has won
+function ifWon(underScore, gameWord) {
+  underScore = underScore.split(" ").join("");
+  return underScore === gameWord;
+}
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
-
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
 function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
+  let playGame = true;
+
+  //Gets random word from dictionary
   const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  let maxNumWrongGuesses = 6;
+  let guessedLetter = "";
+  let underScores = "";
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+  //Iterating through word string by each element (letter)
+  for (let i = 0; i < word.length; i++) {
+    underScores += "_ ";
+  }
+
+  while (playGame) {
+    console.log(`Remaining Incorrect Guesses: ${maxNumWrongGuesses}\n`);
+    console.log(`Letters Guessed: ${guessedLetter}\n`);
+    console.log(`Word: ${underScores}\n`);
+
+    const givenLetter = readline.question("Guess a letter: ");
+    console.log("THE USER INPUTTED:", givenLetter + "\n");
+
+    if (isInputValid(givenLetter)) {
+      guessedLetter += " " + givenLetter;
+      if (isGuessCorrect(givenLetter, word)) {
+        underScores = replaceUnderscoreWithLtr(underScores, givenLetter, word);
+        console.log(underScores + "\n");
+      } else {
+        maxNumWrongGuesses--;
+      }
+    } else {
+      console.log("Please enter a valid letter");
+      continue;
+    }
+
+    if (ifWon(underScores, word) || maxNumWrongGuesses === 0) {
+      playGame = false;
+      if (ifWon(underScores, word)) {
+        console.log("Congratulations, you win!");
+      } else {
+        console.log("So sorry, you lost! Better luck next time!");
+        console.log("The secret word is: " + word);
+      }
+    }
+  }
 }
 
 run();

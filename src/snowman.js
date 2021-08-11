@@ -110,7 +110,7 @@ function getRandomWord() {
 // this function is taking the word and creating the matching dashes
 function addUnderscores(word, state){
  for(let char of word){
-   state.wordArr.push("_")
+   state.wordArr.push("_ ")
  }
  return state.wordArr
 }
@@ -151,28 +151,47 @@ function run() {
   }
   //get the word
   // const word = getRandomWord();
-  const word = "hamburger"
+  const word = "cocoa"
   //put the word into dashes according to length
   let convertToDashes = addUnderscores(word, state);
   // console log the game structure
-  console.log(`Remaining Incorrect Guesses: ${state.allGuesses}`)
-  console.log(`Letters Guessed: ${state.answerArr}`)
-  console.log(`Word: ${convertToDashes}`)
+  
   //start the game 
   while(state.shouldKeepPlaying){
     //have player guess the letter
     const userInput = readline.question("Guess a letter: ");
-    //
+    // 
     let apprGuess = checkingValidity(userInput, state);
-    if(!apprGuess){
+    if(apprGuess){
+      console.log(`Letters Guessed: ${state.answerArr}`)
+      console.log(`Word: ${convertToDashes.join(' ')}`)
+      console.log(`Remaining Guesses: ${state.allGuesses}`)
+      
+     
+
+      // console.log("Invalid response: only single letters, no numbers, and no symbols.")
+      // continue;
+    } else {
+      state.allGuesses --;
+      console.log(`Remaining Incorrect Guesses: ${state.allGuesses}`)
+      console.log(`Letters Guessed: ${state.answerArr}`)
+      console.log(`Word: ${convertToDashes.join(' ')}`)
       console.log("Invalid response: only single letters, no numbers, and no symbols.")
       continue;
     }
+    if(state.allGuesses===0){
+      console.log(`Game Over: the secret word was ${word}`)
+      return "Game Over"
+      
+    }
     let letterToDashes = convertCorGuesses(word,userInput,state)
-    console.log(`Word: ${letterToDashes.join(" ")}`);
+    // console.log(`Word: ${letterToDashes.join(" ")}`);
     let playerOutcome = ifPlayerWon(word, state)
     if(playerOutcome){
       console.log("You won!")
+      console.log(`${state.wordArr.join(' ')}`)
+      return
+      
     }
     // after each incorrect guess all guesses --
     // after each guess the guesses need to be added to the answer array

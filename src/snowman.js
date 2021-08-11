@@ -16,18 +16,21 @@ function getRandomWord() {
 }
 
 // importing valid inputs
+// ./ means that this file is within the same directory.
 const validInput = require("./validInput");
 // New helper function
 
+//the parameter allows us to have a list of elements that will be revised via  .includes() method
 function validInputCheck (letter) {
   return validInput.includes(letter.toLowerCase());
 };
 
 //console.log("THE USER INPUTTED:", userInput);
-
+const userName = readline.question(`\nWelcome!\n\nPlease type your name\n
+`) || "User";
 
 function run() {
-  const userName = readline.question(`Welcome!\n\nPlease type your name`) || "User";
+ 
   // This line of code gets a random word. The `word` variable will be a string.
   // declare a variable for our random work
   const secretWord = getRandomWord();
@@ -38,16 +41,16 @@ let incorrectGuess = secretWord.length;
   // declare variable for displayWord -- set to empty array.
   let displayedWord = [];
   let message = "";
-  // use a loop to push "_" based on secretWord.length.
+  // we are comparing indexis between a string and an array and using a loop to push "_" as many there are "indexis" on secretWord.length.
   while (displayedWord.length < secretWord.length){
     displayedWord.push("_");
   }
   // Declare variable message
-   message = `\n\nHello ${userName}. Enjoy your game!`;
+   message = `Hello ${userName}. Enjoy your game!`;
   // console.log "remaining Incorrect Guesses: 7, Letters Guessed: None, Word: _ _ _"
   //create a loop for our game.
   while (incorrectGuess !== 0 && displayedWord.includes("_")){
-       console.log(`\n-------------------------------\nRemaining Incorrect Guesses: ${incorrectGuess}\n\nLetters Guessed: ${alreadyGuessed.join(", ") || "None"}\n---------------------------------\n\nWord: ${displayedWord.join(" ")}\n\n----------------------------${message}\n`);
+       console.log(`\n-------------------------------\nRemaining Incorrect Guesses: ${incorrectGuess}\n\nLetters Guessed: ${alreadyGuessed.join(", ") || "None"}\n---------------------------------\n\nWord: ${displayedWord.join(" ")}\n\n----------------------------\n${message}\n`);
 // Ask for an input
     
 
@@ -79,8 +82,8 @@ let incorrectGuess = secretWord.length;
 // if it does, change message
         message = `Awesome ${userName}, You guessed correctly!`;
       } else {
-// if input is incorrect
-        incorrectGuess -= 1;
+// if input is incorrect subtract 1 from secretword.length and message the user
+        incorrectGuess -= 1; 
         message = `${userName}, You guessed wrong`;
       }
 // Add input to letters guessed
@@ -94,18 +97,19 @@ let incorrectGuess = secretWord.length;
     if (!displayedWord.includes("_")){
       console.log (`${userName} You are a WINNER`); 
     } else {
-      console.log(`${userName}, You ran out of Guesses. The word was ${secretWord}\n\nWould you like to play again?`);
-    }
+      console.log(`${userName}, You ran out of Guesses. The word was ${secretWord}\n\n`)
+    };
 const answers = ["y", "n"]
 let playAgain = "";
-
+let replayMsg = "";
 while (!answers.includes(playAgain)) {
 // Ask if the user wants to play again
-// if yes, run the functoion
+// console.log(replayMsg);
+// if yes, run the function
 // if no, "Thank you for playing";
 playAgain = readline.question(`${userName} would you like to play again? (y,n)`);
 // declare variablefor correct answers
-let replayMsg = "";
+
 if (playAgain.toLowerCase() === "y") {
   // if yes, run the function
   run();

@@ -45,6 +45,19 @@ function run() {
       theBlanks = theBlanks.join('')
     } 
   }
+  //decrement remaining incorrect guess count each time user enters a wrong guess(letter only).
+    if(!word.includes(userInput) && validEntry.includes(userInput)){
+    incorrectGuesses --
+    } 
+    else if(userInput.length > 1 || !validEntry.includes(userInput)){
+      console.log(wrongEntryType);
+    }
+      console.log("\nRemaining Incorrect Guesses: " + incorrectGuesses)
+    
+  //once the incorrectGuesses = 0 the game ends with an alert saying you lost
+    if(incorrectGuesses === 0){
+      return console.log(endMessage);
+    }
       console.log("\nLetters Guessed: " + lettersGuessed)
       console.log("\nWord: " + theBlanks)
       console.log("\nYou guessed:", userInput);

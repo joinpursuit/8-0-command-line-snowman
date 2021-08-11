@@ -29,21 +29,42 @@ let snowman =
  ------_____---------____---\__ --_  __/__LJ__---------________-----___
    `;
 
-let state = {
-  shouldKeepPlaying: true,
-  playerWins: 0,
-  playerLoses: snowman,
-  guess: word.length,
-  answerArr: [],
-  usedLetters: []
-}
+// let state = {
+//   shouldKeepPlaying: true,
+//   playerWins: 0,
+//   playerLoses: snowman,
+//   guess: word.length,
+//   answerArr: [],
+//   usedLetters: []
+// }
 
 function run() {
 
-  //function 
+  let state = {
+    shouldKeepPlaying: true,
+    playerWins: 0,
+    playerLoses: snowman,
+    guess: word.length,
+    answerArr: [],
+    usedLetters: []
+  }
+  
+  function underscoresFilledArr(){ 
+    for(let i = 0; i < word.length; i++){
+      state.answerArr[i] = "_";
+    }
+      console.log(state.answerArr.join(" "));
+  }
 
-  for(let i = 0; i < word.length; i++){
-    state.answerArr[i] = "_";
+  underscoresFilledArr();
+
+  function inputsSpliced(guessInput){
+    for(let j = 0; j < word.length; j++){
+      if(word[j] === guessInput){
+        state.answerArr.splice(j, 1, guessInput);
+      } 
+    }
+    console.log(state.answerArr.join(" "))
   }
 
   while(state.shouldKeepPlaying){
@@ -67,40 +88,35 @@ function run() {
       }
     }
   }// first while loop ending
-    
-  while(state.guess > 0){
-    console.log((state.answerArr.join(" ")));
-    let guessInput = readline.question("Guess a letter: ").toLowerCase();
+  state.shouldKeepPlaying = true;
+  underscoresFilledArr();
+   // Second While loop Begins 
+  while(state.guess > 0 && state.shouldKeepPlaying){
+    const guessInput = readline.question("Guess a letter: ").toLowerCase();
   
     if(guessInput === null){
       break;
-    }else if(guessInput.length !== 1){
-      console.log("Chillllllllll just type a single letter my guy sheeeshhhhhhh.")
-    }else{
-      for(let j = 0; j < word.length; j++){
-        if(word[j] === guessInput){
-          state.answerArr[j] = guessInput;
-          //console.log(`You have ${state.guess} guesses left!`);
-        }else{
-          state.guess--;
-          break;
-        }   
-      }
+    }else if(guessInput.length !== 1 || !isNaN(guessInput)){
+      console.log("Chillllllllll just type a single letter and numbers my guy sheeeshhhhhhh.")
+    }else if(!word.includes(guessInput)){
+      state.guess--
     }
+
     console.log(`You have ${state.guess} guesses left!`);
 
     if(state.guess === 0){
-      console.log(state.answerArr.join(" "));
       console.log(`${state.playerLoses}\nThe easy word you couldn't guessed is: ${word.toUpperCase()}!`);
       break;
     }
+    
+    inputsSpliced(guessInput);
+
+    if(state.answerArr.join("") === word){
+      console.log("Grrrrrrr you won! The answer was indeed the word: " + word.toUpperCase() + "!");
+      state.shouldKeepPlaying = false;
+    }
+
   }// Second while loop ending
-
-  if(state.answerArr.join("") === word){
-    console.log(state.answerArr.join(" "));
-    console.log("Grrrrrrr you won! The answer was indeed the word: " + word.toUpperCase() + "!");
-  }
-
 }//run function ending
 run();
 

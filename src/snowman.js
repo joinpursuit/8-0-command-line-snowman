@@ -1,6 +1,7 @@
 
 const readline = require("readline-sync");
 const dictionary = require("./dictionary");
+
 function getRandomWord(dictionary) {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
@@ -12,7 +13,7 @@ function run() {
   for (let i = 0; i < word.length; i++){
     answerArr[i] = "_";
   };
-
+9
   let guessArr = [];
   let lives = word.length
   lives = lives + 2;
@@ -27,7 +28,7 @@ function run() {
       console.log("You have"+ " " + lives + " " + "lives left." + "\n")
     }
     const userInput = readline.question("Guess a letter: "); 
-
+    
     if (guessArr.includes(userInput)){
       console.log("\n" + "Already chosen.")
     }

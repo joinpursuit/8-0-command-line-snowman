@@ -45,9 +45,30 @@ function charReplacer (guess, word, letterDisplay) {
   Once you understand the code below, you may remove the comments if you like.
 */
 function run() {
+
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
+
+  let listOfGuessedLetters = [];
+
+
+  let remainingChances = word.length + 1
+
+  function convertToUnderScore (word) { //Keeping inside the run function so it resets everytime a player starts a new game
+    for (let characther of word) {
+      characther = "_"
+      letterDisplay.push(characther)
+      }
+    }
+    convertToUnderScore (word)
+
+
+
   /*
+
+
+
+  
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.

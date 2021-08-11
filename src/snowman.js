@@ -22,19 +22,32 @@ function getRandomWord() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
-function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+function getRandomWord() {
+  const index = Math.floor(Math.random() * dictionary.length);
+  return dictionary[index];
 }
+const word = getRandomWord();
+//determines a winner or a loser
 
+//determines if letter guessed is listed in alreadyGuessedLetters array
+    //if letter is already guessed, error msg is logged
+    //otherwise the guessed letter is listed in alreadyGuessedLetters array
+
+//As long as guessedWord has an underscore you'll have a change to play the game
+  //the while loop executes lines of codes in it's code block until the game ends
+  //executes when user input a letter already inputted
+    
+  //checks if guessed letter is an empty string
+    //if no input is given the user is asked for an input
+    
+  // checks if the input is something other than a letter
+    //searches for the user's guessed input by iterating through the letters of the
+    //random word given, if a match is found, it assigns(replaces the underscore '_') it to the corresponding index of
+    //if user's guess is incorrect, the chance of play is decremented by 1 after each input
+
+  //populates the guessedWord array with underscores, with the same length as the random word
+    //As long as the chance to play is greater than zero, game is played
+    //Invoking playGame function starts the game
+    playGame();
+    
 run();

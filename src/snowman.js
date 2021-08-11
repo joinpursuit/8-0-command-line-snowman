@@ -12,13 +12,13 @@ const { includes } = require("./dictionary");
 const dictionary = require("./dictionary");
 
 
+
+
 function run() {
 
-  let gameState = {
-    gameActive: true,
-  }
+  let gameIsActive = true;
 
-  for (let i = 0; i < dictionary.length; i++) {
+  while (gameIsActive) {
 
     function getRandomWord() {
       const index = Math.floor(Math.random() * dictionary.length);
@@ -27,25 +27,9 @@ function run() {
 
     const word = getRandomWord()
 
-    let isPlayerisReady = readline.question("Welcome to the word guessing game. In this game you will be guessing various words. \n Are you ready to play? \n (Y or N) ").toLowerCase();
-
     let playersRemainingGuesses = 20
 
     let lettersGuessed = [];
-
-
-    if (isPlayerisReady === "n" || isPlayerisReady === "no") {
-      console.log("Okay, please come back when you are ready. Exiting game loop......")
-      break;
-    }
-    else if (isPlayerisReady === "y" || isPlayerisReady === "yes") {
-      console.log("Great! Let's begin!")
-      getRandomWord()
-      console.log(word)
-      //Begin the game play
-    } else {
-      console.log("Please enter a valid selection")
-    }
 
     let generatedWordArr = [];
     for (let i = 0; i < word.length; i++) {
@@ -54,11 +38,27 @@ function run() {
 
     let remainingLetters = word.length;
 
-    while (remainingLetters > 0) {
+    let isPlayerReady = readline.question("Welcome to the word guessing game. In this game you will be guessing various words. \n Are you ready to play? \n (Y or N) ").toLowerCase();
 
-      console.log(generatedWordArr.join(" "));
+    if (isPlayerReady === "n" || isPlayerReady === "no") {
+
+      console.log("Okay, please come back when you are ready. Exiting game loop......")
+      gameIsActive = false;
+    }
+    else {
+      console.log("Great! Let's begin!")
+      getRandomWord()
+      console.log(word)
+    }
+
+
+
+
+    while (gameIsActive === "true" && remainingLetters > 0) {
 
       let userGuess = readline.question("A random word has been generated. Enter your guess. Only letters are allowed. ");
+
+      console.log(generatedWordArr.join(" "));
 
       if (userGuess.length !== 1) {
         console.log("Please type one letter")
@@ -89,7 +89,7 @@ function run() {
           run()
         } else if (congraulationsMessage === "n" || congraulationsMessage === "no") {
           console.log("Oh, but you are do so well! Until next time! \n Ending game loop")
-          break;
+          endGame()
         }
       }
 
@@ -100,19 +100,15 @@ function run() {
           console.log("Okay! You've warmed up. Let's see what you can do! \n Generating word......")
         } else if (losingMessage === "n" || losingMessage === "no") {
           console.log("Okay! Comeback when you are ready! \n Ending game loop......")
-          break;
+          gameIsActive = false;
         }
       }
 
     }
 
-
   }
 
 }
-
-
-
 
 run();
 

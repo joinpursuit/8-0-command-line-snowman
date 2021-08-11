@@ -53,7 +53,10 @@ function run() {
     // if(userInput === null){
     //   break;
       
-    // } else{ 
+     
+
+
+
       if(userInput.length !== 1 || (!isNaN(userInput))){
         console.log(`Invalid input: ${userInput}, please type a valid letter`);
        

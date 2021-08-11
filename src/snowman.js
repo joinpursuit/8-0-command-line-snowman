@@ -37,7 +37,7 @@ function run() {
 
   // while the user still has guesses run this loop
   while (state.remainingGuesses > 0) {
-    console.log(word) // to test
+    // console.log(word) // to test
     console.log(`${state.hiddenWord}\n`);
     const userInput = readline.question("Guess a letter: ");
     let userInput2;

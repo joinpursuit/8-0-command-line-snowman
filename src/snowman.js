@@ -42,6 +42,8 @@ const enterUserName = readline.question("\033[0;32m" + `Enter your name:  ` + "\
 let winningSteaks = 0;
 console.log( "\033[1;33m" + "\nYou will then be given a number of chances based on the word" + "\n **Only Enter a Number!**" + "\033[1;35m" + "\nPress 'return' if you don't want to choose.")
 const askForNumberOfChances = Number(readline.question("\033[0;32m" + `Enter a number of chances you want:  ` + "\033[1;37m"))
+const orange = chalk.hex('#FFA500')
+const brightBlue = chalk.hex('#ccddff')
 
 
 
@@ -91,6 +93,7 @@ function run() {
   //While this loop's condition is true, continue this game
   while (remainingChances && letterDisplay.includes("_")) {
     
+    console.log("\033[1;31m" + `Your winning steaks: ${winningSteaks} `+ "\033[1;33m") // showing winning steaks if the player continued the game after winning
 
     console.log(`Player's name: ${"\033[1;37m" + enterUserName + "\033[1;33m"}`) // Display the player's name
 
@@ -98,11 +101,8 @@ function run() {
     
     
     console.log(`\nList of your guessed characters: ${listOfGuessedLetters.concat()}`)
-   
-    console.log(`Player's name: ${"\033[1;37m" + enterUserName + "\033[1;33m"}`) // Display the player's name
-    console.log(String("\033[1;35m" + `-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}` + "\033[1;33m"))
     
-    console.log(`\nList of your guessed characters: ${listOfGuessedLetters.concat()}`)
+
  
     const userInput = readline.question("\033[1;34m" + `\n***************\nGuess a letter: ` + "\033[1;33m").toLowerCase() ;
   
@@ -125,6 +125,7 @@ function run() {
               console.log(brightBlue('\nOoops! Wrong guess!') + orange(`\nYou have '${chalk.bold.yellow(remainingChances)}' chance(s) left!`))
               listOfGuessedLetters.push(userInput)
               } 
+              
     } // While loop ends here
 
     console.log(`\nYour Guesses were: ${listOfGuessedLetters}.\nThe secret word was '${word}'\n`)

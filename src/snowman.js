@@ -8,37 +8,43 @@ function getRandomWord() {
   return dictionary[index];
 }
 
+const word = "apple";
+let snowman =
+  `
+  , ,    ,      ,    ,     ,     ,   ,      ,     ,     ,      ,      ,
+,HA HA HA HA HA HA HA HA BAKA! BAKA! BAKA! YOU KNOW NOTHING SNOW MAN!!!  
+,       ,     ,    ,       ,   .____. ,   ,     ,      ,       ,      ,
+ ,    ,   ,    ,     ,   ,   , |   :|         ,   , ,   ,   ,       ,
+   ,        ,    ,     ,     __|====|__ ||||||  ,        ,      ,      ,
+ ,   ,    ,   ,     ,    , *  / o  o \  ||||||,   ,  ,        ,    ,
+,   ,   ,         ,   ,     * | -=   |  \====/ ,       ,   ,    ,     ,
+   ,  ,    ,   ,           , U==\__//__. \\//    ,  ,        ,    ,
+,   ,  ,    ,    ,    ,  ,   / \\==// \ \ ||  ,   ,      ,          ,
+ ,  ,    ,    ,     ,      ,|    o ||  | \||   ,      ,     ,   ,     ,
+,      ,    ,    ,      ,   |    o ""  |\_|B),    ,  ,    ,       ,
+  ,  ,    ,   ,     ,      , \__  --__/   ||  ,        ,      ,     ,
+,  ,   ,       ,     ,   ,  /          \  ||,   ,   ,      ,    ,    ,
+ ,      ,   ,     ,        |            | ||      ,  ,   ,    ,   ,
+,    ,    ,   ,  ,    ,   ,|            | || ,  ,  ,   ,   ,     ,  ,
+ ------_____---------____---\__ --_  __/__LJ__---------________-----___
+   `;
+
+let state = {
+  shouldKeepPlaying: true,
+  playerWins: 0,
+  playerLoses: snowman,
+  guess: word.length,
+  answerArr: [],
+  usedLetters: []
+}
+
 function run() {
-  const word = getRandomWord();
-  let snowmanArr = [`_[_]_`,
-  `_[_]_
-    (")`,
-    `_[_]_
-      (")
-  "--( : )--"`,
-    `_[_]_
-      (")
-  "--( : )--"
-    (  :  )`,
-    `_[_]_
-      (")
-  "--( : )--"
-    (  :  )
-   ""-...-""`
-  ];
 
-  let state = {
-    shouldKeepPlaying: true,
-    playerWins: 0,
-    playerLoses: snowmanArr
+  //function 
+
+  for(let i = 0; i < word.length; i++){
+    state.answerArr[i] = "_";
   }
-
-  let answerArr = [];
-    for(let i = 0; i < word.length; i++){
-      answerArr[i] = "_";
-    }
-
-    let lettersLeft = word.length;
 
   while(state.shouldKeepPlaying){
     const userInput = readline.question(`**************************\nLets play a game!\r\n**************************\nA game of SNOW!(Yes or no) `).toLowerCase();
@@ -50,47 +56,55 @@ function run() {
     }else{
       console.log("Let the Brrrrrrrrr game begin!");
 
-    const guessedLetter = readline.question("Type a letter: ");
+      const guessedLetter = readline.question("Type a letter: ");
     
-    if(!isNaN(guessedLetter)){
-      console.log("HAHAHAHAHAHAAHAHAHA you really typed in a NUMBER! My guy LOL! Try again.");
-      break;
-    }else{
-      console.log("So you do know what a letter is....good for you buddy!")
-    }
-      while(lettersLeft > 0){
-          console.log((answerArr.join(" ")));
-          let numOfGuessesLeft = lettersLeft;
-          let guessInput = readline.question("Guess a letter: ").toLowerCase();
-
-          while(numOfGuessesLeft > 0){
-          numOfGuessesLeft--;
-          console.log("Number of guesses left: " + numOfGuessesLeft);
-
-          if(guessInput === null){
-            break;
-          }else if(guessInput.length !== 1){
-          console.log("Chillllllllll just type a single letter my guy sheeeshhhhhhh.")
-          }else{
-            for(let j = 0; j < word.length; j++){
-              if(word[j] === guessInput){
-                answerArr[j] = guessInput;
-                lettersLeft--;
-                }   
-              }
-            }
-          }
-        }
+      if(!isNaN(guessedLetter)){
+        console.log("HAHAHAHAHAHAAHAHAHA you really didn't type anything! My guy LOL! GAME OVER!!!...Try again.");
+        state.shouldKeepPlaying = false;
+      }else{
+        console.log("So you do know what a letter is....good for you buddy!")
+        state.shouldKeepPlaying = false;
       }
-      if(numOfGuessesLeft === 0){
-        console.log(answerArr.join(" "));
-        console.log("HA HA HA HA HA HA HA HA BAKA! BAKA! BAKA! YOU KNOW NOTHING SNOW MAN!!! The easy word you couldn't guessed is " + word);
-        break;
-       }
     }
-    if(answerArr.join("") === word){
-      console.log(answerArr.join(" "));
-      console.log("Grrrrrrr you won! The answer was indeed the word " + word);
-     }
+  }// first while loop ending
+    
+  while(state.guess > 0){
+    console.log((state.answerArr.join(" ")));
+    let guessInput = readline.question("Guess a letter: ").toLowerCase();
+  
+    if(guessInput === null){
+      break;
+    }else if(guessInput.length !== 1){
+      console.log("Chillllllllll just type a single letter my guy sheeeshhhhhhh.")
+    }else{
+      for(let j = 0; j < word.length; j++){
+        if(word[j] === guessInput){
+          state.answerArr[j] = guessInput;
+          //console.log(`You have ${state.guess} guesses left!`);
+        }else{
+          state.guess--;
+          break;
+        }   
+      }
+    }
+    console.log(`You have ${state.guess} guesses left!`);
+
+    if(state.guess === 0){
+      console.log(state.answerArr.join(" "));
+      console.log(`${state.playerLoses}\nThe easy word you couldn't guessed is: ${word.toUpperCase()}!`);
+      break;
+    }
+  }// Second while loop ending
+
+  if(state.answerArr.join("") === word){
+    console.log(state.answerArr.join(" "));
+    console.log("Grrrrrrr you won! The answer was indeed the word: " + word.toUpperCase() + "!");
   }
+
+}//run function ending
 run();
+
+// while(numOfGuessesLeft > 0){
+//   numOfGuessesLeft--;
+//   console.log("Number of guesses left: " + numOfGuessesLeft);
+// }

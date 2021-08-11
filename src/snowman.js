@@ -33,13 +33,15 @@ function gameIntro() {
     default : console.log("That is not one of the options"); gameIntro(); break;
   }
 }
+let word = getRandomWord();
 
 let status = {
   dashArr: [],
   lettersGuessArr: [],
-  guessRemaining: null,
+  guessRemaining: word.length + 1,
   gameContinue: true,
 }
+
 
 function putDashes(randomWord) {
   for(let l of randomWord) {
@@ -48,6 +50,7 @@ function putDashes(randomWord) {
   return status.dashArr.join(" ");
 }
 
+// replaces the dash with the correct letter guess
 function replaceDashLetters(randomWord, guessLetter) {
   for(let i = 0; i < randomWord.length; i++) {
     if(randomWord[i] === guessLetter) status.dashArr.splice(i, 1, guessLetter);
@@ -55,11 +58,15 @@ function replaceDashLetters(randomWord, guessLetter) {
   return status.dashArr.join(" ");
 }
 
+// an array of letters guessed
 function guessLettersArr(guessLetter) {
-  status.lettersGuessArr.push(guessLetter);
+  if(!status.lettersGuessArr.includes(guessLetter)) {
+    status.lettersGuessArr.push(guessLetter);
+  }
   return status.lettersGuessArr.join(" ");
 }
 
+// remaining of guesses
 function letterRemaining(randomWord, guessLetter) {
   let correctLetter = false;
   for(let i = 0; i < randomWord.length; i++) {
@@ -75,40 +82,67 @@ function isGameWon(secretWord) {
   return gameWon;
 }
 
-function run() {
-  const word = getRandomWord();
+// check if input is one letter or is an alphabetical letter
+function checkCorrectInput(usrInput) {
+  if(usrInput.length > 1 || !(/[a-z]/).test(usrInput)) {
+    return "Please Input 1 Letter!";
+  } else {
+    return true;
+  }
+}
+
+function resetStatus() {
+  word = getRandomWord();
+  status.dashArr = [];
+  status.guessLettersArr = [];
+  status.gameContinue = true;
   status.guessRemaining = word.length + 1;
+  return status;
+}
+
+function run() {
   console.log("\n");
-  console.log(putDashes(word)); //???...do I need this? will figure out later
+  console.log(putDashes(word));
   console.log("\n");
   console.log("Guessed Letters: ");
   console.log("\n");
-  console.log(`You have ${word.length + 1} guesses remaining`);
+  console.log(`You have ${status.guessRemaining} guesses remaining`);
 
   while(status.gameContinue) {
-    const userInput = readline.question("Guess a letter: ");
-    let uiLetter = userInput.toLowerCase();
-    console.log("\n");
-    console.log(replaceDashLetters(word, uiLetter));
-    console.log("\n");
-    console.log(`Guessed Letters: ${guessLettersArr(uiLetter)}`);
-    console.log("\n");
-    if(isGameWon(word) === true) {
-      console.log(`You Win! You took ${status.lettersGuessArr.length} guesses`);
-      status.gameContinue = false;
-      gameIntro();
-    } else if(status.guessRemaining === 1) {
-      console.log("You ran out of guesses!");
-      status.gameContinue = false;
-      gameIntro();
-    } else if (status.guessRemaining === 2) {
-      console.log(`You have ${letterRemaining(word, uiLetter)} guess remaining`);
-    } else if (status.guessRemaining > 2) {
-      console.log(`You have ${letterRemaining(word, uiLetter)} guesses remaining`);
+    const userInput = readline.question("Guess a letter: ").toLowerCase();
+    let uiLetter = null;
+    if(checkCorrectInput(userInput) === true) {
+      uiLetter = userInput;
+      console.log(`Guessed Letters: ${guessLettersArr(uiLetter)}`);
+      console.log("\n");
+      console.log(replaceDashLetters(word, uiLetter));
+      console.log("\n");
+      if(isGameWon(word) === true) {
+        console.log(`You Win! You took ${status.lettersGuessArr.length} guesses`);
+        status.gameContinue = false;
+        resetStatus();
+        return gameIntro();
+      } else if(status.guessRemaining === 1) {
+        console.log("You ran out of guesses!");
+        console.log(`The Correct Word is ${word}.`)
+        status.gameContinue = false;
+        resetStatus();
+        return gameIntro();
+      } else if (status.guessRemaining === 2) {
+        console.log(`You have ${letterRemaining(word, uiLetter)} guess remaining`);
+      } else if (status.guessRemaining > 2) {
+        console.log(`You have ${letterRemaining(word, uiLetter)} guesses remaining`);
+      }
+    } else {
+      // if input is incorrect, will return a string
+      console.log(checkCorrectInput(userInput));
     }
-
   }
-  
 }
 
 gameIntro();
+
+/*
+// UNRESOLVED BUGS: 
+- repeated letters in Guessed Letters Array appears and guesses remaining is reduced
+*/

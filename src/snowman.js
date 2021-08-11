@@ -31,10 +31,10 @@ function run() {
   // split 'word' into an array of string of letters, get the length
   const newWordArr = word.split("");
   console.log(newWordArr);
-  const newWordLength = newWordArr.length;
 
   let lines = "";
 
+  // replaces word with underscores to show the user the length of the word they're guessing
   for (const eachLetter of newWordArr) {
     lines += "_";
   }
@@ -42,31 +42,70 @@ function run() {
   // first user text block OBJECT
   const outputTextBlock = {
     remainingIncorrectGuesses: 7,
-    lettersGuessed: "None",
-    word: `${lines}`,
+    lettersGuessed: "",
+    word: lines.split(""),
   };
 
+  // some variables that point object values, easier to use the variables
   let remainingGuesses = outputTextBlock.remainingIncorrectGuesses;
   let guessed = outputTextBlock.lettersGuessed;
   let hiddenLetters = outputTextBlock.word;
 
-  console.log(
-    `\nRemaining Incorrect Guesses: ${remainingGuesses.toFixed()}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters}\n`
-  );
+  while (remainingGuesses > 0 && word !== hiddenLetters.join("")) {
+    // dynamic 3 block message user sees
+    console.log(`\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters.join("")}\n`);
+    
+    // This line of code will print out whatever is inputted in by the user.
+    let userInput = readline.question("Guess a letter: ");
+    // lower cases any upper cased letters
+    userInput = userInput.toLowerCase();
+    console.log(`You typed: ${userInput}`);
+    
+    // edge cases or for user errors
+    if (!alphabet.includes(userInput)) {
+      console.log(`Invalid input: ${userInput}, please type a valid letter`);
+      // logs the guessed letters.
+    } else if (alphabet.includes(userInput)) {
+      if (!guessed.includes(userInput)) {
+        guessed += `${userInput}, `;
+      } else if (guessed.includes(userInput)) {
+        // user gets a message when they've guessed the same letter twice
+        console.log(`You've already guessed ${userInput}, try again!`);
+      }
+      // deducts a guess when user guesses wrong.
+      if (!newWordArr.includes(userInput)) {
+        remainingGuesses = remainingGuesses - 1;
+      }
+      // logs the correct letters to word key value.
+      for (const letter in newWordArr) {
+        if (userInput === newWordArr[letter]) {
+          hiddenLetters.splice(letter, 1, userInput);
+        }
+      }
+    }
 
-  // This line of code will print out whatever is inputted in by the user.
-  let userInput = readline.question("Guess a letter: ");
-  // lower cases any upper cased letters
-  userInput = userInput.toLowerCase();
-
-
-  // edge cases or for user errors
-  alphabet.map((letter) =>
-    alphabet.includes(userInput)
-      ? (result = `THE USER INPUTTED: ${userInput}`)
-      : (result = `Invalid input: ${userInput}, please type a valid letter`)
-  );
-  console.log(result);
+   // logs win if user won. logs lost if user lost
+    if (remainingGuesses === 0) {
+      console.log(`\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${word}\nYou Lost!`);
+      // takes user input 'y' for yes and 'n' for no, for the question 'Do you want to keep playing?'
+      let userInput2 = readline.keyInYN(["\nDo you want to keep playing?",["Press 'y' for yes, 'n' for no"]])
+      // if input is truthy: restart the game
+      if (userInput2) {
+        run();
+      } else {
+        // else: exit out out of the loop(defualt) and display the message below
+        console.log('Alright, see ya next time!');
+      }
+    // checks if user has guessed all the letters
+    } else if (word === hiddenLetters.join("")) {
+      // when true: logs the message 'You Won!'
+      console.log(
+        `\nRemaining Incorrect Guesses: ${remainingGuesses}\nLetters guessed: ${guessed}\nWord: ${hiddenLetters.join(
+          ""
+        )}\nYay You Won🎉!`
+      );
+    }
+  }
 }
-
+// function invokation 
 run();

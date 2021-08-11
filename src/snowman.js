@@ -12,13 +12,10 @@ const { includes } = require("./dictionary");
 const dictionary = require("./dictionary");
 
 
-
-
 function run() {
 
-  let gameIsActive = true;
 
-  while (gameIsActive) {
+  for (let i = 0; i < dictionary.length; i++) {
 
     function getRandomWord() {
       const index = Math.floor(Math.random() * dictionary.length);
@@ -27,38 +24,42 @@ function run() {
 
     const word = getRandomWord()
 
+    let isPlayerReady = readline.question("Welcome to the word guessing game. In this game you will be guessing various words. \n Are you ready to play? \n (Y or N) ").toLowerCase();
+
     let playersRemainingGuesses = 20
 
     let lettersGuessed = [];
+
+
+    if (isPlayerReady === "n" || isPlayerReady === "no") {
+      console.log("Okay, please come back when you are ready. Exiting game loop......")
+      gameIsActive = false;
+    } else if (isPlayerReady === "y" || isPlayerReady === "yes") {
+      getRandomWord()
+      console.log(word)
+    } else {
+      console.log("Please enter valid input")
+    }
 
     let generatedWordArr = [];
     for (let i = 0; i < word.length; i++) {
       generatedWordArr[i] = "_";
     }
 
+
     let remainingLetters = word.length;
 
-    let isPlayerReady = readline.question("Welcome to the word guessing game. In this game you will be guessing various words. \n Are you ready to play? \n (Y or N) ").toLowerCase();
+    while (remainingLetters > 0) {
 
-    if (isPlayerReady === "n" || isPlayerReady === "no") {
 
-      console.log("Okay, please come back when you are ready. Exiting game loop......")
-      gameIsActive = false;
-    }
-    else {
-      console.log("Great! Let's begin!")
-      getRandomWord()
-      console.log(word)
-    }
+      console.log(generatedWordArr.join(" "));
 
 
 
-
-    while (gameIsActive === "true" && remainingLetters > 0) {
 
       let userGuess = readline.question("A random word has been generated. Enter your guess. Only letters are allowed. ");
 
-      console.log(generatedWordArr.join(" "));
+
 
       if (userGuess.length !== 1) {
         console.log("Please type one letter")
@@ -101,14 +102,19 @@ function run() {
         } else if (losingMessage === "n" || losingMessage === "no") {
           console.log("Okay! Comeback when you are ready! \n Ending game loop......")
           gameIsActive = false;
+        } else {
+          console.log("Invalid input.")
         }
       }
 
     }
 
   }
-
 }
+
+
+
+
 
 run();
 

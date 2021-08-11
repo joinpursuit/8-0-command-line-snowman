@@ -13,9 +13,9 @@ function getWinOrLoss(word, currentDifficulty) {
   //default guesses for easy difficulty
   let remainingGuesses = 15;
   //if the current difficulty is hard or legendary, then re-assign remaining guesses
-  if (currentDifficulty === "hard") {
+  if (currentDifficulty === "Hard") {
     remainingGuesses = 7;
-  } else if (currentDifficulty === "legendary") {
+  } else if (currentDifficulty === "Legendary") {
     remainingGuesses = 3;
   }
 

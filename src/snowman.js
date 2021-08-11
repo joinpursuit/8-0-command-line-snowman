@@ -36,13 +36,13 @@ function run() {
 
     let lettersGuessed = []
 
+    //Ask if the player is ready. If no, return the exitMessage to end the game. If yes we commence with playing the game.
     if (isPlayerReady === "n" || isPlayerReady === "no") {
       console.log(exitMessage)
       return exitMessage
     } else if (isPlayerReady === "y" || isPlayerReady === "yes") {
       console.log("Wonderful!! Generating word.......")
       getRandomWord()
-      console.log(word)
     } else {
       console.log("Please enter valid input")
     }
@@ -59,10 +59,11 @@ function run() {
 
       let userGuess = readline.question("A random word has been generated. Enter your guess. Only letters are allowed. ");
 
+//If the user types more than one letter, the guess is invalid. 
       if (userGuess.length !== 1) {
         console.log("Please type one letter")
       } else {
-
+//If word does not include the users guess. We let the player know. Add the users guess into the array holding the letters guessed, while decrementing the remaining guesses.
        if (!word.includes(userGuess)) {
           console.log("Sorry that guess is invalid. One guess has be reduced from your total.")
           lettersGuessed.push(userGuess)
@@ -70,7 +71,7 @@ function run() {
           console.log("Remaining Guesses : " + gameState.playersRemainingGuesses)
           console.log("Letters you've guessed so far: " + lettersGuessed)
         }
-
+//IF word entry does match. Let the player know they are on the right track. Decrement reaminging numbers. Add the guss into array holding letter guessed. 
         for (i = 0; i < word.length; i++) {
           if (word[i] === userGuess) {
             console.log("SUCCESS!!!You've guessed a letter! See if you can guess the rest.")
@@ -85,6 +86,9 @@ function run() {
       }
 
 
+
+      //If there are no more remaining letters. The player has won. We congratulate them. And invite them to play again, should they want to, we let them know a word is generating and start the game over.
+      //If no, we return the exitmessage to close the game.
       if (remainingLetters === 0) {
         let congraulationsMessage = readline.question("congratulations! You've guessed the secret word! Do you want to play again? \n (Y or N").toLowerCase();
         if (congraulationsMessage === "y" || congraulationsMessage === "yes") {
@@ -97,7 +101,7 @@ function run() {
         }
       }
 
-
+//If there are no remaining guesses, the user has lost. We let them know they lost, while letting them know what the word was. We invite them toi try again. If yes, the game loop continues. If not we return exitmessage to end the game.
       if (gameState.playersRemainingGuesses === 0) {
         let losingMessage = readline.question("Sorry! You gave it a good go, but you've used up all your guesses. The word was....... " + word + " . Would you like to play again? \n (Y or N ").toLowerCase();
         if (losingMessage === "y" || losingMessage === "yes") {

@@ -148,11 +148,14 @@ function livesColor(lives){
   }
 }
 
+let userInput;
+let wordReset;
 
 function run(hint, word){
-  const commands = [{
-    Commmands: '/start', Discription: 'Restart'
-  }]
+  const commands = [
+    {Commands: '/end', Discription: 'End the game'},
+    {Commands: '/reset', Discription: 'Resets word'}
+]
   //CC- Get `userInput`
   //CC- Send `userInput` to function `isValidChar()` to check for valid characters
   
@@ -166,9 +169,13 @@ function run(hint, word){
   
   //Declare variable `lives` = 7
   lives = 7
+
+  let cheat;
   
-  cheat = readline.question("Hit any button to start..")
+  if(!(userInput === '/reset')){
+   cheat = readline.question("Hit Return/Enter to start..")
   console.clear()
+  }
 
   //While `keepLooping`
   while (keepLooping && typeof keepLooping !== 'string'){
@@ -188,13 +195,16 @@ function run(hint, word){
     //console.log(`\tLETTERS GUESSED: ${guessesArray.sort().join(', ')}`)
     
     //Declare const `userInput` equal to `readline.question("Guess a letter: ")`
-    const userInput = (readline.question(`\n\t\t   Guess a letter: `)).toLowerCase()
+    userInput = (readline.question(`\n\t\t   Guess a letter: `)).toLowerCase()
 
     if(userInput === '/admin'){
       cheat = userInput
       console.clear()
       continue
-    } else if (userInput === '/start'){
+    } else if (userInput === '/end'){
+      console.clear()
+      return true
+    } else if (userInput === '/reset'){
       console.clear()
       return true
     }

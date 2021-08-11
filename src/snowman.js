@@ -10,6 +10,7 @@ const readline = require("readline-sync");
 */
 const dictionary = require("./dictionary");
 const chalk = require("chalk");
+const { whiteBright, blue } = require("chalk");
 
 /*
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
@@ -48,6 +49,8 @@ console.log( "\033[1;33m" + "\nYou will then be given a number of chances based 
 const askForNumberOfChances = Number(readline.question("\033[0;32m" + `Enter a number of chances you want:  ` + "\033[1;37m"))
 const orange = chalk.hex('#FFA500')
 const brightBlue = chalk.hex('#ccddff')
+const brightYellow = chalk.yellowBright
+const white = chalk.whiteBright
 
 
 
@@ -148,10 +151,10 @@ function run() {
       }
      
     if (remainingChances === 0) { // If the player lost
-      console.log(`\So guessing is not your thing, huh? jkjk! the word was ${word}! You did well ${enterUserName}!`)
-      const startNewGameWhenLost = readline.question(`Maybe you can try again?\nif yes, press 'y', if not, press 'n':`) 
+      console.log(brightYellow(`\So guessing is not your thing, huh? jkjk! the word was ${word}! \nYou did well`) + " " + whiteBright(`${enterUserName}!`))
+      const startNewGameWhenLost = readline.question(orange(`\nMaybe you can try again?\nif yes, press 'y', if not, press 'n':`))
       if (startNewGameWhenLost === 'y') {
-        console.log(`\n*****Maybe you will beat the game this time? huh?*****\n`)
+        console.log(brightBlue(`\n*****Maybe you will beat the game this time? huh?*****\n`))
         run()
     } else {
       console.log(`********************************************\n\nThank you for playing today! Have a good day!\n\n*********************************************`)

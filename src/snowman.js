@@ -24,7 +24,7 @@ function getRandomWord() {
 
 //Using function from GitHub to add colors to my game!!
 
-var colors = {
+let colors = {
 	0: "\033[0;30m", /* 00 BLACK    0x30 */
 	1: "\033[0;34m", /* 01 BLUE     0x31 */
 	2: "\033[0;32m", /* 02 GREEN    0x32 */
@@ -42,16 +42,6 @@ var colors = {
 	e: "\033[1;33m", /* 14 YELLOW   0x65 */
 	f: "\033[1;37m", /* 15 WHITE    0x66 */
 };
-function c(r, msg) {
-	return '§' + r + msg + '§r'; // I do have questions about this line of code
-}
-
-function mccolor(str) {
-	return str.replace(/§([0-9a-fr])/g, function(m, contents) { //Also have questions about this line of code
-		return colors[contents] || "\033[0m";
-	});
-}
-
 
 //FUNCTIONS WE WILL USE TO HELP OUR MAIN FUNCTION() {}
 let errorMessage = "";
@@ -61,16 +51,15 @@ function checkInput(input) {
     if ((input >= 'a' && input <= 'z') && input.length - 1 === 0 || (input >= 'A' && input <= 'Z') && input.length - 1 === 0) {
   //Statement that checks if our array contains any giving letters given by input
       if (checkArray.includes(input)) {
-        errorMessage = colors[4] + "Error! You already guessed that. Input a different letter"
+        errorMessage = `${colors[4]} "Error! You already guessed that letter... Input a different letter"`
   //If guessed letter was previously inputted should return an error
         console.log(errorMessage) 
-        // return true;
       }
+
   //If given an input other than a letter
     } else {
       errorMessage = colors[4] + "Error your input is Invalid! Input a letter"
       console.log(errorMessage) 
-      // return true;
     }
     checkArray.push(input);
   } 
@@ -121,7 +110,7 @@ function guessesLeft (guesses, word, input) {
 
 // Set up global variables to access them as we go
 const word = getRandomWord();
-let guesses = 7  ;
+let guesses = 7;
 let guessCount = 0;
 let checkArray = [];
 let letterArray = [];
@@ -141,7 +130,7 @@ function run() {
     const userInput = readline.question("\nYou have entered => The Snowman Game!\n\nYou have 7 chances to Win :) or Lose :(\n\nPress any Key to Start the Game; \n\n");
     // This line of code will print out whatever is inputted in by the user.
     //Check the word to test
-    //console.log(word)
+    
   //Welcome to the Snowman Game!
     console.log(`${colors[3]} ----------Welcome to the Snowman Game!----------\n\n Remaining Incorrect Guesses: ${guesses} \n Word: ${hiddenLetters(word)} \n\n`); 
   

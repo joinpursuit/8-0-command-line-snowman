@@ -1,7 +1,7 @@
 function updateAllTimeHighScores(name, currentSessionScore, difficulty) {
   /*
   `fs(file-sync)` is a library that allows you to import from files. The library is assigned to the variable `fileSync`.
-*/
+  */
   const fileSync = require("fs");
   //declare a constant variable called scores to get highScores Obj
   const scores = JSON.parse(fileSync.readFileSync(`./src/highScores/allTimeHighScores${difficulty}.json`));

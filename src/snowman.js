@@ -1,4 +1,3 @@
-
 /** 
 ||The Snowman Game
 
@@ -84,15 +83,13 @@ function getRandomWord() {
 
   //global variables
 let guessedWord = [] // stores the guessed letters forming the secret word
-let guessedLetter = '' //letter guessed to form the word 
-
-
+let guessedLetter = '' //letter guessed to form the word
+//let WordLength = word.length +  3; 
 let WordLength = process.argv[2]; // maximum number of chances to play the game
-
 let alreadyGuessedLetters =[]; //stores letters already guessed
-//let warGamesText = "\n\n\n Do you want to play a game?\n\n           Type yes or no. \n\n\n\n";
+//let invalidInput = "\n\n\n I don't understand your input. \n\n\n\n     Click 'OK' and try again.\n\n\n ";
 
-let aiGreeting = chalk.magentaBright.bold(`\n\n \t\t\t*** The Snowman game *** \n\n`) +
+let introMessage = chalk.magentaBright.bold(`\n\n \t\t\t*** The Snowman game *** \n\n`) +
 chalk.italic.blackBright(`This game allows you to guess letters of a secrete word that will be revealed \n`)+
 chalk.italic.blackBright(`to you at the end of the game. You'll be given a maximum number of chances to \n`) +
 chalk.italic.blackBright(`play this game. When you exhaust your chance without forming the word, then loose \n`)+
@@ -100,39 +97,52 @@ chalk.italic.blackBright(`otherwise you won. Your chance of play is premise on t
 chalk.italic.blackBright(`and an incorrect guess. In either case, your chance is decrement by 1 . Your chance \n`) +
 chalk.italic.blackBright(`is not affected should you input a correct letter.`) + chalk.bgRed(`\n\n\t\t Note: Your guess must be a single letter only.\n\n`)
 
+let winCount = 0;
+let looseCount = 0;
 
-
-//let aiGreeting = "Awesome! My name is H.A.L. I have drawn the gallows.";
 // let hangmanPics = [" +---+\n  |     |\n  |\n  |\n  |\n  |\n=========","  +---+\n  |       | \n  |      0\n  |\n  |\n  |\n ========= ","  +---+\n  |      |\n  |     0\n  |     +\n  |\n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+\n  | \n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+-\n  |      |\n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+-\n  |      |\n  |     /\n=========","  +---+\n  |       |\n  |      0\n  |     -+-\n  |       |\n  |      / \\  \n========="];
 // let gallow = hangmanPics[0];
-// let noScreen = "\n\n\n ok, maybe some other time\n\n\n";
 
-// const wannaPlay = () => {
-//   let userResponse = prompt(warGamesText).toLowerCase();
+//  let nextTime = "\n\n\n ok, maybe some other time\n\n\n";
+//  let warGamesText = "\n\n\n Do you want to play a game?\n\n           Type yes or no. \n\n\n\n";
+
+// const wantToPlay = () => {
+//   let userResponse = log(warGamesText);
 
 //   if (userResponse === "no") {
-//     alert(noScreen);
+//     log(nextTime);
 //   } else if (userResponse === "yes") {
-//     return diffChoice();
+//     return wantToPlay();
 //   } else {
-//     alert(badInput);
+//     log(invalidInput);
 //   }
 
-//   return wannaPlay();
+//   return wantToPlay();
 // }
 
 
 function screenMessage() {
   if(guessedWord.length === 0) {
-    log(aiGreeting);
+    log(introMessage);
     
   }} 
 
 //determines a winner or a looser
 function gameWonLost(guessedWord, word){
-  guessedWord.join('') === word ? log(chalk.green(`Good job! You won!!! The secret word is  ${word}`)) : log(chalk.redBright(`Hard luck! You lost!!! The secret word is ${word}`))  
+  if(guessedWord.join('') === word){
+    log(chalk.green(`Good job! You won!!! The secret word is  ${word}`))
   
+  } else {
+  log(chalk.redBright(`Hard luck! You lost!!! The secret word is ${word}`)) 
    }
+  }
+let history = gameWonLost(guessedWord, word)
+if(history){
+  winCount++
+} else {
+  looseCount++
+}
+
 
   function populate(){
     for (let i = 0; i < word.length; i++) {
@@ -207,13 +217,14 @@ function playGame(){
         Word: ${guessedWord.join(' ')}\n`
         + '\n*****************************************************'
         )));
+        log(`Won : ${winCount} \t\t ${looseCount}`)
       }
      
     }
 
 
 
-   screenMessage()
+screenMessage()
 function run() {
    
  //populates the guessedWord array with underscores, with the same length as the random word 
@@ -226,6 +237,7 @@ function run() {
      
      }
      gameWonLost(guessedWord, word)
+     //wantToPlay()
 }
 
 run();

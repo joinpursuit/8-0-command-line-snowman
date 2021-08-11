@@ -50,9 +50,6 @@ function getRandomWord() {
   return dictionary[index];
 }
 
-// // Declare a variable 'word' equals to the value, which is calling the getRandomWord function.
-// const word = getRandomWord();
-
 // First helper function:
 // To check if the userInput matches the requirements or not, each time should enter one lowercase letter.
 function checkCorrectInput(letter) {
@@ -150,7 +147,7 @@ function run() {
       // If the final format underscore equals to the random word
         // Prints the congrat sentence.
       if (underscore ===  word) {
-        console.log("Congratulations! You Win \u{1F31F} ! \n" + "\u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389}")
+        console.log("Congratulations! You Win \u{1F31F} ! \n" + "\n \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389} \u{1F389}")
         // Stop the game and go back to the beginning of the while loop
         guessChances = 0;
         continue;

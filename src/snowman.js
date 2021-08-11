@@ -87,7 +87,7 @@ function letterChecker(userInput){
   }
 }
 
-function replaceBlanks(guessBox){
+function replaceBlanks(guessBox, i, letter){
  
   guessBox = guessBox.split("")
   guessBox.splice((i * 2),1, letter)
@@ -124,12 +124,28 @@ function run() {
   for (let letter of word){
     guessBox +=  "_ "
   }
-
+  //user chooses difficulty level
+  console.log("Enter the number that corresponds with your desired difficulty level\nEasy:   1\nNormal: 2\nHard:   3")
+  const difficultyLevel = readline.question("Select Your Challenge: ");
+  
+  
+  if(difficultyLevel === "1"){
+    remainingGuesses = word.length + 4
+  }else if(difficultyLevel === "3"){
+    remainingGuesses = Math.round(word.length / 2)
+  }
+  console.log(difficultyLevel)
   // This code represent the start screen of the game that appears in the terminal
   gameStatus(divider, remainingGuesses, guessLetters, guessBox)
 
  
   for (let i = 0; i < array.length; i++){ 
+    
+    if(remainingGuesses <= word.length/2){
+  
+      console.log("I'm melting but you need more help than I do 🤷🏾‍♂️");
+    
+    }
     // This line of code will print out whatever is inputted in by the user.
     let userInput = readline.question("Choose Wisely: ");
     userInput = lowCase(userInput)
@@ -138,11 +154,9 @@ function run() {
       let letter = word[i]
       if (userInput.toLowerCase() === letter){
 
-        guessBox = guessBox.split("")
-        guessBox.splice((i * 2),1, letter)
-        guessBox = guessBox.join('')
+        replaceBlanks(guessBox, i, letter)
       }
-      }
+    }
       //Subtracts 1 guess each time the user guesses incorrectly with a valid letter that has not been guessed before
     if (!word.includes(lowCase(userInput)) && 
     !guessLetters.includes(lowCase(userInput)) &&
@@ -165,9 +179,7 @@ function run() {
       for (let i = 0; i < word.length; i++){
         let letter = word[i]
   
-        guessBox = guessBox.split("")
-        guessBox.splice((i * 2),1, letter)
-        guessBox = guessBox.join('')
+        replaceBlanks(guessBox, i, letter)
         
        }
       //Logs the current game status to the terminal

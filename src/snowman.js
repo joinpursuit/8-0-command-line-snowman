@@ -1,40 +1,69 @@
 /*
+  The `getRandomWord` variable is a function that will return a word that is randomly picked from the dictionary array
+*/
+const getRandomWord = require("./getRandomWord.js");
+/*
+  The getWinOrLoss variable is a function that will return whether or not the user won in SnowMan
+*/
+const getWinOrLoss = require("./getWinOrLoss.js");
+/*
+  The displayMainMenu variable is a function that will display a menu of options to the user before choosing to play the game or exiting out
+*/
+const displayMainMenu = require("./displayMainMenu.js");
+/*
+  The incrementOrReset variable is a closure that will keep track of the score in the currentSession and increment if the user wins and reset if the user loses and wishes to run the game again
+*/
+const getIncrementedOrPreResetScore = require("./getIncrementedOrPreResetScore.js");
+/*
   `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
 */
 const readline = require("readline-sync");
 /*
-  The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
+  The `updateAllTimeHighScores` variable is a function that will determine if a new highScore has been reached and update the highScores.
 */
-const dictionary = require("./dictionary");
-
+const updateAllTimeHighScores = require("./updateAllTimeHighScores.js");
 /*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
+  The `setDifficulty` variable is a function that will determine the difficulty of the snowman game
 */
-function getRandomWord() {
-  const index = Math.floor(Math.random() * dictionary.length);
-  return dictionary[index];
-}
+const setDifficulty = require("./setDifficulty.js");
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
+//used IIFE to run snowMan on the fly
+(function runSnowman() {
+  // Declare a variable called userName and assign it evaluated result of invoking readline question
+  const userName = readline.question("Please enter your desired username:");
+  // declare a flag variable called userWantsToContinue and assign it to true to start off to enter our while loop
+  let userWantsToContinue = true;
 
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
+  displayMainMenu(userName);
+  // Declare a variable called currentDifficulty to allow the user the ability to change difficulty
+  const currentDifficulty = setDifficulty();
+  //keep repeating till user doesn't want to continue anymore
+  while (userWantsToContinue) {
+    // This line of code gets a random word. The `word` variable will be a string.
+    const word = getRandomWord();
+    // Declare a variable called userIsWinner and assign it the evaluated result of invoking getWinOrLoss passing in the word as the argument
+    const userIsWinner = getWinOrLoss(word, currentDifficulty);
+    //declare a variable named tempHighScore to hold the current score to use to check and see if highScores need to update
+    let currentSessionScore = null;
 
-  Once you understand the code below, you may remove the comments if you like.
-*/
-function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
-}
-
-run();
+    if (userIsWinner) {
+      console.log("\n🏆 You Won! 🏆\nThe word was: " + word + "!\n🌟 You're a star! 🌟");
+      console.log("Current Streak:", getIncrementedOrPreResetScore());
+      userWantsToContinue = readline.keyInYNStrict("Do you want to continue?");
+      //if user wins but doesn't want to continue, break out of while loop but before that log highest score this session
+      //logs highest score this session if user wins and chooses to not continue before exiting function
+      if (!userWantsToContinue) {
+        currentSessionScore = getIncrementedOrPreResetScore(true);
+        console.log("Highest Score this session was:", currentSessionScore);
+        updateAllTimeHighScores(userName, currentSessionScore, currentDifficulty);
+        break;
+      }
+    } else {
+      console.log("\nYou Lost! The word was: " + word + "!\nKeep failing forward, you'll get em next time!");
+      currentSessionScore = getIncrementedOrPreResetScore(true);
+      console.log("Highest Score this session was:", currentSessionScore);
+      updateAllTimeHighScores(userName, currentSessionScore, currentDifficulty);
+      userWantsToContinue = readline.keyInYNStrict("Do you want to continue?");
+    }
+  }
+})();

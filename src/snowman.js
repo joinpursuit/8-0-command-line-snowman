@@ -36,8 +36,7 @@ const setDifficulty = require("./setDifficulty.js");
 
   displayMainMenu(userName);
   // Declare a variable called currentDifficulty to allow the user the ability to change difficulty
-  let currentDifficulty = setDifficulty();
-
+  const currentDifficulty = setDifficulty();
   //keep repeating till user doesn't want to continue anymore
   while (userWantsToContinue) {
     // This line of code gets a random word. The `word` variable will be a string.
@@ -54,7 +53,6 @@ const setDifficulty = require("./setDifficulty.js");
       //if user wins but doesn't want to continue, break out of while loop but before that log highest score this session
       //logs highest score this session if user wins and chooses to not continue before exiting function
       if (!userWantsToContinue) {
-        updateAllTimeHighScores();
         currentSessionScore = getIncrementedOrPreResetScore(true);
         console.log("Highest Score this session was:", currentSessionScore);
         updateAllTimeHighScores(userName, currentSessionScore, currentDifficulty);

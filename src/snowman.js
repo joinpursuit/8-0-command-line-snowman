@@ -35,7 +35,22 @@ function run() {
     if(validEntry.includes(userInput) && userInput.length === 1){
       lettersGuessed += userInput + " "
     } 
-  
+  //lets the game actually work 
+  //the loop that matches the guesses  
+  //replaces the "_" with the userInput
+  for (let i = 0; i < word.length; i++){
+    if(userInput === word[i]){
+      theBlanks = theBlanks.split("")
+      theBlanks.splice(i*2, 1, userInput)
+      theBlanks = theBlanks.join('')
+    } 
+  }
+      console.log("\nLetters Guessed: " + lettersGuessed)
+      console.log("\nWord: " + theBlanks)
+      console.log("\nYou guessed:", userInput);
+    if(!theBlanks.includes("_")) {
+      return console.log (winningMessage);
+    } 
       else {
            i--
       }

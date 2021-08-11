@@ -150,6 +150,9 @@ function livesColor(lives){
 
 
 function run(hint, word){
+  const commands = [{
+    Commmands: '/start', Discription: 'Restart'
+  }]
   //CC- Get `userInput`
   //CC- Send `userInput` to function `isValidChar()` to check for valid characters
   
@@ -164,10 +167,15 @@ function run(hint, word){
   //Declare variable `lives` = 7
   lives = 7
   
+  cheat = readline.question("Hit any button to start..")
+  console.clear()
+
   //While `keepLooping`
   while (keepLooping && typeof keepLooping !== 'string'){
-    
-    //console.log(word)
+    console.table(commands)
+    if(cheat === '/admin'){
+      console.log(word)
+    }
     console.log(`❌`+"\033[31m"+` ${guessesArray.sort().join(', ')}`+"\033[39m"+`\n\n${livesColor(lives)}`)
     
     //Console log `hint`
@@ -181,6 +189,15 @@ function run(hint, word){
     
     //Declare const `userInput` equal to `readline.question("Guess a letter: ")`
     const userInput = (readline.question(`\n\t\t   Guess a letter: `)).toLowerCase()
+
+    if(userInput === '/admin'){
+      cheat = userInput
+      console.clear()
+      continue
+    } else if (userInput === '/start'){
+      console.clear()
+      return true
+    }
     
     //const userInput = 'zz'
     

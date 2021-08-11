@@ -100,27 +100,6 @@ chalk.italic.blackBright(`is not affected should you input a correct letter.`) +
 let winCount = 0;
 let looseCount = 0;
 
-// let hangmanPics = [" +---+\n  |     |\n  |\n  |\n  |\n  |\n=========","  +---+\n  |       | \n  |      0\n  |\n  |\n  |\n ========= ","  +---+\n  |      |\n  |     0\n  |     +\n  |\n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+\n  | \n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+-\n  |      |\n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+-\n  |      |\n  |     /\n=========","  +---+\n  |       |\n  |      0\n  |     -+-\n  |       |\n  |      / \\  \n========="];
-// let gallow = hangmanPics[0];
-
-//  let nextTime = "\n\n\n ok, maybe some other time\n\n\n";
-//  let warGamesText = "\n\n\n Do you want to play a game?\n\n           Type yes or no. \n\n\n\n";
-
-// const wantToPlay = () => {
-//   let userResponse = log(warGamesText);
-
-//   if (userResponse === "no") {
-//     log(nextTime);
-//   } else if (userResponse === "yes") {
-//     return wantToPlay();
-//   } else {
-//     log(invalidInput);
-//   }
-
-//   return wantToPlay();
-// }
-
-
 function screenMessage() {
   if(guessedWord.length === 0) {
     log(introMessage);

@@ -90,7 +90,7 @@ Because the comments take up a lot of space, you should feel free to delete them
 
 To complete this project your game will need to do the following.
 
-- [ ] The user should see a number of `_` characters equal to the number of letters in the word. For example, if the word is `apple`, the user should see `_ _ _ _ _`.
+- [ ] The user should see a number of `apple_` characters equal to the number of letters in the word. For example, if the word is `apple`, the user should see `_ _ _ _ _`.
 - [ ] If the user enters an invalid guess (e.g. `3` or `apple`), a message should display telling the user to enter a letter. Invalid guesses should not count against the guess count.
 - After each guess:
   - [ ] The user should see the new updated word, replacing all `_` with letters they have guessed. For example, if the user guesses `p` for the word `apple`, the user would see `_ p p _ _`.

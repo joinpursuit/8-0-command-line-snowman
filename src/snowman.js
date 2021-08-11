@@ -59,10 +59,10 @@ function isPlayingAgain(word, isWin){
     console.log(`\n\n\n\t${isWin}`)
     console.log(`\n\n\t\t    The word was ${word}`)
   } else {
-    console.log("`\n\n\t\tSorry better luch next time....")
-    console.log(`The word was ${word}`)
+    console.log("\n\n\t\t\033[31mSorry better luck next time....\033[39m")
+    console.log("\n\t\t     The word was \033[32m"+word+"\033[39m")
   }
-  if(readline.keyInYN("\n\n\nWould you like to play again..")){
+  if(readline.keyInYN(`\n\n\n\t  Would you like to play again..`)){
     console.clear()
     return true
   }
@@ -129,7 +129,7 @@ function isStillPlaying(lives, underScore, word){
   if(lives === 0){
     keepLooping = false
   } else if (underScore === word){
-    keepLooping = "✅ Congratulations you guessed the word! ✅"
+    keepLooping = "✅ \033[32mCongratulations you guessed the word!\033[39m ✅"
   }
   return keepLooping
 }
@@ -166,7 +166,7 @@ function run(hint, word){
   //While `keepLooping`
   while (keepLooping && typeof keepLooping !== 'string'){
     console.clear()
-    console.log(word)
+    //console.log(word)
     console.log(`❌`+"\033[31m"+` ${guessesArray.sort().join(', ')}`+"\033[39m"+`\n\n${livesColor(lives)}`)
     
     //Console log `hint`

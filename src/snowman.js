@@ -8,7 +8,7 @@ const readline = require("readline-sync");
 const dictionary = require("./dictionary");
 
 // This line of code gets a random word. The `word` variable will be a string.
-const word = "apple";
+const word = getRandomWord()
 
 
 /*

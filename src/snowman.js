@@ -198,5 +198,5 @@ const userInput = readline.question("Guess a letter: ");
 // console.log("THE USER INPUTTED:", userInput);
   
 }
-console.log(word)
+
 run();

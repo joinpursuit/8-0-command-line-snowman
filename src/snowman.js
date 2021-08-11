@@ -34,7 +34,7 @@ function gameStatus(divider, remainingGuesses, guessLetters, guessBox){
   
 
   console.log(divider)
-  console.log("Lives Left: " + remainingGuesses)
+  console.log("Days until Winters End: " + remainingGuesses)
   console.log("Letters Guessed: " + guessLetters )
   console.log("Word: " + guessBox)
 }
@@ -124,8 +124,9 @@ function run() {
   for (let letter of word){
     guessBox +=  "_ "
   }
+  console.log ("☃️ Welcome to the Snowman game.\nYou have until the end of winter to guess the word\nYou'll have to guess one letter at a time\nEvery incorrect guess will cost you 1 day\nHope you're warmed up\n");
   //user chooses difficulty level
-  console.log("Enter the number that corresponds with your desired difficulty level\nEasy:   1\nNormal: 2\nHard:   3")
+  console.log("\nEnter the number that corresponds with your desired difficulty level\nEasy:   1\nNormal: 2\nHard:   3")
   const difficultyLevel = readline.question("Select Your Challenge: ");
   
   
@@ -134,7 +135,11 @@ function run() {
   }else if(difficultyLevel === "3"){
     remainingGuesses = Math.round(word.length / 2)
   }
-  console.log(difficultyLevel)
+  if(difficultyLevel === "1" || difficultyLevel === "3"){
+  console.log("You have selected level " + difficultyLevel +", I hope you snow what you're doing🧐")
+  }else{
+    console.log("You have selected level 2, I hope you snow what you're doing🧐") 
+  }
   // This code represent the start screen of the game that appears in the terminal
   gameStatus(divider, remainingGuesses, guessLetters, guessBox)
 
@@ -142,52 +147,57 @@ function run() {
   for (let i = 0; i < array.length; i++){ 
     
     if(remainingGuesses <= word.length/2){
-  
+    
       console.log("I'm melting but you need more help than I do 🤷🏾‍♂️");
     
     }
     // This line of code will print out whatever is inputted in by the user.
     let userInput = readline.question("Choose Wisely: ");
+    //makes user input lowercase 
     userInput = lowCase(userInput)
     // replaces blank spaces with a letter if it is in the word
     for (let i = 0; i < word.length; i++){
       let letter = word[i]
-      if (userInput.toLowerCase() === letter){
+      if (userInput === letter){
 
-        replaceBlanks(guessBox, i, letter)
+        guessBox = guessBox.split("")
+        guessBox.splice((i * 2),1, letter)
+        guessBox = guessBox.join('')
       }
     }
-      //Subtracts 1 guess each time the user guesses incorrectly with a valid letter that has not been guessed before
-    if (!word.includes(lowCase(userInput)) && 
-    !guessLetters.includes(lowCase(userInput)) &&
+     //Subtracts 1 guess each time the user guesses incorrectly with a valid letter that has not been guessed before
+    if (!word.includes(userInput) && 
+    !guessLetters.includes(userInput) &&
     letterChecker(userInput)){
       
       remainingGuesses -= 1
       
-      }
+    }
     // adds the first valid guess into the guessLetters string
     if(letterChecker(userInput) && guessLetters === ""){
       
       guessLetters = lowCase(userInput)
     //after the first letter is added this will have guessLetter accumulate valid guesses  
-    }else if (letterChecker(userInput) && !guessLetters.includes(lowCase(userInput))){
+    }else if (letterChecker(userInput) && !guessLetters.includes(userInput)){
         
-        guessLetters += ", " + userInput  
-        }
-      //Stops the game if the user no longer has any guesses available
+      guessLetters += ", " + userInput  
+    }
+    //Stops the game if the user no longer has any guesses available
     if (!remainingGuesses){
       for (let i = 0; i < word.length; i++){
         let letter = word[i]
   
-        replaceBlanks(guessBox, i, letter)
+        guessBox = guessBox.split("")
+        guessBox.splice((i * 2),1, letter)
+        guessBox = guessBox.join('')
         
-       }
+      }
       //Logs the current game status to the terminal
       gameStatus(divider, remainingGuesses, guessLetters, guessBox)
-      return console.log ("Brrrr🥶 it's a cold world out there, ain't it❄️")
-      }
-
+      return console.log ("Brrrr🥶 it's a cold world out there, ain't it❄️\nBetter luck next time")
+    }
     console.log(divider)
+    // if user enters an invalid guess displays this message
     if(!letterChecker(userInput)){
       console.log("Impressive! 26 letters and you're wrong without one \n Invalid Guess Snowball, Enter a letter")
     }
@@ -199,7 +209,7 @@ function run() {
     }
 
   } 
-  console.log("You narrowly escaped this time but Frosty will be back"); 
+  console.log("You narrowly escaped this time but Frosty will be back☃️"); 
 }
 
 run();

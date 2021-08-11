@@ -7,13 +7,21 @@ const readline = require("readline-sync");
 */
 const dictionary = require("./dictionary");
 
+// This line of code gets a random word. The `word` variable will be a string.
+const word = "apple";
+
+
 /*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
+  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. 
+  Instead, you only need to call it from the `run()` function.
 */
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
+
+
+
 
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
@@ -23,8 +31,65 @@ function getRandomWord() {
   Once you understand the code below, you may remove the comments if you like.
 */
 function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
+  let remainingGuess=6;
+  let storingGuess=[];
+  let lettersGuessed = " ";
+
+  
+
+
+// I am pushing a underline
+  for (let i = 0; i < word.length;i++){
+   storingGuess.push("_");
+  }
+  // while the guesses are higher than zero the user can Input a letter 
+  while (remainingGuess > 0 ){
+  const userInput = readline.question("Guess a letter: ");
+  
+  console.log("Number of guesses left:" + remainingGuess)
+        
+  // This line of code will print out whatever is inputted in by the user.
+  
+    // if(userInput === null){
+    //   break;
+      
+    // } else{ 
+      if(userInput.length !== 1 || (!isNaN(userInput))){
+        console.log(`Invalid input: ${userInput}, please type a valid letter`);
+       
+       } else if(!word.includes(userInput)){
+        remainingGuess--;
+       console.log(`the user inputted wrong letter`)
+       } if(remainingGuess === 0){
+         console.log(`You lost correct word is ${word}`)
+       } else {
+          for(let i = 0; i < word.length; i++){
+        
+        
+         if(word[i] === userInput){
+           storingGuess[i] = userInput;
+           console.log(storingGuess.join(" "));
+         } 
+         if(storingGuess.join("")=== word){
+           remainingGuess = 0;
+         console.log(`Good job! The answer was  ${word}`);
+         break;
+         }
+      }  
+      //console.log(storingGuess.join(" "));
+    }
+    //console.log(`Good job! The answer was  ${word}`);
+  }
+}
+
+
+
+
+ 
+
+  //let countDown 
+
+
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
@@ -32,9 +97,8 @@ function run() {
 
     After a user hits the 'return' key, the rest of the code will run.
   */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
-}
+ // letter from user 
+ 
+
 
 run();

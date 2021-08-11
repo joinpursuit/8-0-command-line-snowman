@@ -1,7 +1,8 @@
-const getValidLetterGuess = require("./getValidLetterGuess.js");
-
-//This function returns a letter that wasn't guessed already
+/*
+  This function returns a letter that wasn't guessed already
+*/
 function getNonRepeatingLetter(lettersGuessed, currentWordState, remainingGuesses) {
+  const getValidLetterGuess = require("./getValidLetterGuess.js");
   //while letterGuess from user input is included in lettersGuessedArray
   let userInput = getValidLetterGuess();
   while (lettersGuessed.includes(userInput)) {

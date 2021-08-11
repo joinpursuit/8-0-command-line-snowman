@@ -22,6 +22,10 @@ const readline = require("readline-sync");
   The `updateAllTimeHighScores` variable is a function that will determine if a new highScore has been reached and update the highScores.
 */
 const updateAllTimeHighScores = require("./updateAllTimeHighScores.js");
+/*
+  The `setDifficulty` variable is a function that will determine the difficulty of the snowman game
+*/
+const setDifficulty = require("./setDifficulty.js");
 
 //used IIFE to run snowMan on the fly
 (function runSnowman() {
@@ -31,12 +35,15 @@ const updateAllTimeHighScores = require("./updateAllTimeHighScores.js");
   let userWantsToContinue = true;
 
   displayMainMenu(userName);
+  // Declare a variable called currentDifficulty to allow the user the ability to change difficulty
+  let currentDifficulty = setDifficulty();
+
   //keep repeating till user doesn't want to continue anymore
   while (userWantsToContinue) {
     // This line of code gets a random word. The `word` variable will be a string.
     const word = getRandomWord();
     // Declare a variable called userIsWinner and assign it the evaluated result of invoking getWinOrLoss passing in the word as the argument
-    const userIsWinner = getWinOrLoss(word);
+    const userIsWinner = getWinOrLoss(word, currentDifficulty);
     //declare a variable named tempHighScore to hold the current score to use to check and see if highScores need to update
     let currentSessionScore = null;
 
@@ -50,14 +57,14 @@ const updateAllTimeHighScores = require("./updateAllTimeHighScores.js");
         updateAllTimeHighScores();
         currentSessionScore = getIncrementedOrPreResetScore(true);
         console.log("Highest Score this session was:", currentSessionScore);
-        updateAllTimeHighScores(userName, currentSessionScore);
+        updateAllTimeHighScores(userName, currentSessionScore, currentDifficulty);
         break;
       }
     } else {
       console.log("\nYou Lost! The word was: " + word + "!\nKeep failing forward, you'll get em next time!");
       currentSessionScore = getIncrementedOrPreResetScore(true);
       console.log("Highest Score this session was:", currentSessionScore);
-      updateAllTimeHighScores(userName, currentSessionScore);
+      updateAllTimeHighScores(userName, currentSessionScore, currentDifficulty);
       userWantsToContinue = readline.keyInYNStrict("Do you want to continue?");
     }
   }

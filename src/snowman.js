@@ -95,6 +95,8 @@ function run() {
     }
     convertToUnderScore (word)
 
+  
+  
 
   // ------------------------While Loop------------------------------------------------------------------------------------------------------------------------------
   //While this loop's condition is true, continue this game
@@ -104,7 +106,17 @@ function run() {
 
     console.log(`Player's name: ${"\033[1;37m" + enterUserName + "\033[1;33m"}`) // Display the player's name
 
-    console.log(String("\033[1;35m" + `-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}` + "\033[1;33m"))
+    
+      if (remainingChances > 5) {
+        console.log(blue(`-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}`))
+      } else if (remainingChances > 3) {
+        console.log(String("\033[1;35m" + `-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}` + "\033[1;33m"))
+      } else if (remainingChances > 1) {
+        console.log(brightYellow(`-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}`))
+      }
+
+
+
     
     
     console.log(`\nList of your guessed characters: ${listOfGuessedLetters.concat()}`)
@@ -161,10 +173,6 @@ function run() {
     }
   }
       
-
-
-
-
 }
 
 run();

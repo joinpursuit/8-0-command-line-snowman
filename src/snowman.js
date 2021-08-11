@@ -15,6 +15,28 @@ function getRandomWord() {
   return dictionary[index];
 }
 
+// ------------------------------------------------------------------------------------
+function checkGuess (randomWord, guess) { // Check if input is correct or not
+  if (randomWord.includes(guess)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+function charReplacer (guess, word, letterDisplay) {
+  for (let i = 0; i < word.length; i++) {
+    if (word[i] === guess) {
+      if (word[i] === guess.toLowerCase()){
+        letterDisplay.splice(i,1,"\033[1;34m" + `${guess}` + "\033[1;33m")
+      }
+    }
+  }
+}
+// ------------------------------------------------------------------------------------
+
+
+
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
 

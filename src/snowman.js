@@ -1,5 +1,4 @@
 
-
 /** 
 ||The Snowman Game
 
@@ -86,9 +85,48 @@ function getRandomWord() {
   //global variables
 let guessedWord = [] // stores the guessed letters forming the secret word
 let guessedLetter = '' //letter guessed to form the word 
-let WordLength = word.length + 3; // maximum number of chances to play the game
-let alreadyGuessedLetters =[]; //stores letters already guessed
 
+
+let WordLength = process.argv[2]; // maximum number of chances to play the game
+
+let alreadyGuessedLetters =[]; //stores letters already guessed
+//let warGamesText = "\n\n\n Do you want to play a game?\n\n           Type yes or no. \n\n\n\n";
+
+let aiGreeting = chalk.magentaBright.bold(`\n\n \t\t\t*** The Snowman game *** \n\n`) +
+chalk.italic.blackBright(`This game allows you to guess letters of a secrete word that will be revealed \n`)+
+chalk.italic.blackBright(`to you at the end of the game. You'll be given a maximum number of chances to \n`) +
+chalk.italic.blackBright(`play this game. When you exhaust your chance without forming the word, then loose \n`)+
+chalk.italic.blackBright(`otherwise you won. Your chance of play is premise on two conditions: an invalid input\n`) +
+chalk.italic.blackBright(`and an incorrect guess. In either case, your chance is decrement by 1 . Your chance \n`) +
+chalk.italic.blackBright(`is not affected should you input a correct letter.`) + chalk.bgRed(`\n\n\t\t Note: Your guess must be a single letter only.\n\n`)
+
+
+
+//let aiGreeting = "Awesome! My name is H.A.L. I have drawn the gallows.";
+// let hangmanPics = [" +---+\n  |     |\n  |\n  |\n  |\n  |\n=========","  +---+\n  |       | \n  |      0\n  |\n  |\n  |\n ========= ","  +---+\n  |      |\n  |     0\n  |     +\n  |\n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+\n  | \n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+-\n  |      |\n  |\n=========","  +---+\n  |      |\n  |     0\n  |    -+-\n  |      |\n  |     /\n=========","  +---+\n  |       |\n  |      0\n  |     -+-\n  |       |\n  |      / \\  \n========="];
+// let gallow = hangmanPics[0];
+// let noScreen = "\n\n\n ok, maybe some other time\n\n\n";
+
+// const wannaPlay = () => {
+//   let userResponse = prompt(warGamesText).toLowerCase();
+
+//   if (userResponse === "no") {
+//     alert(noScreen);
+//   } else if (userResponse === "yes") {
+//     return diffChoice();
+//   } else {
+//     alert(badInput);
+//   }
+
+//   return wannaPlay();
+// }
+
+
+function screenMessage() {
+  if(guessedWord.length === 0) {
+    log(aiGreeting);
+    
+  }} 
 
 //determines a winner or a looser
 function gameWonLost(guessedWord, word){
@@ -175,8 +213,9 @@ function playGame(){
 
 
 
-
+   screenMessage()
 function run() {
+   
  //populates the guessedWord array with underscores, with the same length as the random word 
  populate()
  

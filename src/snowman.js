@@ -94,6 +94,19 @@ function run() {
               } 
     } // While loop ends here
 
+    console.log(`\nYour Guesses were: ${listOfGuessedLetters}.\nThe secret word was '${word}'\n`)
+
+
+    if (!letterDisplay.includes("_")) { // If the player won
+      console.log(`\Holy Moly Cow!!! You beat the game!!!\nCongratulations! ${enterUserName} !!!\n`) // Offer a chance to continue
+     
+    if (remainingChances === 0) { // If the player lost
+      console.log(`\So guessing is not your thing, huh? jkjk! the word was ${word}! You did well ${enterUserName}!`)
+      
+
+
+
+
 }
 
 run();

@@ -15,6 +15,8 @@ function getRandomWord() {
   return dictionary[index];
 }
 
+
+const letterDisplay = [];
 // ------------------------------------------------------------------------------------
 function checkGuess (randomWord, guess) { // Check if input is correct or not
   if (randomWord.includes(guess)) {
@@ -109,9 +111,26 @@ function run() {
 
     if (!letterDisplay.includes("_")) { // If the player won
       console.log(`\Holy Moly Cow!!! You beat the game!!!\nCongratulations! ${enterUserName} !!!\n`) // Offer a chance to continue
+      const startNewGame = readline.question(`Feeling like you wanna test your luck again?\nif yes, press 'y', if not, press 'n':`) 
+        if (startNewGame === 'y') { // If the player wishes to continue
+          console.log(`\n*****Decided to try your luck again today? huh?*****\n`)
+          winningSteaks ++ // Add 1 to the winningSteaks
+          run()
+        } else { // Otherwise, print out the following message
+          console.log(`********************************************\n\nThank you for playing today! Have a good day!\n\n*********************************************`)
+        }
+      }
      
     if (remainingChances === 0) { // If the player lost
       console.log(`\So guessing is not your thing, huh? jkjk! the word was ${word}! You did well ${enterUserName}!`)
+      const startNewGameWhenLost = readline.question(`Maybe you can try again?\nif yes, press 'y', if not, press 'n':`) 
+      if (startNewGameWhenLost === 'y') {
+        console.log(`\n*****Maybe you will beat the game this time? huh?*****\n`)
+        run()
+    } else {
+      console.log(`********************************************\n\nThank you for playing today! Have a good day!\n\n*********************************************`)
+    }
+  }
       
 
 

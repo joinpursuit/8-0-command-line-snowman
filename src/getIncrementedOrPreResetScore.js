@@ -1,7 +1,6 @@
 /*
   Function is being used to create a closure in which we will use to create persistent memory when working with a current game session
 */
-
 function trackCurrentScore() {
   let currentScore = 0;
 
@@ -19,4 +18,5 @@ function trackCurrentScore() {
 }
 
 const getIncrementedOrPreResetScore = trackCurrentScore();
+
 module.exports = getIncrementedOrPreResetScore;

@@ -79,7 +79,7 @@ function run() {
   //while the guess counts (which is always 9) is more than 0
   while (guessCounts > 0) {
     //log the dashes
-    console.log(`${dashes.join(" ")}`, word /*, word*/);
+    console.log(`${dashes.join(" ")}` /*, word*/);
     //log the guess counts
     console.log("How many guesses you have left: " + guessCounts);
     //log the letters guessed

@@ -1,27 +1,34 @@
 const readline = require("readline-sync");
+
 const dictionary = require("./dictionary");
+
+
+gameState = {
+  word: getRandomWord(),
+  blankWordArr: [],
+  guesses: [],
+  maxWrongGuesses: 6
+}
 
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
 
-gameState = {
-  playSnowman: true,
-  word: 'apple', // getRandomWord(),
-  guesses: [],
-  maxWrongGuesses: 6
+function displayBlankWord (word){
+  for (let i=0; i<gameState.word.length; i++){
+    gameState.blankWordArr.push('_');
+  }
+  return gameState.blankWordArr;
 }
 
-function displayBlankWord(){
-  let blankWord = 'Word: ';
+function addLettersToBlankWord(blankWordArr, word, userGuess){
   for (let i=0; i<gameState.word.length; i++){
-    blankWord += '_';
-    if (i !== gameState.word.length-1){
-      blankWord += ' ';
-    } 
+    if (gameState.word[i] === userGuess){
+      gameState.blankWordArr.splice(i, 1, userGuess);
+    }
   }
-  console.log(blankWord, '\n');
+  return gameState.blankWordArr.join(' ');
 }
 
 function addGuessToList(userGuess){
@@ -29,56 +36,46 @@ function addGuessToList(userGuess){
   return gameState.guesses;
 }
 
-
 function run() {
   console.log('SNOWMAN GAME\n') // Title of Game
+  const word = gameState.word;
+  let blankWord = displayBlankWord(word).join(' ');
+  console.log('Word: ' + blankWord + '\n');
+ 
   
-  //const word = getRandomWord(); // Picks out a random word for game
   
-  displayBlankWord(); // Displays word in blank/underscore form
-
   while (gameState.maxWrongGuesses > 0){
-    console.log('Number of guesses remaining: ' + gameState.maxWrongGuesses); // Prints out the number of guesses
-    
-    let userGuess = readline.question("Please guess a letter: "); // Lets user type a letter
-    
-    if (isNaN(Number(userGuess)) && userGuess.length === 1){ // Checks to see if userGuess is a letter and only 1 letter
-      addGuessToList(userGuess); // Uses helper function to
+    if (!gameState.blankWordArr.includes('_')){
+    console.log('!Winner Winner Chicken Dinner!')
+    break;
     }
+
+    console.log('Number of guesses remaining: ' + gameState.maxWrongGuesses);
+    const userGuess = readline.question("Please guess a letter: ").toLowerCase();
     
-    let isGivenLetterInWord = false;
-    
-    if (!isNaN(Number(userGuess)) || userGuess.length > 1){
-      console.log('ERROR: Please enter a valid letter');
-      gameState.maxWrongGuesses++;
+
+    if (!isNaN(Number(userGuess)) || userGuess.length > 1){ // Checks if userGuess is a number or more than 1 letter
+        // console.log('\nWord: ' + blankWord);
+        console.log('\nERROR: Please enter a valid letter'); // Outputs the following error message
+        gameState.maxWrongGuesses++; // Makes sure the user does not lose a guess when inputting a invalid letter/number
+      } else {
+        addGuessToList(userGuess); // Uses helper function to keep track and store letters that were guessed 
+      } 
+
+    if (word.includes(userGuess)){
+      let wordArr = blankWord.split(" ");
+      blankWord = addLettersToBlankWord(wordArr, word, userGuess);
+      console.log('\nWord: ' + blankWord);
+      console.log('\nGuessed letters: ' + gameState.guesses);
+    } else {
+      console.log('\nWord: ' + blankWord);
+      console.log('\nGuessed letters: ' + gameState.guesses);
+      gameState.maxWrongGuesses--;
     } 
 
-    let word = '\nWord: ';
-    for (let i=0; i<gameState.word.length; i++){
-      if (gameState.word[i] === userGuess) {
-        word += userGuess;
-        isGivenLetterInWord = true;
-      } else {
-        word += '_';
-      }
-      
-      if (i !== gameState.word.length-1){
-        word += ' ';
-      }
-    }
-
-    console.log(word);
-    
-    if (isGivenLetterInWord === false){
-      gameState.maxWrongGuesses--;
-    }
-    
-    console.log("Guessed Letters: " + gameState.guesses);
-    
   }
-
-  if (gameState.maxWrongGuesses === 0){
-    console.log('\nGAME OVER');
+  if (gameState.maxWrongGuesses === 0){ // If maxwrongguesses is equal to 0, then it's gameover
+    console.log('\n!GAME OVER! The word was: ' + gameState.word);
   }
 }
 

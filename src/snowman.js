@@ -1,40 +1,98 @@
-/*
-  `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
-*/
+
 const readline = require("readline-sync");
-/*
-  The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
-*/
+
 const dictionary = require("./dictionary");
 
-/*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
-*/
-function getRandomWord() {
+// * @param {}
+// * @returns {string} string of random generated word
+function getRandomWord() { 
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
+lettersGuessed = [];
 
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
+function replaceUnderScores(word){
+  let dash = "";
+  for(let i=0; i < word.length; i++){
+    if(lettersGuessed.includes(word[i])){
+      dash += word[i];
+      dash += " ";
+    } else {
+      dash += "_";
+      dash += " ";
+    } 
+  }
+  return dash
+}
 
-  Once you understand the code below, you may remove the comments if you like.
-*/
-function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+function checkUserValidity(userInput) {
+  return typeof userInput === "string" && userInput.length === 1 && (userInput >= "a" && userInput <="z");
+}
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+function checkWinner(){
+  let condition = true;
+  for(let i=0; i < word.length; i++){
+    if (!lettersGuessed.includes(letter)){
+      return false
+    }
+  }
+  return condition;
+}
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+function repeatedLetters (string, letter){
+  if (string.includes(letter)){
+    console.log(`${userInput} has been inputed. \n Please try another letter!`);
+  }
+  return false
+}
+
+
+function run() { 
+
+  const state = {
+    numberOfGuesses : 12,
+    shouldPlay : true,
+  }
+
+  const word = getRandomWord(); // word is equal to randomly generated word
+  const userInput = readline.question("Do you wanna play Snow-Man? :) Press any key to play: ");
+
+  console.log("THE USER INPUTTED:", userInput);   // This line of code will print out whatever is inputted in by the user.
+  
+  let wordLengthUnderscores = "_ ".repeat(word.length);
+
+  console.log(wordLengthUnderscores + "\n");
+
+  while (state.shouldPlay) {
+    console.log(`Letters Guessed: ${lettersGuessed.join()}\n`);
+    console.log(`Guesses Left: ${state.numberOfGuesses}`);
+    const userInput = readline.question("Please enter your guess:").toLowerCase();
+
+
+    let string = lettersGuessed.join();
+
+    if (checkUserValidity(userInput)){
+      if (repeatedLetters(string, userInput)){
+        console.log(repeatedLetters(string, userInput));
+        continue;
+      } else {
+        string += " " + userInput;
+      }
+    }
+    
+    let didPlayerGuessCorrectly = replaceUnderScores(word);
+
+    if (!didPlayerGuessCorrectly) {
+      state.numberOfGuesses--;
+    } // 
+
+  }
+  
+  
+
+
+
 }
 
 run();

@@ -1,40 +1,96 @@
-/*
-  `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
-*/
+
 const readline = require("readline-sync");
-/*
-  The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
-*/
+
 const dictionary = require("./dictionary");
 
-/*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
-*/
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
-
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
 function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+  let snowmanArr = [`_[_]_`,
+  `_[_]_
+    (")`,
+    `_[_]_
+      (")
+  "--( : )--"`,
+    `_[_]_
+      (")
+  "--( : )--"
+    (  :  )`,
+    `_[_]_
+      (")
+  "--( : )--"
+    (  :  )
+   ""-...-""`
+  ];
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  let state = {
+    shouldKeepPlaying: true,
+    playerWins: 0,
+    playerLoses: snowmanArr
+  }
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
-}
+  let answerArr = [];
+    for(let i = 0; i < word.length; i++){
+      answerArr[i] = "_";
+    }
 
+    let lettersLeft = word.length;
+
+  while(state.shouldKeepPlaying){
+    const userInput = readline.question(`**************************\nLets play a game!\r\n**************************\nA game of SNOW!(Yes or no) `).toLowerCase();
+    
+    if(userInput === "no" || userInput === "n"){
+      console.log("Ending Game.....COWARD!");
+      state.shouldKeepPlaying = false;
+      break;
+    }else{
+      console.log("Let the Brrrrrrrrr game begin!");
+
+    const guessedLetter = readline.question("Type a letter: ");
+    
+    if(!isNaN(guessedLetter)){
+      console.log("HAHAHAHAHAHAAHAHAHA you really typed in a NUMBER! My guy LOL! Try again.");
+      break;
+    }else{
+      console.log("So you do know what a letter is....good for you buddy!")
+    }
+      while(lettersLeft > 0){
+          console.log((answerArr.join(" ")));
+          let numOfGuessesLeft = lettersLeft;
+          let guessInput = readline.question("Guess a letter: ").toLowerCase();
+
+          while(numOfGuessesLeft > 0){
+          numOfGuessesLeft--;
+          console.log("Number of guesses left: " + numOfGuessesLeft);
+
+          if(guessInput === null){
+            break;
+          }else if(guessInput.length !== 1){
+          console.log("Chillllllllll just type a single letter my guy sheeeshhhhhhh.")
+          }else{
+            for(let j = 0; j < word.length; j++){
+              if(word[j] === guessInput){
+                answerArr[j] = guessInput;
+                lettersLeft--;
+                }   
+              }
+            }
+          }
+        }
+      }
+      if(numOfGuessesLeft === 0){
+        console.log(answerArr.join(" "));
+        console.log("HA HA HA HA HA HA HA HA BAKA! BAKA! BAKA! YOU KNOW NOTHING SNOW MAN!!! The easy word you couldn't guessed is " + word);
+        break;
+       }
+    }
+    if(answerArr.join("") === word){
+      console.log(answerArr.join(" "));
+      console.log("Grrrrrrr you won! The answer was indeed the word " + word);
+     }
+  }
 run();

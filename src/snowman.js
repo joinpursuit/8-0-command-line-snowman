@@ -131,7 +131,8 @@ function run() {
  
   for (let i = 0; i < array.length; i++){ 
     // This line of code will print out whatever is inputted in by the user.
-    const userInput = readline.question("Choose Wisely: ");
+    let userInput = readline.question("Choose Wisely: ");
+    userInput = lowCase(userInput)
     // replaces blank spaces with a letter if it is in the word
     for (let i = 0; i < word.length; i++){
       let letter = word[i]
@@ -143,28 +144,42 @@ function run() {
       }
       }
       //Subtracts 1 guess each time the user guesses incorrectly with a valid letter that has not been guessed before
-      if (!word.includes(lowCase(userInput)) && 
-      !guessLetters.includes(lowCase(userInput)) &&
-      letterChecker(userInput)){
+    if (!word.includes(lowCase(userInput)) && 
+    !guessLetters.includes(lowCase(userInput)) &&
+    letterChecker(userInput)){
       
       remainingGuesses -= 1
       
       }
-      //Stops the game if the user no longer has any guesses available
-      if (!remainingGuesses){
-        for (let i = 0; i < word.length; i++){
-          let letter = word[i]
-  
-          guessBox = guessBox.split("")
-          guessBox.splice((i * 2),1, letter)
-          guessBox = guessBox.join('')
+    // adds the first valid guess into the guessLetters string
+    if(letterChecker(userInput) && guessLetters === ""){
+      
+      guessLetters = lowCase(userInput)
+    //after the first letter is added this will have guessLetter accumulate valid guesses  
+    }else if (letterChecker(userInput) && !guessLetters.includes(lowCase(userInput))){
         
+        guessLetters += ", " + userInput  
         }
-
-        gameStatus(divider, remainingGuesses, guessLetters, guessBox)
-        return console.log ("Brrrr🥶 it's a cold world out there, ain't it❄️")
-      }
+      //Stops the game if the user no longer has any guesses available
+    if (!remainingGuesses){
+      for (let i = 0; i < word.length; i++){
+        let letter = word[i]
+  
+        guessBox = guessBox.split("")
+        guessBox.splice((i * 2),1, letter)
+        guessBox = guessBox.join('')
+        
+       }
       //Logs the current game status to the terminal
+      gameStatus(divider, remainingGuesses, guessLetters, guessBox)
+      return console.log ("Brrrr🥶 it's a cold world out there, ain't it❄️")
+      }
+
+    console.log(divider)
+    if(!letterChecker(userInput)){
+      console.log("Impressive! 26 letters and you're wrong without one \n Invalid Guess Snowball, Enter a letter")
+    }
+    //Logs the current game status to the terminal
     gameStatus(divider, remainingGuesses, guessLetters, guessBox)   
     //This is the condition that causes the infinite loop if the full word has not been guessed yet  
     if(removeSpaces(guessBox) !== word){

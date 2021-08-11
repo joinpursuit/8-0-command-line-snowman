@@ -63,21 +63,37 @@ function run() {
     convertToUnderScore (word)
 
 
-
-  /*
-
-
-
+  // ------------------------While Loop------------------------------------------------------------------------------------------------------------------------------
+  //While this loop's condition is true, continue this game
+  while (remainingChances && letterDisplay.includes("_")) {
+    
+    console.log(String("\033[1;35m" + `-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}` + "\033[1;33m"))
+    
+    console.log(`\nList of your guessed characters: ${listOfGuessedLetters.concat()}`)
+ 
+    const userInput = readline.question("\033[1;34m" + `\n***************\nGuess a letter: ` + "\033[1;33m").toLowerCase() ;
   
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+    console.log(chalk.bgBlue("You Guessed:", userInput))
+   
+    // Check if it is correct or not 
+          if  (userInput.length > 1 || !isNaN(userInput)) { // why is typeof not working?
+            console.log(`${userInput} is not valid. Please try again. You have '${chalk.bold.yellow(remainingChances)}' chance(s) left!`)
+          
+            }
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+          else if (checkGuess(word, userInput) === true) { // If userInput is correct
+            console.log(orange(`Nailed it! Correct guess!!! You have '${chalk.bold.yellow(remainingChances)}' chance(s) left!`))
+                listOfGuessedLetters.push(userInput)
+                charReplacer (userInput, word, letterDisplay) 
+                
+            }
+              else { // Otherwise, decrease the remiainingChances by 1
+              remainingChances --;
+              console.log(brightBlue('\nOoops! Wrong guess!') + orange(`\nYou have '${chalk.bold.yellow(remainingChances)}' chance(s) left!`))
+              listOfGuessedLetters.push(userInput)
+              } 
+    } // While loop ends here
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
 }
 
 run();

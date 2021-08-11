@@ -25,8 +25,8 @@ function run() {
     theBlanks += "_ "
   }
     console.log("\nWord: " + theBlanks)   
-    console.log("Remaining Incorrect Guesses: " + incorrectGuesses)
-    console.log("Letters Guessed: " + lettersGuessed)
+    // console.log("Remaining Incorrect Guesses: " + incorrectGuesses)
+    // console.log("Letters Guessed: " + lettersGuessed)
 
   //the loop that starts the game + continue the game
   for (let i = 0; i < word.length; i++){

@@ -22,7 +22,6 @@ async function definition() {
     })
   })
 }
-
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
@@ -51,9 +50,9 @@ let choice = readline.keyInYN("\x1b[1;39m" + '👺 Hi! Would you like to play a 
           console.log("\x1b[1;91m" + '👎 Oh well! I tried 👎' + "\x1b[39m")
             //function to quit game 
             quitTest()
-      }
+          }
 //restart function when user wins or loses
-async function restartGame() {
+function restartGame() {
   leaveChoice = readline.keyInYN("\x1b[1;95m" + 'Would you like to play again?' + "\x1b[39m")
     if (leaveChoice) {
       word = getRandomWord()
@@ -65,15 +64,13 @@ async function restartGame() {
         currentSolvedWord: [],
         guessedWords: '',
         arrayGuessedWords: [],
-    }
+      }
         //function to add definition for hint.
         definition()
-        // readline.question('Enter to continue')
         //function here to show hiddenWord to user
         makeTheBlanks()
         //function for gamePlay
         gamePlay()
-        
     } else {
       //print if user chooses not to play
       console.log("\x1b[1;91m" + "Too bad, come back soon!" + "\x1b[39m")
@@ -129,7 +126,7 @@ function gamePlay() {
         }
           //function here for user to know how many guesses left
           guessLeftCounter()
-      }
+        }
 //show the letters the user already guessed
 function showGuessedWord() {
     if (snowman.arrayGuessedWords.length === 0) {

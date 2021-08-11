@@ -28,7 +28,7 @@ function getRandomWord() {
 
   Once you understand the code below, you may remove the comments if you like.
 */
-
+console.clear()
 
 //Global Variables
 
@@ -57,7 +57,8 @@ function startGame(){
 function isPlayingAgain(word, isWin){
   if(typeof isWin === 'string'){
     console.log(`\n\n\n\t${isWin}`)
-    console.log(`\n\n\t\t    The word was ${word}`)
+    console.log("\n\t\t  The word was \033[32m"+word+"\033[39m")
+
   } else {
     console.log("\n\n\t\t\033[31mSorry better luck next time....\033[39m")
     console.log("\n\t\t     The word was \033[32m"+word+"\033[39m")
@@ -165,7 +166,7 @@ function run(hint, word){
   
   //While `keepLooping`
   while (keepLooping && typeof keepLooping !== 'string'){
-    console.clear()
+    
     //console.log(word)
     console.log(`❌`+"\033[31m"+` ${guessesArray.sort().join(', ')}`+"\033[39m"+`\n\n${livesColor(lives)}`)
     
@@ -201,6 +202,7 @@ function run(hint, word){
       
       //---> press enter to try again ---> continue
       readline.question(`\n\n\t   Press Enter to continue...`)
+      console.clear()
       continue;
     } else {
       
@@ -209,6 +211,7 @@ function run(hint, word){
       
       //---> press enter to try again ---> continue
       readline.question(`\n\t   Press Enter to continue...`)
+      console.clear()
       continue;
     }
     
@@ -223,6 +226,7 @@ function run(hint, word){
     
     //Set `keepLooping` equal to/= `isStillPlaying(`lives`, `underScore`)`
     keepLooping = isStillPlaying(lives, underScore, word)
+    console.clear()
   }
   
   //Declare variable const `playAgain` = `isPlayingAgain()`

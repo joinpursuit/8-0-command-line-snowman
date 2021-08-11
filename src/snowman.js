@@ -87,6 +87,12 @@ function letterChecker(userInput){
   }
 }
 
+function replaceBlanks(guessBox){
+ 
+  guessBox = guessBox.split("")
+  guessBox.splice((i * 2),1, letter)
+  guessBox = guessBox.join('')
+}
 
 // This line of code gets a random word. The `word` variable will be a string.
 /*
@@ -118,9 +124,26 @@ function run() {
     guessBox +=  "_ "
   }
 
+  // This code represent the start screen of the game that appears in the terminal
   gameStatus(divider, remainingGuesses, guessLetters, guessBox)
-  
+
+ 
+    
+    // This line of code will print out whatever is inputted in by the user.
   const userInput = readline.question("Choose Wisely: ");
+
+  for (let i = 0; i < word.length; i++){
+    let letter = word[i]
+    if (userInput.toLowerCase() === letter){
+
+      guessBox = guessBox.split("")
+      guessBox.splice((i * 2),1, letter)
+      guessBox = guessBox.join('')
+    }
+    }
+  
+    gameStatus(divider, remainingGuesses, guessLetters, guessBox)   
+ 
     
 }
 

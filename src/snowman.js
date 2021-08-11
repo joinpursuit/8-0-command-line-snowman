@@ -62,6 +62,9 @@ function run() {
         if (!isNaN(Number(userGuess)) || userGuess.length > 1){ // Checks if userGuess is a number or more than 1 letter
           console.log('\nERROR: Please enter a valid letter'); // Outputs the error message
           gameState.maxWrongGuesses++; // Makes sure the user does not lose a guess when inputting a invalid letter/number
+        } else if (gameState.guesses.includes(userGuess)){ // Checks if userGuess has already been guessed
+          console.log('\nERROR: You have already guessed: ' + userGuess + '\n'); // Outputs the error message
+          continue; // Prevents the player from losing a guess count
         } else {
           addGuessToList(userGuess); // Uses helper function to keep track and store letters that were guessed 
         } 
@@ -78,7 +81,7 @@ function run() {
         } 
       }
       if (gameState.maxWrongGuesses === 0){ // If maxwrongguesses is equal to 0, then it's gameover
-        console.log('\n!GAME OVER! The word was: ' + gameState.word);
+        console.log('\n!GRRR GAME OVER! The word was: ' + gameState.word);
         gameState.playSnowman = false; // Changes the value to false and ends the code
       }
     }

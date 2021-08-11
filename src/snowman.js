@@ -38,6 +38,10 @@ function charReplacer (guess, word, letterDisplay) {
 // ------------------------------------------------------------------------------------
 
 
+const enterUserName = readline.question("\033[0;32m" + `Enter your name:  ` + "\033[1;37m") // Take player's name in 
+let winningSteaks = 0;
+
+
 
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
@@ -79,6 +83,8 @@ function run() {
   //While this loop's condition is true, continue this game
   while (remainingChances && letterDisplay.includes("_")) {
     
+
+    console.log(`Player's name: ${"\033[1;37m" + enterUserName + "\033[1;33m"}`) // Display the player's name
     console.log(String("\033[1;35m" + `-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}` + "\033[1;33m"))
     
     console.log(`\nList of your guessed characters: ${listOfGuessedLetters.concat()}`)

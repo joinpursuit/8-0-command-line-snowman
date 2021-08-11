@@ -17,23 +17,14 @@ function getRandomWord() {
 
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
-
   You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
   Once you understand the code below, you may remove the comments if you like.
 */
 //
 
-//follow
-//012345
-//_ _ _ _ _ _
-//0123456789t
-//0 1 2 3 4 5
-
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
-  const word = "apple";
-  //getRandomWord();
+  const word = getRandomWord();
 
   let incorrectGuesses = word.length + 1;
   let lettersGuessed = ["None"];
@@ -68,7 +59,7 @@ function run() {
     "y",
     "z",
   ];
-  let invalidMsg = "Please enter a valid input";
+  let invalidMsg = "Please enter a lowercase letter";
 
   //assign underscores to a var called theBlanks to hide secret word
   for (let i = 0; i < word.length; i++) {
@@ -86,7 +77,8 @@ function run() {
       if (validEntries.includes(userInput)) {
         lettersGuessed.push(" " + userInput);
       } else {
-        return console.log(invalidMsg);
+        incorrectGuesses++;
+        console.log(invalidMsg);
       }
       //if "None" is present after first push, remove with shift method
       if (lettersGuessed.includes("None")) {
@@ -116,14 +108,11 @@ function run() {
     }
     /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
-
     The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
-
     After a user hits the 'return' key, the rest of the code will run.
   */
 
     // This line of code will print out whatever is inputted in by the user.
-    console.log("Letter guessed:", userInput);
     if (theBlanks.includes("_")) {
       i--;
     } else {

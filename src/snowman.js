@@ -37,13 +37,13 @@ function run() {
 
   // while the user still has guesses run this loop
   while (state.remainingGuesses > 0) {
-    // console.log(word) // to test
+    console.log(word) // to test
     console.log(`${state.hiddenWord}\n`);
     const userInput = readline.question("Guess a letter: ");
     let userInput2;
 
     // takes care of invalid entries
-    if (typeof userInput !== "string" || userInput.length > 1) {
+    if (typeof userInput !== "string" || userInput.length > 1 || state.lettersGuessed.includes(userInput)) {
       console.log("Invalid entry! Please enter a valid letter.");
     } else {
       console.log("THE USER INPUTTED:", userInput);

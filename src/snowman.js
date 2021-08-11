@@ -16,7 +16,7 @@ function getRandomWord() {
 }
 
 
-const letterDisplay = [];
+// const letterDisplay = [];
 // ------------------------------------------------------------------------------------
 function checkGuess (randomWord, guess) { // Check if input is correct or not
   if (randomWord.includes(guess)) {
@@ -40,6 +40,8 @@ function charReplacer (guess, word, letterDisplay) {
 
 const enterUserName = readline.question("\033[0;32m" + `Enter your name:  ` + "\033[1;37m") // Take player's name in 
 let winningSteaks = 0;
+console.log( "\033[1;33m" + "\nYou will then be given a number of chances based on the word" + "\n **Only Enter a Number!**" + "\033[1;35m" + "\nPress 'return' if you don't want to choose.")
+const askForNumberOfChances = Number(readline.question("\033[0;32m" + `Enter a number of chances you want:  ` + "\033[1;37m"))
 
 
 
@@ -70,6 +72,12 @@ function run() {
 
   let remainingChances = word.length + 1
 
+  if(askForNumberOfChances){
+    remainingChances = askForNumberOfChances
+  } // the number of total chances that players have
+
+  const letterDisplay = []; // Display the secret word's characters 
+
   function convertToUnderScore (word) { //Keeping inside the run function so it resets everytime a player starts a new game
     for (let characther of word) {
       characther = "_"
@@ -84,6 +92,13 @@ function run() {
   while (remainingChances && letterDisplay.includes("_")) {
     
 
+    console.log(`Player's name: ${"\033[1;37m" + enterUserName + "\033[1;33m"}`) // Display the player's name
+
+    console.log(String("\033[1;35m" + `-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}` + "\033[1;33m"))
+    
+    
+    console.log(`\nList of your guessed characters: ${listOfGuessedLetters.concat()}`)
+   
     console.log(`Player's name: ${"\033[1;37m" + enterUserName + "\033[1;33m"}`) // Display the player's name
     console.log(String("\033[1;35m" + `-----------------------------------\nThis word has ${word.length} characters.\n\n${letterDisplay.join("  ")}` + "\033[1;33m"))
     

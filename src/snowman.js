@@ -79,7 +79,9 @@ function run() {
   //While loop until word is complete or there are no more guesses 
   while (word !== hiddenWord && guesses > 0) {
     let userInput = readline.question(" Guess a letter: ");
-    
+    // set to lower case to accept values in uppercase as well
+    userInput = userInput.toLowerCase()
+
     //Check for Errors
     while (checkInput(userInput)) {
       userInput = readline.question(" Guess a letter: ")

@@ -8,14 +8,15 @@ function getRandomWord() {
   return dictionary[index];
 }
 //----------------------------------------------------------------//
+const userName = readline.question(`Enter your name:  `)
+
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
-  const word = "loop"
-  //getRandomWord();
+  const word = getRandomWord();
   let validEntry = "abcdefghijklmnopqrstuvwxyz"
-  let wrongEntryType = "\nNot a letter, please enter a letter!"
-  let endMessage = `\nSorry, better luck next time! The correct word is "${word}".`
-  let winningMessage = `\nYay! The word "${word}" saved your snowman!`
+  let wrongEntryType = "Not a letter, please enter a letter!"
+  let endMessage = `\nOh,no 🧊🧊🧊! Sorry ${userName}, better luck next time! The correct word is "${word}".`
+  let winningMessage = `\nYay! The word "${word}" saved your ⛄, ${userName}!`
   let incorrectGuesses = word.length + 1 
   let lettersGuessed = ""
   let theBlanks = ""
@@ -24,12 +25,12 @@ function run() {
     theBlanks += "_ "
   }
     console.log("\nWord: " + theBlanks)   
-    console.log("\nRemaining Incorrect Guesses: " + incorrectGuesses)
-    console.log("\nLetters Guessed: " + lettersGuessed)
+    console.log("Remaining Incorrect Guesses: " + incorrectGuesses)
+    console.log("Letters Guessed: " + lettersGuessed)
 
-//the loop that starts the game + continue the game
+  //the loop that starts the game + continue the game
   for (let i = 0; i < word.length; i++){
-//The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+    //The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
     let userInput = readline.question("\nPick a letter: ")
     userInput = userInput.toLowerCase()
     if(validEntry.includes(userInput) && userInput.length === 1){
@@ -45,7 +46,7 @@ function run() {
       theBlanks = theBlanks.join('')
     } 
   }
-  //decrement remaining incorrect guess count each time user enters a wrong guess(letter only).
+    //decrement remaining incorrect guess count each time user enters a wrong guess(letter only).
     if(!word.includes(userInput) && validEntry.includes(userInput)){
     incorrectGuesses --
     } 
@@ -53,26 +54,22 @@ function run() {
       console.log(wrongEntryType);
     }
       console.log("\nRemaining Incorrect Guesses: " + incorrectGuesses)
-    
-  //once the incorrectGuesses = 0 the game ends with an alert saying you lost
+    //once the incorrectGuesses = 0 the game ends with an alert saying you lost
     if(incorrectGuesses === 0){
       return console.log(endMessage);
     }
-      console.log("\nLetters Guessed: " + lettersGuessed)
       console.log("\nWord: " + theBlanks)
-      console.log("\nYou guessed:", userInput);
+      console.log("Letters Guessed: " + lettersGuessed)
+      console.log("You guessed:", userInput);
     if(!theBlanks.includes("_")) {
-      return console.log (winningMessage);
+      return console.log(winningMessage);
     } 
       else {
            i--
       }
   }
 }
-     
 run();
-
-
 
 //how can i start / play the game
 //ask for userinput

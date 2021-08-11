@@ -51,6 +51,16 @@ function run() {
 
   let listOfGuessedLetters = [];
 
+  // Opening 
+
+  const opening = readline.question("\033[0;33m" + `\n    
+  **************************************************
+  Welcome to Fatema and Ki Sub's Snowman Game World! \n 
+  Please press 'return' button to start the game!\n
+  **************************************************` + "\033[1;33m");
+
+
+
 
   let remainingChances = word.length + 1
 

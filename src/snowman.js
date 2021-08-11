@@ -130,7 +130,11 @@ function run() {
     // Check if it is correct or not 
           if  (userInput.length > 1 || !isNaN(userInput)) { // why is typeof not working?
             console.log(`${userInput} is not valid. Please try again. You have '${chalk.bold.yellow(remainingChances)}' chance(s) left!`)
-          
+              if (userInput.length < 1) {
+              const test = "empty space"
+              console.log(chalk.bgYellow(chalk.blue("You entered nothing!")))
+              listOfGuessedLetters.push(test)
+          }
             }
 
           else if (checkGuess(word, userInput) === true) { // If userInput is correct

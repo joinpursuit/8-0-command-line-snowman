@@ -128,23 +128,28 @@ function run() {
   gameStatus(divider, remainingGuesses, guessLetters, guessBox)
 
  
-    
+  for (let i = 0; i < array.length; i++){ 
     // This line of code will print out whatever is inputted in by the user.
-  const userInput = readline.question("Choose Wisely: ");
+    const userInput = readline.question("Choose Wisely: ");
 
-  for (let i = 0; i < word.length; i++){
-    let letter = word[i]
-    if (userInput.toLowerCase() === letter){
+    for (let i = 0; i < word.length; i++){
+      let letter = word[i]
+      if (userInput.toLowerCase() === letter){
 
-      guessBox = guessBox.split("")
-      guessBox.splice((i * 2),1, letter)
-      guessBox = guessBox.join('')
-    }
-    }
+        guessBox = guessBox.split("")
+        guessBox.splice((i * 2),1, letter)
+        guessBox = guessBox.join('')
+      }
+      }
   
     gameStatus(divider, remainingGuesses, guessLetters, guessBox)   
  
-    
+    if(removeSpaces(guessBox) !== word){
+      i = -1
+    }
+
+  } 
+  console.log("You narrowly escaped this time but Frosty will be back"); 
 }
 
 run();

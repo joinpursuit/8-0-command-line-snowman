@@ -4,6 +4,7 @@ const dictionary = require("./dictionary");
 
 
 gameState = {
+  playSnowman: true,
   word: getRandomWord(),
   blankWordArr: [],
   guesses: [],
@@ -37,48 +38,53 @@ function addGuessToList(userGuess){
 }
 
 function run() {
-  console.log('SNOWMAN GAME\n') // Title of Game
-  const word = gameState.word;
-  let blankWord = displayBlankWord(word).join(' ');
-  console.log('Word: ' + blankWord + '\n');
- 
-  
-  
-  while (gameState.maxWrongGuesses > 0){
-    if (!gameState.blankWordArr.includes('_')){
-    console.log('!Winner Winner Chicken Dinner!')
-    break;
-    }
-
-    console.log('Number of guesses remaining: ' + gameState.maxWrongGuesses);
-    const userGuess = readline.question("Please guess a letter: ").toLowerCase();
-    
-
-    if (!isNaN(Number(userGuess)) || userGuess.length > 1){ // Checks if userGuess is a number or more than 1 letter
-        // console.log('\nWord: ' + blankWord);
-        console.log('\nERROR: Please enter a valid letter'); // Outputs the following error message
-        gameState.maxWrongGuesses++; // Makes sure the user does not lose a guess when inputting a invalid letter/number
-      } else {
-        addGuessToList(userGuess); // Uses helper function to keep track and store letters that were guessed 
-      } 
-
-    if (word.includes(userGuess)){
-      let wordArr = blankWord.split(" ");
-      blankWord = addLettersToBlankWord(wordArr, word, userGuess);
-      console.log('\nWord: ' + blankWord);
-      console.log('\nGuessed letters: ' + gameState.guesses);
+  while (gameState.playSnowman){
+    let userAnswer = readline.question('\nDo you want to play Snowman? (Y or n)\n').toLowerCase();
+    if (userAnswer === 'n' || userAnswer === 'no'){
+      console.log('Okay, bye...');
+      gameState.playSnowman = false;
     } else {
-      console.log('\nWord: ' + blankWord);
-      console.log('\nGuessed letters: ' + gameState.guesses);
-      gameState.maxWrongGuesses--;
-    } 
+      console.log('\nSNOWMAN GAME\n') // Title of Game
+      const word = gameState.word;
+      let blankWord = displayBlankWord(word).join(' ');
+      console.log('Word: ' + blankWord + '\n');
+    
+      while (gameState.maxWrongGuesses > 0){
+        if (!gameState.blankWordArr.includes('_')){
+        console.log('\n!Winner Winner Chicken Dinner!\n');
+        gameState.playSnowman = false;
+        break;
+        }
 
-  }
-  if (gameState.maxWrongGuesses === 0){ // If maxwrongguesses is equal to 0, then it's gameover
-    console.log('\n!GAME OVER! The word was: ' + gameState.word);
-  }
-}
+        console.log('Number of guesses remaining: ' + gameState.maxWrongGuesses);
+        const userGuess = readline.question("Please guess a letter: ").toLowerCase();
 
+        if (!isNaN(Number(userGuess)) || userGuess.length > 1){ // Checks if userGuess is a number or more than 1 letter
+            // console.log('\nWord: ' + blankWord);
+            console.log('\nERROR: Please enter a valid letter'); // Outputs the following error message
+            gameState.maxWrongGuesses++; // Makes sure the user does not lose a guess when inputting a invalid letter/number
+          } else {
+            addGuessToList(userGuess); // Uses helper function to keep track and store letters that were guessed 
+          } 
+
+        if (word.includes(userGuess)){
+          let wordArr = blankWord.split(" ");
+          blankWord = addLettersToBlankWord(wordArr, word, userGuess);
+          console.log('\nWord: ' + blankWord);
+          console.log('\nGuessed letters: ' + gameState.guesses);
+        } else {
+          console.log('\nWord: ' + blankWord);
+          console.log('\nGuessed letters: ' + gameState.guesses);
+          gameState.maxWrongGuesses--;
+        } 
+      }
+      if (gameState.maxWrongGuesses === 0){ // If maxwrongguesses is equal to 0, then it's gameover
+        console.log('\n!GAME OVER! The word was: ' + gameState.word);
+        gameState.playSnowman = false;
+      }
+    }
+  }
+}  
 run();
 
 

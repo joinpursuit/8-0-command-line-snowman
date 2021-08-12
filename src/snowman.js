@@ -1,40 +1,117 @@
-/*
-  `readline-sync` is a library that allows you to access user input from the command line. The library is assigned to the variable `readline`. It is used in the `run()` function below.
-*/
+
 const readline = require("readline-sync");
-/*
-  The `dictionary` variable will have an array of words that can be used for your game. It is used in the `getRandomWord()` function.
-*/
+
 const dictionary = require("./dictionary");
 
-/*
-  This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
-*/
 function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
+const word = getRandomWord();
+let snowman =
+  `
+  , ,    ,      ,    ,     ,     ,   ,      ,     ,     ,      ,      ,
+,HA HA HA HA HA HA HA HA BAKA! BAKA! BAKA! YOU KNOW NOTHING SNOW MAN!!!  
+,       ,     ,    ,       ,   .____. ,   ,     ,      ,       ,      ,
+ ,    ,   ,    ,     ,   ,   , |   :|         ,   , ,   ,   ,       ,
+   ,        ,    ,     ,     __|====|__ ||||||  ,        ,      ,      ,
+ ,   ,    ,   ,     ,    , *  / o  o \  ||||||,   ,  ,        ,    ,
+,   ,   ,         ,   ,     * | -=   |  \====/ ,       ,   ,    ,     ,
+   ,  ,    ,   ,           , U==\__//__. \\//    ,  ,        ,    ,
+,   ,  ,    ,    ,    ,  ,   / \\==// \ \ ||  ,   ,      ,          ,
+ ,  ,    ,    ,     ,      ,|    o ||  | \||   ,      ,     ,   ,     ,
+,      ,    ,    ,      ,   |    o ""  |\_|B),    ,  ,    ,       ,
+  ,  ,    ,   ,     ,      , \__  --__/   ||  ,        ,      ,     ,
+,  ,   ,       ,     ,   ,  /          \  ||,   ,   ,      ,    ,    ,
+ ,      ,   ,     ,        |            | ||      ,  ,   ,    ,   ,
+,    ,    ,   ,  ,    ,   ,|            | || ,  ,  ,   ,   ,     ,  ,
+ ------_____---------____---\__ --_  __/__LJ__---------________-----___
+   `;
 
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
 function run() {
-  // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  let state = {
+    shouldKeepPlaying: true,
+    playerWins: 0,
+    playerLoses: snowman,
+    guess: word.length,
+    answerArr: [],
+    usedLetters: []
+  }
+  
+  function underscoresFilledArr(){ 
+    for(let i = 0; i < word.length; i++){
+      state.answerArr[i] = "_";
+    }
+      console.log(state.answerArr.join(" "));
+  }
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
-}
+  underscoresFilledArr();
 
+  function inputsSpliced(guessInput){
+    for(let j = 0; j < word.length; j++){
+      if(word[j] === guessInput){
+        state.answerArr.splice(j, 1, guessInput);
+      } 
+    }
+    console.log(state.answerArr.join(" "))
+  }
+
+  while(state.shouldKeepPlaying){
+    const userInput = readline.question(`**************************\nLets play a game!\r\n**************************\nA game of SNOW!(Yes or no) `).toLowerCase();
+    
+    if(userInput === "no" || userInput === "n"){
+      console.log("Ending Game.....COWARD!");
+      state.shouldKeepPlaying = false;
+      break;
+    }else{
+      console.log("Let the Brrrrrrrrr game begin!");
+
+      const guessedLetter = readline.question("Type a letter: ");
+    
+      if(!isNaN(guessedLetter)){
+        console.log("HAHAHAHAHAHAAHAHAHA you really didn't type anything! My guy LOL! GAME OVER!!!...Try again.");
+        state.shouldKeepPlaying = false;
+      }else{
+        console.log("So you do know what a letter is....good for you buddy!")
+        state.shouldKeepPlaying = false;
+      }
+    }
+  }// first while loop ending
+  state.shouldKeepPlaying = true;
+  underscoresFilledArr();
+   // Second While loop Begins 
+  while(state.guess > 0 && state.shouldKeepPlaying){
+    const guessInput = readline.question("Guess a letter: ").toLowerCase();
+  
+    if(guessInput === null){
+      break;
+    }else if(guessInput.length !== 1 || !isNaN(guessInput)){
+      console.log("Chillllllllll just type a single letter! Oh and no numbers my guy sheeeshhhhhhh.");
+    }else if(!word.includes(guessInput)){
+      state.guess--;
+    }
+
+    console.log(`You have ${state.guess} guesses left!`);
+
+    if(state.guess === 0){
+      console.log(`${state.playerLoses}\nThe easy word you couldn't guessed is: ${word.toUpperCase()}!`);
+      break;
+    }
+    
+    inputsSpliced(guessInput);
+
+    if(state.answerArr.join("") === word){
+      console.log("Grrrrrrr you won! The answer was indeed the word: " + word.toUpperCase() + "!");
+      state.shouldKeepPlaying = false;
+    }
+
+  }// Second while loop ending
+}//run function ending
 run();
+
+// //if(guessInput.length === 1){
+      // if(state.usedGuessLetters.includes(guessInput)){
+      //   console.log("You really guessed the same letter my guy.....BAKA!");
+      //   state.usedGuessLetters.push(guessInput);

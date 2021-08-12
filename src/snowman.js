@@ -23,6 +23,59 @@ function getRandomWord() {
   Once you understand the code below, you may remove the comments if you like.
 */
 function run() {
+  let randomWord = getRandomWord();
+  // let randomWord = 'test'
+  let dashedWord ='';
+  let numOfGuessesLeft= 6;
+  let guessed = '';
+
+  while(numOfGuessesLeft > 0){
+    if(dashedWord.length >0){
+      dashedWord = '';
+    }
+    let finished = true
+    for(let i= 0; i<randomWord.length;i++){
+      if(guessed.includes(randomWord[i])){
+        dashedWord +=randomWord[i]
+      } else{
+        finished = false;
+       dashedWord += '_'; 
+      }
+      
+      if(i!== randomWord.length-1){
+        dashedWord += ' ';
+      }
+    }
+    if(finished){
+      console.log('You beat me!');
+      return;
+    }
+
+    console.log(dashedWord);
+    console.log('guessed letters', guessed);
+    console.log(`You have ${numOfGuessesLeft} guesses left`);
+
+    let givenLetter = readline.question("Guess a letter: ");
+    if(!isNaN(Number(givenLetter)) || givenLetter.length >1 || guessed.includes(givenLetter)){
+      console.log(`This doesn't look right, try again!`);
+      continue;
+    }
+    
+    guessed += givenLetter;
+
+    if(!randomWord.includes(givenLetter)){
+      numOfGuessesLeft--;
+    }
+  }
+  console.log('You lost!');
+    numOfGuessesLeft--;
+    console.log('Number of guesses left: ' + numOfGuessesLeft);
+
+  
+   
+
+
+  
   // This line of code gets a random word. The `word` variable will be a string.
   const word = getRandomWord();
   /*
@@ -38,3 +91,8 @@ function run() {
 }
 
 run();
+
+// PROBLEMS
+// having trouble having the last letter show up when you guess the word correctly 
+//even if its the right letter, your number of guesses still decrease
+//counts '0 guesses left' as an additional guess

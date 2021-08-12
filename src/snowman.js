@@ -24,6 +24,67 @@ function alphabet(n) {
   return false;
 }
 
+function run() {
+  const word = getRandomWord();
+  //empty array for guessed letters
+  const guessed = [];
+  //the amount of guess counts allocated to a users
+  let guessCounts = word.length;
+  //underscore to show to users
+  const underscore = "_"
+
+  //the amount of underscores are equal to the length of a word, the Array.from turns the dashes into an array
+  let underscores = Array.from(underscore.repeat(word.length));
+  
+  //while loop will say that while the guess counts is less than 9 and more than 0
+  while (guessCounts > 0) {
+    //log the underscores
+    console.log(`${underscores.join(" ")}`);
+    //log the guess counts
+    console.log("How many guesses you have left: " + guessCounts);
+    //log the letters guessed by users
+    console.log("Guessed:" + guessed);
+    //this is the actual code taking the user input and lower case it
+    const userInput = readline.question("Guess a letter: ").toLowerCase();
+    //log what the user input lastn
+    console.log("THE USER INPUTTED:", userInput);
+    //then we push the user input into the guessed array
+    guessed.push(userInput);
+
+    //if the helper function rings true on in valid then fire an error
+    if (!alphabet(userInput)) {
+      console.log("Invalid input. Only letters. One by one pls.");
+    }
+
+    //if the random word includes the user input
+    if (word.includes(userInput)) {
+      //then we'll for loop through random word
+      for (let i = 0; i < word.length; i++) {
+        //if the random word at any index is equal to the user input
+        if (word[i] === userInput) {
+          //then the word reveals the letter in place on the correct space
+          underscores[i] = userInput;
+        }
+      }
+      
+    //else we subtract the guess count by 1 (because the guess is incorrect)
+    } else {
+      guessCounts--;
+    }
+
+    //if they win meaning they get the whole word
+    if (word.toLowerCase() === underscores.join("").toLowerCase()) {
+      //then congrats and end the function
+      console.log(`The word was ${word}! Wonderful job honey (: `);
+      return;
+      }
+    }
+  //if while loop ends due to incorrect guesses
+  if (guessCounts === 0) {
+    //then we have a "better luck next time"
+    console.log(`The word was: ${word}.Better luck next time! Try again.`);
+  }
+}
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
 

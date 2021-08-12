@@ -70,13 +70,13 @@ function run() {
     //log the dashes
     console.log(`${dashes.join(" ")}` /*, word*/);
     //log the guess counts
-    console.log("How many guesses you have left: " + guessCounts);
+    console.log("Guesses left...make them count: " + guessCounts);
     //log the letters guessed
-    console.log("You Guessed:" + guessed);
+    console.log("Your Guesses so far...which have all been just fabulous:" + guessed);
     //this is the actaul code taking what the user is inputting (given)
-    const userInput = readline.question("Guess a letter: ").toLowerCase();
+    const userInput = readline.question("Guess a letter...anything you'd like: ").toLowerCase();
     //log what the user input last
-    console.log("THE USER INPUTTED:", userInput);
+    console.log("To confirm your letter is:", userInput);
     //then we push the user input into the guessed array
     guessed.push(userInput);
     //if its anything outside of the alphabet or more then one character then "invalid input"

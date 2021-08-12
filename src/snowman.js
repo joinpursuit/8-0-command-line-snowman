@@ -8,7 +8,7 @@ function getRandomWord() {
   return dictionary[index];
 }
 
-const word = "apple";
+const word = getRandomWord();
 let snowman =
   `
   , ,    ,      ,    ,     ,     ,   ,      ,     ,     ,      ,      ,
@@ -28,15 +28,6 @@ let snowman =
 ,    ,    ,   ,  ,    ,   ,|            | || ,  ,  ,   ,   ,     ,  ,
  ------_____---------____---\__ --_  __/__LJ__---------________-----___
    `;
-
-// let state = {
-//   shouldKeepPlaying: true,
-//   playerWins: 0,
-//   playerLoses: snowman,
-//   guess: word.length,
-//   answerArr: [],
-//   usedLetters: []
-// }
 
 function run() {
 
@@ -124,7 +115,3 @@ run();
       // if(state.usedGuessLetters.includes(guessInput)){
       //   console.log("You really guessed the same letter my guy.....BAKA!");
       //   state.usedGuessLetters.push(guessInput);
-// while(numOfGuessesLeft > 0){
-//   numOfGuessesLeft--;
-//   console.log("Number of guesses left: " + numOfGuessesLeft);
-// }

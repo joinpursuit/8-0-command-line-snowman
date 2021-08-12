@@ -1,6 +1,6 @@
 //import our game functions
-const { run } = require('./snowman');
-const { ttt } = require('./tiktak');
+const { run } = require('./snowmanExport');
+const { ttt } = require('./tiktakExport');
 //importing(?) the the readline library
 const readline = require('readline-sync');
 
@@ -38,7 +38,5 @@ function gameHub() {
         startMsg = `${userName}, your input of '${gameChoice}' is invalid. Please try again.`;
     }
   }
-  //Print an exit message
-  console.log(`Thanks for playing!! ^~^`);
 }
 gameHub();

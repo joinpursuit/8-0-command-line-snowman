@@ -148,7 +148,7 @@ function ttt(name) {
   console.log(`Thanks for playing!! ^~^`);
 }
 
-ttt();
+//ttt();
 
 //helper function that returns which sign won the game, if no-one won yet, returns false
 function winCheck(game) {

@@ -59,16 +59,16 @@ function run() {
   // This line of code gets a random word. The `word` variable will be a string.
   //boolean that will keep the game running or not
   let continueGame = true;
-  //keeps track of inputs and stores in an array
+  //keeps track of all the inputs and stores it in this array
   let wrongGuess = [];
-  //all valid inputs
+  //all alphabet inputs
   const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-  //number of tries
+  //number of tries/guesses
   let tries = 7;
   const word = getRandomWord();
-  //to be filled with spaces equal to number of letters in word
+  //to be entered with spaces equal to number of letters in word
   let placeholder = [];
-  //every valid userInput the function will work with
+  //all the valid player Inputs the function will work with
   if(placeholder.length === 0){
     getUnderscores(word, placeholder);
   }
@@ -81,15 +81,15 @@ function run() {
     After a user hits the 'return' key, the rest of the code will run.
   */
   const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
+  // This line of code will print out what the player has input.
   while(continueGame){
-    //show the player how many spaces are left
+    //This shows the player how many spaces are left
       console.log(`\n${placeholder.join(' ')}`);
       const userInput = readline.question(`Remaining incorrect guesses: ${tries}\nLetters guessed: ${wrongGuess}\nGuess a lowercase letter: `);
-    //if the input is valid, continue, also keeps track of wrong guesses in an array
+    //if the input is valid, it continues and keeps track of all the wrong guesses in this array
       if(inputValidityCheck(userInput, alphabet)){
         let checkIfBoolean = replaceLetters(word, placeholder, userInput);
-        //decrement remaining tries if valid letter is wrong
+        //remaining guesses if valid letter is a wrong guess 
         if(!checkIfBoolean){
           if(!wrongGuess.includes(userInput)){
             wrongGuess.push(userInput);
@@ -104,11 +104,11 @@ function run() {
         continue;
       }
       if(confirmWinner(word, placeholder)){
-        console.log(`The word was '${word}', you won with ${tries} guesses left!`);
+        console.log(`The word was '${word}', you won! you saved the Snowman with ${tries} guesses left!`);
         continueGame = false;
       }
       if(tries <= 0){
-        console.log(`You ran out of guesses! The word was '${word}'. Try again next time.`);
+        console.log(`You ran out of guesses! Your luck run out! The word was '${word}'. The snowman did not survive.  Try your luck again and save the snowman next time.`);
         break;
       }
     }

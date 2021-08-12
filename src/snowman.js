@@ -14,6 +14,39 @@ function getRandomWord() {
   const index = Math.floor(Math.random() * dictionary.length);
   return dictionary[index];
 }
+function replaceLetters(word, placeholder, userInput){
+  if(word.includes(userInput)){
+    for(let i = 0; i < word.length; i++){
+      if(word[i] === userInput){
+        placeholder.splice(i, 1, userInput);
+      }
+    }
+   return placeholder;
+  }else{
+    return false;
+  }
+}
+
+function confirmWinner(word, placeholder){
+  let placeholderStr = placeholder.join('');
+  if(placeholderStr === word){
+  return true;
+  }
+}
+
+function inputValidityCheck(userInput, alphabet){
+  if(alphabet.includes(userInput)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+function getUnderscores(word, placeholder){
+  for(let i = 0; i < word.length; i++){
+    placeholder.push('_');
+  }
+}
 
 /*
   This function will run your game. Everything you want to happen in your game should happen inside of here.
@@ -24,7 +57,22 @@ function getRandomWord() {
 */
 function run() {
   // This line of code gets a random word. The `word` variable will be a string.
+  //boolean that will keep the game running or not
+  let continueGame = true;
+  //keeps track of inputs and stores in an array
+  let wrongGuess = [];
+  //all valid inputs
+  const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+  //number of tries
+  let tries = 7;
   const word = getRandomWord();
+  //to be filled with spaces equal to number of letters in word
+  let placeholder = [];
+  //every valid userInput the function will work with
+  if(placeholder.length === 0){
+    getUnderscores(word, placeholder);
+  }
+
   /*
     The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
 
@@ -34,7 +82,36 @@ function run() {
   */
   const userInput = readline.question("Guess a letter: ");
   // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
-}
+  while(continueGame){
+    //show the player how many spaces are left
+      console.log(`\n${placeholder.join(' ')}`);
+      const userInput = readline.question(`Remaining incorrect guesses: ${tries}\nLetters guessed: ${wrongGuess}\nGuess a lowercase letter: `);
+    //if the input is valid, continue, also keeps track of wrong guesses in an array
+      if(inputValidityCheck(userInput, alphabet)){
+        let checkIfBoolean = replaceLetters(word, placeholder, userInput);
+        //decrement remaining tries if valid letter is wrong
+        if(!checkIfBoolean){
+          if(!wrongGuess.includes(userInput)){
+            wrongGuess.push(userInput);
+            tries--;
+          }
+        }else{
+          placeholder = checkIfBoolean;
+         // console.log(placeholder.join(' '));
+        }
+      }else{
+        console.log('Enter a valid lowercase letter.');
+        continue;
+      }
+      if(confirmWinner(word, placeholder)){
+        console.log(`The word was '${word}', you won with ${tries} guesses left!`);
+        continueGame = false;
+      }
+      if(tries <= 0){
+        console.log(`You ran out of guesses! The word was '${word}'. Try again next time.`);
+        break;
+      }
+    }
+  }
 
 run();

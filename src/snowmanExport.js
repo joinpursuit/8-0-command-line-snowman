@@ -153,7 +153,7 @@ function run(name) {
   console.log(`Thanks for playing!! ^~^`);
 }
 //test
-run();
+//run();
 module.exports = {
   run,
 };

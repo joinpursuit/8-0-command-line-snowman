@@ -97,9 +97,9 @@ function run() {
     if(guessInput === null){
       break;
     }else if(guessInput.length !== 1 || !isNaN(guessInput)){
-      console.log("Chillllllllll just type a single letter and numbers my guy sheeeshhhhhhh.")
+      console.log("Chillllllllll just type a single letter! Oh and no numbers my guy sheeeshhhhhhh.");
     }else if(!word.includes(guessInput)){
-      state.guess--
+      state.guess--;
     }
 
     console.log(`You have ${state.guess} guesses left!`);
@@ -120,6 +120,10 @@ function run() {
 }//run function ending
 run();
 
+// //if(guessInput.length === 1){
+      // if(state.usedGuessLetters.includes(guessInput)){
+      //   console.log("You really guessed the same letter my guy.....BAKA!");
+      //   state.usedGuessLetters.push(guessInput);
 // while(numOfGuessesLeft > 0){
 //   numOfGuessesLeft--;
 //   console.log("Number of guesses left: " + numOfGuessesLeft);

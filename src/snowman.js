@@ -29,13 +29,18 @@ function validInputCheck(letter) {
 
   Once you understand the code below, you may remove the comments if you like.
 */
+
+//Set win & loss variables out here so I can accumulate through recursion
+let snowmanWins = 0;
+let snowmanLosses = 0;
+
 function run(name) {
   //Ask for their name
   let userName = name || readline.question('Enter your username: ') || 'User';
   //Declare variable for our secretword
   const secretWord = getRandomWord();
   //Declare variable for our incorrectGuess, set to length of secretWord
-  let incorrectGuess = secretWord.length;
+  let incorrectGuess = Number(process.argv[2]) || secretWord.length;
   //Declare variable for alreadyGuessed, set to empty array
   let alreadyGuessed = [];
   //Declare variable for displayedWord, set to empty array
@@ -94,18 +99,33 @@ function run(name) {
     //Send them back to guess phase
     continue;
   }
+
+  //Print the game state
+  console.log(
+    `\n-------------------------------------\nRemaining Incorrect Guesses: ${incorrectGuess}\nLetters Guessed: ${
+      alreadyGuessed.join(', ') || 'None'
+    }\nWord: ${displayedWord.join(' ')}${message}`
+  );
+
   //check if they won
   if (!displayedWord.includes('_')) {
     //if they did, give winning message
     console.log(
-      `\nGOOD JOB ${userName}!!! YOU'RE A WINNER!!\nYour word was: ${secretWord}\n\n-------------------------------------\n`
+      `\nGOOD JOB ${userName}!!! YOU'RE A WINNER!!\nYour word was: ${secretWord}\n-------------------------------------\n`
     );
+    //add 1 to the wins
+    snowmanWins += 1;
   } else {
     //if they didn't, give losing message
     console.log(
       `\nSorry ${userName}, better luck next time! Your word was: ${secretWord}\n\n-------------------------------------\n`
     );
+    //add 1 to the losses
+    snowmanLosses += 1;
   }
+
+  //Print wins and losses
+  console.log(`Wins: ${snowmanWins} Losses: ${snowmanLosses}`);
 
   //declare replayMsg as empty string
   let replayMsg = '';
@@ -119,7 +139,7 @@ function run(name) {
     console.log(replayMsg);
     //ask if they would like to play again
     playAgain = readline.question(
-      `${userName}, would you like to play again? (y,n)`
+      `${userName}, would you like to play again? (y,n) `
     );
     //check for their answer
     if (playAgain.toLowerCase() === 'y') {
@@ -131,4 +151,7 @@ function run(name) {
   }
 }
 //test
-run();
+//run();
+module.exports = {
+  run,
+};

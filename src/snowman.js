@@ -154,8 +154,8 @@ let wordReset;
 function run(hint, word){
   const commands = [
     {Commands: '/end', Discription: 'End the game'},
-    {Commands: '/reset', Discription: 'Resets word'}
-]
+    {Commands: '/reset', Discription: 'New Word'}
+  ]
   //CC- Get `userInput`
   //CC- Send `userInput` to function `isValidChar()` to check for valid characters
   

@@ -7,6 +7,57 @@ const readline = require("readline-sync");
 */
 const dictionary = require("./dictionary");
 
+/**
+ * setting up game state
+ * What data do we need to access or update?
+ * - secret word 
+ * - correct guesses
+ * - wrong guesses
+ * - max num of wrong data
+ * ==HELPER FUNCTIONS THAT USE STATE==
+ * -put a random secret word into state
+ * -check if a guess is correct
+ * -add a correct guess to the list
+ * -check if the game is won
+ * 
+ */
+
+
+// let secretWord = getRandomWord();
+// let correctGuesses = [];
+// let incorrectGuesses = [];
+// // HELPER FUNCTIONS
+// //Need a different secret word each game
+// function isGuessCorrect(guess){
+//   return secretWord.includes(guess);
+// }
+
+// console.log(isGuessCorrect("a"));
+
+//How do we keep previous guesses in memory aka state
+// function addCorrectGuessToList(guess){
+//   correctGuesses.push(guess);
+//     return correctGuesses;
+// }
+// //How do we keep wrong guess in memory
+// function addIncorrectGuessesToList(guess){
+//   incorrectGuesses.push(guess);
+//   return incorrectGuesses;
+  
+// }
+
+//console.log(addCorrectGuessToList('p')); //['p']
+//console.log(addCorrectGuessToList('l')); //['l']
+
+// function isNotALetter(){
+//   if (typeof userInput !== 'string' || userInput.length >1){
+//     return "Please enter a letter."
+//   } ;
+// }
+
+// console.log(isNotALetter("word"))
+
+
 /*
   This function returns a random word from the list in `src/dictionary.js`. You do not need to update or edit this function. Instead, you only need to call it from the `run()` function.
 */
@@ -15,26 +66,63 @@ function getRandomWord() {
   return dictionary[index];
 }
 
-/*
-  This function will run your game. Everything you want to happen in your game should happen inside of here.
 
-  You should still define other, smaller functions outside of the `run()` function that have a single specific purpose, such as getting user input or checking if a guess is correct. You can then call these helper functions from inside the `run()` function.
-
-  Once you understand the code below, you may remove the comments if you like.
-*/
 function run() {
+  
   // This line of code gets a random word. The `word` variable will be a string.
-  const word = getRandomWord();
-  /*
-    The line of code below stops the execution of your program to ask for input from the user. The user can enter whatever they want!
+  //const word = getRandomWord();
 
-    The text that will show up to the user will be "Guess a letter: ". Whatever value is entered will be assigned to the variable `userInput`.
+  let state = {
+    word : getRandomWord(),
+    dashedWord:"",
+    guessedLetters: "",
+    numOfGuessesLeft: 6,
 
-    After a user hits the 'return' key, the rest of the code will run.
-  */
-  const userInput = readline.question("Guess a letter: ");
-  // This line of code will print out whatever is inputted in by the user.
-  console.log("THE USER INPUTTED:", userInput);
+  }
+
+  while(state.numOfGuessesLeft > 0){
+    // Accumulator pattern for isGivenLetter in word, bool, false -- Decrement numofGuesses
+    if(state.dashedWord.length > 0){
+      state.dashedWord = "";
+    }
+    let solvedWord = true;
+
+    for(let i = 0; i < state.word.length; i++){
+      if(state.guessedLetters.includes(state.word[i])){
+        state.dashedWord += state.word[i];
+      }else {
+        solvedWord = false;
+        state.dashedWord += "_";
+      }
+
+      if(i !== state.word.length-1){
+        state.dashedWord += " ";
+      }
+    }
+    if(solvedWord){
+      console.log("Yay you won!" );
+      return;
+    }
+
+    console.log(state.dashedWord, "\n");
+    console.log("Guessed Letters: ", state.guessedLetters, "\n");
+    console.log(`You have ${state.numOfGuessesLeft} guesses remaining`);
+    const givenLetter = readline.question("Please enter your guess: ");
+    if(!isNaN(givenLetter) || givenLetter.length > 1 || state.guessedLetters.includes(givenLetter)){
+      console.log("Please enter a valid letter")
+      continue;
+    }
+    state.guessedLetters += givenLetter;
+
+    
+   
+    if(!state.word.includes(givenLetter)){
+    state.numOfGuessesLeft--;
+    }
+  }
+//Outside of the while loop once guesses = 0 return this message is word was not solved.
+console.log("Sorry you ran out of guesses. The word was " + state.word)
+
 }
 
 run();

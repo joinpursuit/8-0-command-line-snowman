@@ -106,7 +106,7 @@ function run() {
           I will give you access to a continue for 2 more lives whenever 
           you run out, try your best to not need them, but you may push 
           through as you wish.  If you'd like a specific number of lives
-          run the file again with "node snowman.js {number}".
+          run the file again with "node snowman.js [number]".
   `
   )
   let snowman = [

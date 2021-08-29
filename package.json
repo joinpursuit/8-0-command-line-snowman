@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "readline-sync": "^1.4.10"
+    "chalk": "^4.1.2",
+    "dotenv": "^10.0.0",
+    "node-fetch": "^2.6.1",
+    "readline-sync": "^1.4.10",
+    "xmlhttprequest": "^1.8.0"
   }
 }
